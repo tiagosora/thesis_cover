@@ -11,41 +11,6 @@
 % Add 'final' parameter to remove "DOCUMENTO PROVISÓRIO" from cover page
 \documentclass[11pt,a4paper]{report}
 
-%%% This file is a template for the cover of your
-%%%  thesis.
-%%% Lines like this one, starting with %%% , are
-%%%  instructions. Search them to know where and
-%%%  how to edit this file. After editing the
-%%%  document you can delete them.
-%%% Items marked with OPTIONAL can be removed.
-%%% Most of the lines you will have to change
-%%%  already have examples to help you understand.
-%%% The complete list of options and commands can
-%%%  be found in uaThesisTemplate.sty
-
-%%% Select your area of study and department from
-%%%  the following lists and replace them in the
-%%%  \usepackage declaration ([area,department]).
-%%%
-%%% | area        |   | department |
-%%% ---------------   --------------
-%%% | arts        |   | dao        |
-%%% | sciences    |   | dbio       |
-%%% | education   |   | dcspt      |
-%%% | economy     |   | deca       |
-%%% | engineering |   | degeit     |
-%%% | humanities  |   | de         |
-%%% | health      |   | deti       |
-%%% |             |   | demac      |
-%%% |             |   | decivil    |
-%%% |             |   | dem        |
-%%% |             |   | dfis        |
-%%% |             |   | dlc        |
-%%% |             |   | dmat       |
-%%% |             |   | dq         |
-%%% |             |   | dcm        |
-%%% |             |   | dgeo        |
-%%% ---------------   --------------
 %% Import the UA thesis template
 \usepackage[engineering,deti]{uaThesisTemplate}
 
@@ -59,138 +24,49 @@
 
 \usepackage{xspace}% used by \sigla
 
-%%% This package is only used to create a dummy
-%%%  text for the abstract. You can remove the
-%%%  following line in the final document.
-%\usepackage{blindtext}
+% TODO: Remove the following line in the final document.
+\usepackage{blindtext}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%       DEFINE THESIS COVER FIELDS
-%%                  START
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%% Edit thesis year
-%% Thesis Year
 \ThesisYear{\the\year}
 
 
-%%% Uncomment one of the following options:
-%\DocumentTypeThesis
-%\DocumentTypeThesisProposal
 \DocumentTypeDissertation
 
-%%% Uncomment if you are a student of a MAP Doctoral program 
-%%% http://www.map.edu.pt/
-%%% | area                | identifier |
-%%% | Biology of Plants   | bioplant   |
-%%% | Computer Science    | i          |
-%%% | Physics             | fis        |
-%%% | Telecommunications  | tele       |
 
-%\MAPProgram{i}
-
-%%% Edit author's name
 %% Author's full name
 \Author{TIAGO\\GOMES CARVALHO}
 
-%%% Edit thesis title in Portuguese
 %% Thesis Mandatory Title in Portuguese
 \TitlePT{Desenho e Desenvolvimento de uma Solução Inteligente para a Gestão de Objectos Perdidos}
-
-%%% OPTIONAL: you can write your thesis title in
-%%%  other languages. You can repeat the following
-%%%  line as many times as you want, or remove it
-%%%  if you only want the portuguese title.
-%% Optional Titles in additional languages.
 \TitleEN{Design and Development of an Intelligent Solution for the Management of Lost Items}
 
-%%% Edit your supervisor's information.
-%%%
-%%% Use this command for male supervisor
-%%% \Supervisor{name}{category}
-%%%
-%%% Or this command for female supervisor
-%%% \Supervisora{name}{category}
-%%%
-%%% name   : Supervisor's name
-%%% categoy: One of the following list
-%%%
-%%% | category                  |
-%%% -----------------------------
-%%% | catedrático/a             |
-%%% | catedrático/a convidado/a |
-%%% | associado/a c/ agregação  |
-%%% | associado/a               |
-%%% | auxiliar                  |
-%%% | auxiliar convidado        |
-%%% -----------------------------
 %% Supervisor information
-\Supervisor{Eurico FarinhaPedrosa}{associado}
+\Supervisor{Eurico Farinha Pedrosa}{associado}
 
-%%% OPTIONAL: you can add a second supervisor.
-%%%
-%%% Use this command for male supervisor
-%%% \SupervisorMember{name}{category}
-%%% 
-%%% Or this command for female supervisor
-%%% \SupervisoraMember{name}{category}
-%%%  {[preposition: (at, in, no, da)] department}
-%%%  {[preposition: (at, in, do, na)] school}
-%%%  {[preposition: (and, e)] }
-%%%
-%%% name      : See above.
-%%% category  : See above.
-%%% department: Can be a department, faculty or
-%%%             other; Choose the preposition
-%%%             accordingly.
-%%% school    : University/School name; Choose the
-%%%             preposition accordingly.
-%%% last      : Write {e } (Portuguese) or {and } (English)
-%%%             for the last enumerated Supervisor; Or
-%%%             nothing {} for all other supervisors 
-%% Optional SecondSupervisor information
-\SupervisorMember{(co-orientador)}{auxiliar convidado}{do Departamento de Matemática}{da Universidade de Aveiro}{}
+%% Optional Second Supervisor information
+\SupervisorMember{Mario Luís Pinto Antunes}{associado}{do Departamento de Eletrónica, Telecomunicações e Informática}{da Universidade de Aveiro}{}
 
-%%% Repeat the above declaration for additional
-%%%  Supervisor members as many times as necessary.
-%% Additional Supervisor members
-\SupervisoraMember{(co-orientadora)}{associada c/ agregação}{do Departamento de Biologia}{da Universidade de Aveiro}{}
-\SupervisorMember{(co-orientador)}{auxiliar convidado}{do Departamento de Física}{da Universidade de Aveiro}{e }
-
-%%% Edit your degree information.
-%%%
-%%% \Degree{title}{name}
-%%%
-%%% title: Degree title (Mestre or Doutor)
-%%% name : Degree name
 %% Degree title and name
-\Degree{Mestre}{Engenharia de Computadores e Telemática}
+\Degree{Mestre}{Engenharia Informática}
 
-%%% OPTIONAL: edit grant support texts where
-%%%  appropriate. Maximum two.
-%%%
-%%% \GrantText{grant1}{grant2}
 %% Optional Grant support texts
-\GrantText{Texto Apoio financeiro do POCTI no âmbito do III Quadro Comunitário de Apoio.\\
-          \newline
-          (if applicable- Portuguese mandatory)}
-          {Texto Apoio financeiro da FCT e do FSE no âmbito do III Quadro Comunitário de Apoio.\\
-          \newline
-          (if applicable- Portuguese mandatory)}
+% \GrantText{Texto Apoio financeiro do POCTI no âmbito do III Quadro Comunitário de Apoio.\\
+%           \newline
+%           (if applicable- Portuguese mandatory)}
+%           {Texto Apoio financeiro da FCT e do FSE no âmbito do III Quadro Comunitário de Apoio.\\
+%           \newline
+%           (if applicable- Portuguese mandatory)}
 
-%%% Edit the Jury President information.
 %% First Member will be the President of the Jury
-\JuriMember{Prof. Doutor João Antunes da Silva}{professor associado da Universidade de Aveiro}
+% \JuriMember{Prof. Doutor João Antunes da Silva}{professor associado da Universidade de Aveiro}
 
-%%% Repeat the above declaration for additional
-%%%  members of the jury as many times as necessary.
 %% Additional members of the Jury
-\JuriMember{Prof. Doutor João Antunes da Silva}{professor associado da Universidade de Aveiro}
-\JuriMember{Prof. Doutor João Antunes da Silva}{professor associado da Universidade de Aveiro}
-\JuriMember{Prof. Doutor João Antunes da Silva}{professor associado da Universidade de Aveiro}
-\JuriMember{Prof. Doutor João Antunes da Silva}{professor associado da Universidade de Aveiro}
-\JuriMember{Prof. Doutor João Antunes da Silva}{professor associado da Universidade de Aveiro}
+% \JuriMember{Prof. Doutor João Antunes da Silva}{professor associado da Universidade de Aveiro}
+% \JuriMember{Prof. Doutor João Antunes da Silva}{professor associado da Universidade de Aveiro}
+% \JuriMember{Prof. Doutor João Antunes da Silva}{professor associado da Universidade de Aveiro}
+% \JuriMember{Prof. Doutor João Antunes da Silva}{professor associado da Universidade de Aveiro}
+% \JuriMember{Prof. Doutor João Antunes da Silva}{professor associado da Universidade de Aveiro}
 
 
 
@@ -218,18 +94,8 @@
 
 
 %%% OPTIONAL: Acknowledge the use of AI Tools
-\AIUse{I acknowledge the use of [insert AI system(s) and link] to [specific use of generative artificial intelligence or other tasks].
-I acknowledge the use of [software, codes or platforms] to [specific use software, codes or platforms or to other tasks].
-\newline\newline
-{Example 1: I acknowledge the use of ChatGPT 3.5 (Open AI, https://chat.openai.com) to summarise the initial notes and to proofread the final draft and the use of 
-Office365 (Microsoft, https://www.office.com) for text writing and productivity.}
-\newline\newline
-{Example 2: No content generated by AI technologies has been used in this Thesis.}
-}
-%Reconheço o uso de [inserir sistema(s) de IA e respetiva hiperligação] para [indicar utilização específica de IA ou outras tarefas]. Reconheço a utilização de [indicar software, código ou plataforma] para [indicar utilização específica de software, código ou platafoma ou para outras tarefas].
-%Exemplo 1: Reconheço a utilização do ChatGPT 3.5 (Open AI, https://chat.openai.com) para resumir as notas iniciais e para rever o rascunho final, a utilização do Office365 (Microsoft, https://www.office.com) para a escrita do texto.
-%Exemplo 2: Não foram utilizados no presente trabalho quaisquer conteúdos gerados por tecnologias de IA.
-
+\AIUse{I acknowledge the use of Grammarly (Grammarly, https://www.grammarly.com/) to improve and correct some sentences and paragraphs, pontuation and vocabulary.
+I acknowledge the use of ChatGPT-4o to improve the overall deliver of this Thesis document.}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -245,7 +111,7 @@ Office365 (Microsoft, https://www.office.com) for text writing and productivity.
 %%%  declaration). If you're writing your thesis
 %%%  in english uncomment the following line.
 %%% Set the proper language or you will end with incorrect hyphenation!
-%\selectlanguage{english}
+\selectlanguage{english}
 
 
 \MakeCover

@@ -1,18 +1,9 @@
 [0] Config.pm:307> INFO - This is Biber 2.19
 [0] Config.pm:310> INFO - Logfile is 'build/matter.blg'
-[27] biber-darwin:340> INFO - === Thu Oct 10, 2024, 11:55:12
-[34] Biber.pm:419> INFO - Reading 'build/matter.bcf'
-[65] Biber.pm:979> INFO - Found 1 citekeys in bib section 0
-[71] Biber.pm:4419> INFO - Processing section 0
-[77] Biber.pm:4610> INFO - Looking for bibtex file 'bib/references.bib' for section 0
-[77] bibtex.pm:1713> INFO - LaTeX decoding ...
-[79] bibtex.pm:1519> INFO - Found BibTeX data source 'bib/references.bib'
-[82] UCollate.pm:68> INFO - Overriding locale 'pt-PT' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[82] UCollate.pm:68> INFO - Overriding locale 'pt-PT' defaults 'variable = shifted' with 'variable = non-ignorable'
-[82] Biber.pm:4239> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'pt-PT'
-[82] Biber.pm:4245> INFO - No sort tailoring available for locale 'pt-PT'
-[82] bbl.pm:660> INFO - Writing 'build/matter.bbl' with encoding 'UTF-8'
-[82] bbl.pm:763> INFO - Output to build/matter.bbl
-[82] Biber.pm:131> WARN - BibTeX subsystem: /var/folders/b4/rnd2xfr14ps82v59kf7kb0r80000gn/T/biber_tmp_bWs_/33e59b5ca9ec342068223d604c3f8d55_30008.utf8, line 8, warning: undefined macro "sep."
-[82] Biber.pm:131> WARN - I didn't find a database entry for 'rfc44' (section 0)
-[82] Biber.pm:133> INFO - WARNINGS: 2
+[36] biber-darwin:340> INFO - === Sun Dec 15, 2024, 01:37:52
+[45] Biber.pm:419> INFO - Reading 'build/matter.bcf'
+[81] Biber.pm:979> INFO - Found 0 citekeys in bib section 0
+[90] bbl.pm:660> INFO - Writing 'build/matter.bbl' with encoding 'UTF-8'
+[90] bbl.pm:763> INFO - Output to build/matter.bbl
+[90] Biber.pm:131> WARN - The file 'build/matter.bcf' does not contain any citations!
+[90] Biber.pm:133> INFO - WARNINGS: 1

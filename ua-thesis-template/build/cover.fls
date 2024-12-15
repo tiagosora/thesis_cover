@@ -1,4 +1,4 @@
-PWD /Users/tiagosora/Documents/Universidade/Tese/ua-thesis-template
+PWD /Users/tiagosora/Documents/Universidade/Tese/thesis_cover/ua-thesis-template
 INPUT /usr/local/texlive/2024/texmf.cnf
 INPUT /usr/local/texlive/2024/texmf-dist/web2c/texmf.cnf
 INPUT /usr/local/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt
@@ -63,6 +63,8 @@ INPUT /usr/local/texlive/2024/texmf-dist/tex/generic/babel/locale/en/babel-engli
 INPUT /usr/local/texlive/2024/texmf-dist/tex/generic/babel/locale/en/babel-en.ini
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/tools/xspace.sty
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/tools/xspace.sty
+INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/blindtext/blindtext.sty
+INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/blindtext/blindtext.sty
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/psnfss/t1phv.fd
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/psnfss/t1phv.fd
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/psnfss/t1phv.fd
@@ -107,13 +109,8 @@ INPUT /usr/local/texlive/2024/texmf-dist/fonts/vf/adobe/helvetic/phvr8t.vf
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/adobe/helvetic/phvr8r.tfm
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/adobe/helvetic/phvr8t.tfm
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/adobe/helvetic/phvb8t.tfm
-INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/adobe/helvetic/phvr8t.tfm
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/vf/adobe/helvetic/phvb8t.vf
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/adobe/helvetic/phvb8r.tfm
-INPUT /usr/local/texlive/2024/texmf-dist/fonts/vf/adobe/helvetic/phvr8t.vf
-INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/adobe/helvetic/phvr8r.tfm
-INPUT /usr/local/texlive/2024/texmf-dist/fonts/vf/adobe/helvetic/phvr8t.vf
-INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/adobe/helvetic/phvr8r.tfm
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/psnfss/ts1phv.fd
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/psnfss/ts1phv.fd
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/psnfss/ts1phv.fd
