@@ -10,6 +10,7 @@
 % Remove 'coverdepname' parameter to remove department name from cover pages
 % Add 'final' parameter to remove "DOCUMENTO PROVISÓRIO" from cover page
 \documentclass[11pt,a4paper]{report}
+% \documentclass[11pt,a4paper,final]{report}
 
 %% Import the UA thesis template
 \usepackage[engineering,deti]{uaThesisTemplate}
@@ -38,8 +39,11 @@
 \Author{TIAGO\\GOMES CARVALHO}
 
 %% Thesis Mandatory Title in Portuguese
-\TitlePT{Desenho e Desenvolvimento de uma Solução Inteligente para a Gestão de Objectos Perdidos}
-\TitleEN{Design and Development of an Intelligent Solution for the Management of Lost Items}
+% \TitlePT{Desenho e Desenvolvimento de uma Solução Inteligente para a Gestão de Objectos Perdidos}
+% \TitleEN{Design and Development of an Intelligent Solution for the Management of Lost Items}
+
+\TitlePT{Desenho e Desenvolvimento de um IMS Inteligente para Objectos Perdidos}
+\TitleEN{Design and Development of an Intelligent IMS for Lost Items}
 
 %% Supervisor information
 \Supervisor{Eurico Farinha Pedrosa}{associado}
@@ -70,17 +74,24 @@
 
 
 
-%%% OPTIONAL: Add an acknowledgement text
 %% Optional Acknowledgement text
-\Acknowledgements{Agradeço toda a ajuda a todos os meus colegas e companheiros.}
+
+% \Acknowledgements{Gostaria de agradecer aos meus orientadores, Dr. Eurico Pedrosa e Dr. Mário Antunes, pela sua orientação, paciência e encorajamento ao longo desta investigação. Os seus conhecimentos e sugestões úteis melhoraram muito o meu trabalho e posso seguramente dizer que tiveram um impacto imenso no resultado deste trabalho.
+
+% Muito obrigado aos meus colegas e amigos do DETI-UA pelo seu apoio. Quero também agradecer a todos os que me ajudaram durante as fases de recolha de dados, teste e revisão deste projeto.
+
+% Estou profundamente grato à minha família e amigos pela sua compreensão e amor, que me motivaram a concluir esta dissertação.
+
+% Obrigado a todos os que contribuíram para o sucesso deste projeto.}
 
 %%% Edit the keywords and abstract in Portuguese
 %%% Don't forget to remove the \blindtext[3]
 %%%  declaration.
 %%% Don't remove the \selectlanguage statement or you will end with incorrect hyphenation
 %% Mandatory Keywords and Abstract in Portuguese
-\Abstract{palavras-chave}{texto livro, arquitetura, história, construção, materiais de construção, saber tradicional.}
-         {resumo}{\selectlanguage{portuguese}Um resumo é um pequeno apanhado de um trabalho mais longo (como uma tese, dissertação ou trabalho de pesquisa). O resumo relata de forma concisa os objetivos e resultados da sua pesquisa, para que os leitores saibam exatamente o que se aborda no seu documento.\\Embora a estrutura possa variar um pouco dependendo da sua área de estudo, o seu resumo deve descrever o propósito do seu trabalho, os métodos que você usou e as conclusões a que chegou.\\Uma maneira comum de estruturar um resumo é usar a estrutura IMRaD. Isso significa: \begin{itemize} \item Introdução \item Métodos \item Resultados \item Discussão \end{itemize} Veja mais pormenores aqui:\\\texttt{https://www.scribbr.com/dissertation/abstract/}}
+
+% \Abstract{palavras-chave}{texto livro, arquitetura, história, construção, materiais de construção, saber tradicional.}
+%          {resumo}{\selectlanguage{portuguese}Um resumo é um pequeno apanhado de um trabalho mais longo (como uma tese, dissertação ou trabalho de pesquisa). O resumo relata de forma concisa os objetivos e resultados da sua pesquisa, para que os leitores saibam exatamente o que se aborda no seu documento.\\Embora a estrutura possa variar um pouco dependendo da sua área de estudo, o seu resumo deve descrever o propósito do seu trabalho, os métodos que você usou e as conclusões a que chegou.\\Uma maneira comum de estruturar um resumo é usar a estrutura IMRaD. Isso significa: \begin{itemize} \item Introdução \item Métodos \item Resultados \item Discussão \end{itemize} Veja mais pormenores aqui:\\\texttt{https://www.scribbr.com/dissertation/abstract/}}
 
 %%% OPTIONAL: you can write the keywords and
 %%%  abstract in other languages. You can repeat
@@ -89,11 +100,13 @@
 %%% Don't remove the \selectlanguage statement or you will end with incorrect hyphenation.
 %%% You can modify the language to any other supported by Latex
 %% Optional Keywords and Abstract in additional languages.
-\Abstract{keywords}{textbook, architecture, history, construction, construction materials, traditional knowledge.}
-         {abstract}{\selectlanguage{english}An abstract is a short summary of a longer work (such as a thesis, dissertation or research paper).\\The abstract concisely reports the aims and outcomes of your research, so that readers know exactly what your paper is about.\\Although the structure may vary slightly depending on your discipline, your abstract should describe the purpose of your work, the methods you’ve used, and the conclusions you’ve drawn.\\One common way to structure your abstract is to use the IMRaD structure. This stands for: \begin{itemize} \item Introduction \item Methods \item Results \item Discussion \end{itemize} Check for more details here:\\\texttt{https://www.scribbr.com/dissertation/abstract/}}
+
+% \Abstract{keywords}{textbook, architecture, history, construction, construction materials, traditional knowledge.}
+%          {abstract}{\selectlanguage{english}An abstract is a short summary of a longer work (such as a thesis, dissertation or research paper).\\The abstract concisely reports the aims and outcomes of your research, so that readers know exactly what your paper is about.\\Although the structure may vary slightly depending on your discipline, your abstract should describe the purpose of your work, the methods you’ve used, and the conclusions you’ve drawn.\\One common way to structure your abstract is to use the IMRaD structure. This stands for: \begin{itemize} \item Introduction \item Methods \item Results \item Discussion \end{itemize} Check for more details here:\\\texttt{https://www.scribbr.com/dissertation/abstract/}}
 
 
 %%% OPTIONAL: Acknowledge the use of AI Tools
+
 \AIUse{I acknowledge the use of Grammarly (Grammarly, https://www.grammarly.com/) to improve and correct some sentences and paragraphs, pontuation and vocabulary.
 I acknowledge the use of ChatGPT-3.5 to improve the overall deliver of this Dissertation document.}
 
@@ -112,7 +125,6 @@ I acknowledge the use of ChatGPT-3.5 to improve the overall deliver of this Diss
 %%%  in english uncomment the following line.
 %%% Set the proper language or you will end with incorrect hyphenation!
 \selectlanguage{english}
-
 
 \MakeCover
 \end{document}
