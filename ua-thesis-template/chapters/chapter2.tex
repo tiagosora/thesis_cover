@@ -2,27 +2,54 @@
 \chapter{State of Art}
 \label{chapter:state_of_art}
 
-\section{Manually Managing Lost and Found Items}
+\section{Manually Managing Lost-And-Found Items}
 
-\subsection{Traditional Lost and Found Systems}
+\subsection{Traditional Lost-And-Found Systems}
 
-Todo: Write this section.
+Traditional \ac{lfs} have been integral to managing misplaced belongings across various settings. These systems typically relied on manual processes to log and manage items, sometimes papers or books and, in a few cases, spreadsheets \cite{Anas2023}. The fundamental components included physical logs, where details of found items - such as descriptions, location, and date of discovery - were recorded by staff or custodians.
 
-\subsection{Obstacles in Traditional Systems}
+Often, the responsibility of maintaining these records fell to a designated individual or department. Items were categorised and stored in a secure area, with the hope that owners would reclaim them. Matching found items to reported losses was a manual process, requiring significant time and effort \cite{Anas2023}. Descriptions provided by claimants were cross-referenced with recorded details to determine ownership. In some cases, rudimentary tagging systems were used to label items, aiding the identification process.
 
-Todo: Write this section.
+In environments like universities or corporate campuses, basic digital tools such as spreadsheets were usually introduced to track items. However, the overall workflow remained heavily dependent on manual oversight. Community bulletin boards, notices, or word-of-mouth were also standard methods to inform individuals about found items.
+
+Despite their simplicity, these systems played a critical role in facilitating the return of lost belongings in the pre-digital era \cite{Mayura2024}. They fostered a sense of trust and collaboration within communities, relying on the goodwill and honesty of both finders and administrators. The traditional systems established the groundwork for modern approaches, providing valuable insights into the challenges and requirements of effective lost-and-found management.
+
+Despite the previously detailed inefficiencies of such systems, there are still those who would find these manual workflows to be more trustworthy. For some, the human element brings a level of accountability and understanding that automated systems cannot replicate. Manual processes allow for subjective judgment, which can be beneficial in complex scenarios where nuance is required. The tactile nature of handling paper documents or physical records fosters a sense of security and reliability. Moreover, people who have had negative experiences with technology might prefer traditional methods, viewing them as more stable and less prone to glitches or failures.
+
+
+\subsection{Obstacles in Traditional Systems} 
+
+While traditional \ac{lfs} have historically served their purpose in smaller or less demanding contexts, they face significant challenges when scaled to handle larger volumes of items or more complex environments \cite{Mayura2024}. The scalability of such systems is inherently constrained by their reliance on manual processes and both limited technological integration and automation.
+
+A key obstacle is the dependency on human effort for recording, categorising, and matching items. As the number of lost items increases, so does the burden on staff, leading to delays, errors, and inefficiencies. In high-traffic environments, the sheer volume of items can quickly overwhelm even the most organised traditional systems. Without automation, processing and resolving claims becomes a time-intensive task, reducing the workflow's overall effectiveness. 
+
+Another barrier to scaling is the lack of centralised data management. In traditional systems, records are often siloed, with each location or department maintaining its logs. Especially in larger organisations or distributed campuses, the absence of a unified database also impedes efficient reporting and analysis of trends, such as identifying frequent loss locations or categories of items.
+
+Communication between stakeholders presents further challenges. Traditional systems often lack robust mechanisms for notifying individuals about found items or updating claimants on the status of their reports, resulting in inefficiencies and frustrations, particularly in large-scale operations where the number of inquiries can be substantial.
+
+Finally, the security of manual systems poses significant concerns. As the volume of items increases, the risk of theft, loss, or unauthorised access also rises. Inadequate labelling and verification processes can lead to disputes or errors in returning items to their rightful owners, further eroding trust in the system.
+
+These obstacles highlight traditional systems' limitations in adapting to the demands of modern \ac{lf} management. While effective in smaller, community-focused settings, their scalability issues underscore the need for innovative solutions that leverage technology to enhance efficiency, security, and user satisfaction.
 
 
 
 \section{Inventory Management Systems}
 
-Todo: Write this section.
+\ac{ims}s are crucial tools designed to efficiently manage, track, and control inventory levels across various domains. These systems enable organisations to streamline their operations, reduce costs, and enhance customer satisfaction by ensuring the availability of necessary items at the right time and place \cite{Pauliina2024}. An \ac{ims} employs methodologies such as the ABC-XYZ analysis to classify inventory items based on value and variability, optimising inventory performance through targeted strategies \cite{Pauliina2024}.
 
+Fundamentally, an \ac{ims} aims to address key challenges, including maintaining optimal inventory levels, reducing holding costs, and mitigating risks associated with stockouts or overstocking. Techniques like safety stock determination and lot-sizing methods have been widely adopted \cite{Prabakaran2023}. Such systems have historically evolved to incorporate technological advancements, enhancing the capability to predict, plan, and execute inventory operations effectively \cite{Chebet2019}.
 
+While conventional \ac{ims}s focuses on tangible products, their principles are highly adaptable to managing intangible processes, such as \ac{lf} item tracking and management. This intersection becomes particularly relevant in environments where the inventory (in this case, lost items) exhibits variability in value, volume, and retrieval demand. \ac{ims}s principles, such as classification and optimisation, can be applied to \ac{lfs}s to streamline processes and enhance user experiences. For instance, using the classification method mentioned before, in a \ac{lfs}, items could be categorised using an adapted ABC-XYZ framework that enables prioritisation of storage, retrieval, and notification efforts \cite{Khobragade2018}, such as the following one:
 
-\section{On-Production Solutions}
+\begin{itemize}
+    \item Class A-X Items: High-value items with consistent claims. E.g., electronic devices and jewellery.
+    \item Class B-Y Items: Moderate-value items with fluctuating demand. E.g., wallets, bags and clothing.
+    \item Class C-Z Items: Low-value items with irregular claims. E.g., umbrellas and stationery.
+\end{itemize}
 
-Todo: Write this section.
+The insights from Plinere et al. \cite{Plinere2016} further support the integration of these methodologies into \ac{lfs}s. Their case study emphasises the significance of structured inventory management practices for improving operational efficiency. For instance, high-priority items, such as class A-X items, can benefit from focused attention and expedited claim processes, ensuring user satisfaction while reducing storage costs. Furthermore, their findings highlight the value of predictive analytics in addressing slow-moving or stagnant inventory, matching to unclaimed items in \ac{lfs}s \cite{Plinere2016}. Technological integration, as illustrated in the case study, offers another avenue for improvement. The use of \ac{rfid} and \ac{qr} codes in conventional inventory systems ensures accurate tracking and categorisation of items \cite{Plinere2016, Sohail2018}. Applying these technologies in a \ac{lf} context would improve the accuracy and speed of item retrieval, reducing manual effort and human error. Moreover, the adoption of enterprise resource planning principles, such as imposing a centralised warehouse, would improve transparency and decision-making, possibly enabling a seamless synchronisation of data across departments. Lastly, the Plinere et al. \cite{Plinere2016} study underlines the importance of standardisation in inventory management policies, e.g., uniform intake procedures, categorisation standards, and clear guidelines for item disposition.
+
+Adapting \ac{ims} for \ac{lf} management would definitely address some unique challenges, improving identification, categorisation, and retrieval processes \cite{Pauliina2024}. Unlike traditional inventory, lost items often have sentimental value or urgent retrieval needs, requiring the system to incorporate real-time tracking and user-friendly interfaces. Moreover, integrating predictive analytics, commonly used in \ac{ims} for forecasting demand, would be leveraged to anticipate peak periods of item loss or retrieval, e.g., events or seasons that may influence the volume and types of items lost, allowing proactive resource allocation \cite{Prabakaran2023}.
 
 
 
@@ -69,6 +96,12 @@ Todo: Write this section.
 \subsection{Best Practices}
 
 Todo: Write this section.
+
+
+\section{On-Production Solutions}
+
+Todo: Write this section.
+
 
 \section{Summary}
 
