@@ -120,6 +120,13 @@
 \usepackage[backend=biber, style=ieee, sorting=none, natbib=true, mincitenames=1, maxcitenames=2]{biblatex}
 \bibliography{bib/references.bib}
 
+% Define author-year citation command
+\newcommand{\citeauthoryear}[1]{%
+  \begingroup
+  \citeauthor{#1}, \citeyear{#1} \cite{#1}
+  \endgroup
+}
+
 % Use acronyms
 \usepackage[printonlyused]{acronym} % For acronyms
 
