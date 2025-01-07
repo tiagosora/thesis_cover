@@ -15,17 +15,64 @@ As previously mentioned, this research is separated into key stages. This sectio
 
 The \ac{acdm} is a software development methodology, mainly inspired by Quality Attribute Workshop, Architecture Tradeoff Analysis Method and Attribute Driven Design, that emphasises the use of software architecture as a primary driver for the development process \cite{Lattanze2005}. It integrates architectural design into the overall lifecycle of software development, aiming to improve quality, predictability, and efficiency. Below are the key aspects of \ac{acdm} based on the provided paper. \ac{acdm} is structured around the concept that software architecture serves as the backbone of the system, providing a framework for ensuring consistency, scalability, and alignment with business goals. The architecture is not only a technical construct but also a means of communication among stakeholders.
 
-As shown in figure \ref{fig:acdm_workflow}, the \ac{acdm} organises the architectural design process into clearly defined stages that evolve iteratively to ensure a robust, well-aligned system architecture. \ac{acdm} is inherently iterative, with the flexibility to revisit earlier stages based on findings or changing requirements.
+As shown in Figure \ref{fig:acdm_workflow}, the \ac{acdm} organises the architectural design process into clearly defined stages that evolve iteratively to ensure a robust, well-aligned system architecture. \ac{acdm} is inherently iterative, with the flexibility to revisit earlier stages based on findings or changing requirements.
 
 \begin{figure}[!htb]
-    \caption[\acl{acdm} Workflow]{\ac{acdm} workflow, illustrating the iterative stages, the flow of artifacts, decisions, and refinements through the development process. Adapted from \citeauthoryear{Lattanze2005}.}
-    \label{fig:acdm_workflow}
     \includegraphics[width=0.6\textwidth]{figs/chapter3/acdm_workflow.png}
     \centering
+    \caption[\acl{acdm} Workflow]{\ac{acdm} workflow, illustrating the iterative stages, the flow of artifacts, decisions, and refinements through the development process. Adapted from \citeauthoryear{Lattanze2005}.}
+    \label{fig:acdm_workflow}
 \end{figure}
 
-According to \citeauthoryear{Lattanze2005}, the process begins with \textbf{Discovering Architectural Drivers}, where critical factors such as functional requirements, quality attributes (e.g., performance, scalability, security), and constraints are identified. These drivers form the foundation for all subsequent design decisions. Following this, the \textbf{Project Scope} is established to define the system's boundaries, objectives, deliverables, and constraints, ensuring all stakeholders have a shared understanding of the project's limits and expectations. Once the drivers and scope are defined, a \textbf{Notional Architecture} is created as a high-level conceptual design. This step involves decomposing the system into components, defining their responsibilities, interactions, and dependencies, and adopting appropriate architectural styles and patterns. The notional architecture serves as a blueprint for early-stage validation. The design is then subjected to an \textbf{Architectural Review}, where it is assessed against the architectural drivers and project scope. Scenario-based evaluations, risk assessments, and stakeholder feedback are key activities during this stage. The outcome is a decision to either proceed to production or refine the architecture further.
+\subsubsection{Architectural Drivers}
 
-If the architecture is deemed insufficient during the review, the process enters a \textbf{Refinement Phase}. This phase begins with \textbf{Experiment Planning}, where targeted experiments are designed to address specific weaknesses or uncertainties, such as performance bottlenecks or scalability challenges. These experiments are executed in the \textbf{Experiment Execution} and \textbf{Architecture Refinement} stage, with findings informing updates to the architecture. Once refined, the updated architecture undergoes another review to ensure it meets the required standards before moving forward.
+According to \citeauthoryear{Lattanze2005}, the process begins with discovering the architectural drivers, where critical factors such as functional requirements, quality attributes (e.g., performance, scalability, security), and constraints are identified. These drivers form the foundation for all subsequent design decisions. 
 
-If the architecture passes the review, the process transitions to the \textbf{Production Phase}, beginning with \textbf{Production Planning}, which involves preparing the system for deployment by developing detailed plans, establishing monitoring mechanisms, and ensuring operational readiness. Finally, the system is deployed during the \textbf{Production} stage, when it becomes operational and accessible to end-users. Post-deployment, the architecture is continuously monitored for performance and feedback, allowing iterative improvements as needed.
+\subsubsection{Project Scope}
+
+Following this, the project scope is established to define the system's boundaries, objectives, deliverables, and constraints, ensuring all stakeholders have a shared understanding of the project's limits and expectations.
+
+\subsubsection{Notional Architecture}
+
+Once the drivers and scope are defined, a notional architecture is created as a high-level conceptual design. This step involves decomposing the system into components, defining their responsibilities, interactions, and dependencies, and adopting appropriate architectural styles and patterns. The notional architecture serves as a blueprint for early-stage validation.
+
+\subsubsection{Architectural Review}
+
+The design is then subjected to an architectural review, where it is assessed against the architectural drivers and project scope. Scenario-based evaluations, risk assessments, and stakeholder feedback are key activities during this stage. The outcome is a decision to either proceed to production or refine the architecture further.
+
+\subsubsection{Refinement Phase}
+
+If the architecture is deemed insufficient during the review, the process enters a refinement phase. This phase begins with the \textbf{experiment planning}, where targeted experiments are designed to address specific weaknesses or uncertainties, such as performance bottlenecks or scalability challenges. These experiments are executed in the \textbf{experiment execution} and subsequent \textbf{architecture refinement} stage, with findings informing updates to the architecture. Once refined, the updated architecture undergoes another review to ensure it meets the required standards before moving forward.
+
+\subsubsection{Production Phase}
+
+If the architecture passes the review, the process transitions to the production phase, beginning with the \textbf{production planning}, which involves preparing the system for deployment by developing detailed plans, establishing monitoring mechanisms, and ensuring operational readiness. Finally, the system is deployed during the \textbf{production} stage, when it becomes operational and accessible to end-users. Post-deployment, the architecture is continuously monitored for performance and feedback, allowing iterative improvements as needed.
+
+\subsection{Architectural Drivers} \label{section:architectural_drivers}
+
+TODO: Write this subsection
+
+\subsection{Notional Architecture and Architectural Review} \label{section:notional_architecture_and_architectural_review}
+
+TODO: Write this subsection
+
+\begin{figure}[!htb]
+    \includegraphics[width=0.8\textwidth]{figs/chapter3/notional_arch.png}
+    \centering
+    \caption[Notional Architecture]{.}
+    \label{fig:notional_arch}
+\end{figure}
+
+
+\section{Study Case} \label{section:case_study}
+
+TODO: Write this section
+
+
+\section{Work Environment} \label{section:work_environment}
+
+TODO: Write this section
+
+% \section{Summary} \label{section:chapter3_summary}
+
+% TODO: Write this section
