@@ -1,1 +1,87 @@
-\chapter{Additional content}
+\chapter{Architectural Design} \label{app:architectural-design}
+
+This appendix provides a comprehensive overview of the none previously detailed items of the architectural design of the proposed system, focusing on the methodologies and principles that guided its development. It includes a detailed enumeration of the functional requirements, and the project scope is articulated to define the boundaries and objectives of the research. This document serves as a foundational reference for understanding the system's architectural design and highly complements the previously mentioned decisions and strategies.
+
+\paragraph{Chosen Methodology} \acl{acdm}.
+
+\section{Complete List of Defined System Requirements} \label{app:ad-system-requirements}
+
+\begin{enumerate}
+    \item The system must consider the three types of users: ordinary users, capable of simple actions such as searching for items, reporting their lost belongings, and communicating inside the communities; local managers, responsible for managing the \ac{lf}, inserting new items, updating the status of items and other managing tasks; and system administrators, the ones able to make changes in their system configurations, manage the communities and the users, and access all system logs.
+    \item All users must be able to authenticate securely on their respective platforms using their set of credentials.
+    \item The system must maintain the user session active for a reasonable amount of time, allowing the user to perform multiple actions without the need to re-authenticate frequently. The system must also decline interactions from users with expired sessions.
+    \item The system must redirect users with expired sessions back to the authentication page, where they must be able to log in again.
+    \item The system must authorise users based on their roles (Role Based Access Control), allowing them to perform only the actions they are allowed to.
+    \item All users must be able to identify themselves in the system using their name, email, profile picture, and other relevant information.
+    \item Ordinary users must be able to search for all the non-retrieved items in the system, filtering them by the item's name/description, storage location (local managing point), storage date, and other relevant information.
+    \item Ordinary users must be able to view all the available details of the non-retrieved items.
+    \item Ordinary users must not be able to view the details of the retrieved items.
+    \item Ordinary users must be able to report their lost belongings, describing the item, an image, the location where it was lost, and other relevant information.
+    \item Ordinary users must be able to search for the associated local managing points of the community they are part of.
+    \item Ordinary users must be able to view all the available details of the local managing points of the community they are part of.
+    \item Ordinary users must be able to deliver \ac{lf} items to the local managing points of the community they are part of, providing the location where the item was found and becoming associated with that stored item as its finder.
+    \item Ordinary users must be able to contact visible item finders using a chat-like interface by sending text messages, images, and other relevant information.
+    \item Ordinary users must be able to communicate with other users inside the communities they are part of, using a chat-like interface, by sending text messages, images, and other relevant information.
+    \item Ordinary users must be able to edit their profile information, such as their name, profile picture, and the visibility of their profile information.
+    \item Ordinary users must be able to edit their preferences of usage of the system, such as the language of the interface, the theme of the interface, and notifications settings.
+    \item Ordinary users must be able to view their search history and their reported lost items.
+    \item Ordinary users must be able to view their availability profile information.
+    \item Ordinary users must be able to view their other ordinary users' availability profile information.
+    \item Ordinary users should, by default, get notifications of the status of their reported lost items, such as potential matches.
+    \item Local managers must be able to search for all items in their local managing point, filtering them by the item's name/description, storage date, status, and other relevant information.
+    \item Local managers must be able to view all the details of the stored items in their local managing point.
+    \item Local managers must be able to view the details of the retrieved items in their local managing point.
+    \item Local managers must be able to view the details of the item finders associated with the items in their local managing point.
+    \item Local managers must be able to associate ordinary users as item finders of the items they insert in their local managing point.
+    \item Local managers must be able to update the status of the stored items in their local managing point, such as changing their status to retrieved.
+    \item Local managers must be able to edit their profile information, such as their name, profile picture, and the visibility of their profile information.
+    \item Local managers must be able to edit their preferences of usage of the system, such as the language of the interface, the theme of the interface, and notifications settings.
+    \item Local managers must have access to the system logs of their local managing point.
+    \item Local managers must be able to view the statistics of their local managing point, such as the number of stored items and the number of retrieved items.
+    \item Local managers must be able to view local policies and guidelines of their local managing point.
+    \item Local managers should, by default, get notified of the changes in local policies and guidelines of their local managing point.
+    \item System administrators must be able to search for all items in the system, filtering them by the item's name/description, storage location (local managing point), storage date, status, and other relevant information.
+    \item System administrators must be able to view all the details of any item in the system.
+    \item System administrators must be able to update any item in the system.
+    \item System administrators must be able to manage the communities, such as creating new communities, editing the community information, and deleting communities.
+    \item System administrators must be able to manage the associated local managing points of the communities, such as creating new local managing points, editing the local managing point information, and deleting local managing points.
+    \item System administrators must be able to view local managers of the local managing points of the communities.
+    \item System administrators must be able to define local policies and guidelines for the local managing points of the communities.
+    \item System administrators must be able to create, edit, and terminate any local manager's account.
+    \item System administrators must be able to view the system logs, such as any user's interactions, statistics of the communities, and other relevant information.
+    \item The system should use ordinary users' interactions, such as searches, reports and chat activity, to match lost item reports with stored items.
+    \item The system should notify ordinary users of new potential matches of their lost items with newly stored items based on the certainty of the match and the ordinary users' preferences.
+    \item The system should assist ordinary users when reporting their lost belongings by suggesting the item's name, description, and other relevant information based on the item's image.
+    \item The system should assist local managers when inserting new items in their local managing points by suggesting the item's name, description, tag/category, and other relevant information based on the item's image.
+    \item The system should provide general users with a help page on recovering lost items, with general guidelines and tips.
+\end{enumerate}
+
+% \section*{Quality Attributes} \label{app:ad-quality-attributes}
+
+% \subsubsection*{Scalability}
+
+% The platform must support a growing user base and increasing item-tracking demands as adoption spreads across diverse locations. To achieve this, a microservices architecture is proposed, enabling the independent scaling of critical components such as user management and item management.
+
+% \subsubsection*{Reliability}
+
+% Reliability fosters user trust and is vital for the platform's credibility among stakeholders. To achieve this, fault-tolerant mechanisms, such as, distributed databases, redundant servers, and failover strategies, should be implemented to secure high availability (targeting 99\% uptime) and minimise downtime. Automated monitoring and self-healing protocols must be implemented in order to achieve proactive fault detection and resolution, reducing the "Mean Time to Repair" (MTTR)\footnote{\url{https://www.atlassian.com/incident-management/kpis/common-metrics}} and ensuring uninterrupted service delivery.
+
+% \subsubsection*{Security}
+
+% Given the sensitive nature of the data involved—ranging from personal user information to potentially high-value lost items - the platform adopts a security-first approach. Data encryption needs be applied both in transit and at rest to protect against breaches. Secure authentication and granular authorisation mechanisms should also be implemented.
+
+% \subsubsection*{Usability}
+
+% Designed for a broad spectrum of users, including those with minimal technical expertise, the platform prioritises an intuitive and accessible interface. By applying \ac{ui} and \ac{ux} best practices, the system should deliver seamless navigation for reporting and retrieving lost items. Multilingual support and visual guidance should cater to diverse user demographics, in order to optimise the user experience.
+
+% \subsubsection*{Observability}
+
+% To ensure operational excellence, the platform must integrate observability tools that capture logs, metrics, and traces, enabling real-time and long-term monitoring. These tools' propose is to facilitate the quick detection and resolution of performance issues, provide insights into user interactions, and support continuous improvement efforts. Observability must secure that the platform remains adaptable, driving both user satisfaction and operational efficiency.
+
+\section{Project Scope} \label{app:ad-project-scope}
+
+The project scope of this research centres on developing an intelligent, integrated solution to streamline the management of \ac{lf} across various public and private environments. Traditional approaches to managing lost items are often inefficient, manual, unstructured, and confusing, leading to increased workloads for personnel responsible for these items and frustration for owners trying to reclaim their property. The scope, therefore, focuses on creating a system that not only automates but also optimises \ac{lf} management by leveraging artificial intelligence, security frameworks, and user-centred design principles. This system is envisioned to handle multiple scenarios, from locating lost items to verifying their rightful owners.
+
+To achieve this, the project proposes a full-stack platform that utilises image recognition for item identification, \ac{nlp} for intuitive search capabilities, and monitoring tools to guarantee system stability and accountability. The platform aims for an accessible and efficient user experience, providing features that serve both item owners and administrators. It may also include community-oriented functionalities to ensure that individuals can recover their lost items through collaboration and communication. Ultimately, the project should differentiate itself by integrating advanced multimodal matching in order to improve user satisfaction and operational efficiency and, mainly, increase the likelihood of successful item recovery.
+
+The final deliverable will be a system accessible through two platforms validated with extensive testing in controlled and real-world settings. Designed with adaptability in mind, these platforms should provide scalability for varied contexts and the multiple expected user needs (described in functional requirements \ref{app:ad-system-requirements}). Through continuous prototyping and user feedback, this project seeks to refine the solution into a reliable, intelligent, and secure system that improves lost property management processes and delivers an enhanced user experience.

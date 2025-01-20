@@ -69,9 +69,12 @@
 
 % Configure Hyperlink color
 % As a matter or style, you may use this to enable/disable color boxes on links
-%\usepackage[breaklinks=true,colorlinks=false,linkcolor=blue]{hyperref}
+%\usepackage[hidelinks,breaklinks=true,colorlinks=false,linkcolor=blue]{hyperref}
 % Or use the default values provided by the hyperref package
-\usepackage{hyperref}
+\usepackage[hidelinks,breaklinks=true,colorlinks=false,linkcolor=blue]{hyperref}
+% \usepackage{hyperref}
+
+\usepackage{pgf-pie}
 
 % Redefine section names according to your preference
 %\def\sectionautorefname{Section}
@@ -117,7 +120,7 @@
 \usepackage{todonotes}
 
 % Setup bibliography with Biber using IEEE style for proper UTF-8 support
-\usepackage[backend=biber, style=ieee, sorting=none, natbib=true, mincitenames=1, maxcitenames=2]{biblatex}
+\usepackage[backend=biber, style=numeric, sorting=none, natbib=true, mincitenames=1, maxcitenames=2]{biblatex}
 \bibliography{bib/references.bib}
 
 % Define author-year citation command
@@ -184,6 +187,9 @@
 
 % For test purposes you may use the lipsum package to create dummy text
 \usepackage{lipsum} % REMOVE
+
+% Custom Packages
+\usepackage{outlines}
 
 %Keep floats inside section!
 \usepackage[section]{placeins}
@@ -376,6 +382,7 @@
 \include{chapters/chapter1}
 \include{chapters/chapter2}
 \include{chapters/chapter3}
+\include{chapters/chapter4}
 % \include{chapters/background}
 % \include{chapters/state_of_the_art}
 
@@ -404,9 +411,9 @@
 % Load appendix
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% \mainmatterWithoutReset
-% \appendix
+\mainmatterWithoutReset
+\appendix
 
-% \include{chapters/appendix-more}
+\include{chapters/appendix-more}
 
 \end{document}

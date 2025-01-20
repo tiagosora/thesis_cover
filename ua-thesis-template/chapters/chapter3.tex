@@ -1,220 +1,99 @@
-\chapter{Methodology}
-\label{chapter:methodology}
+\chapter{\acl{slr}}
+\label{chapter:literature-review}
 
-\begin{introduction}
-"The things we lose have a way of coming back to us in the end,
+This chapter summarises a \ac{slr} conducted using \ac{prisma} 2020 \cite{Page2021} guidelines\footnote{\url{https://static1.squarespace.com/static/65b880e13b6ca75573dfe217/t/676243b4c4a4752e13bbdfdf/1734493108989/PRISMA_2020_checklist.pdf}} to explore intelligent technologies for improving \ac{lfms}, emphasising advancements in \ac{ai} and \ac{ir}. The review addresses the research's objectives, including evaluating these technologies, identifying implementation challenges, and establishing best practices. This chapter also emphasises the progress in object recognition and multimodal matching and identifies scalability, computational, and ethical challenges, paving the way for future research to enhance \ac{lf} systems.
 
-if not always in the way we expect"
+\section{Research Question and Methods} \label{subsec:slr}
 
-- J.K. Rowling, Harry Potter and the Order of the Phoenix (2003)
-\end{introduction}
+\ac{lf} management has historically presented numerous challenges across both public and private sectors, as underlined in a wealth of academic articles and studies \cite{Prawira2024}. To address previously mentioned persistent issues and uncover effective solutions, a rigorous \ac{slr} was undertaken, focusing specifically on innovations, challenges, and best practices in the realm of intelligent lost property management. The review was designed with a methodological rigour that adheres to the \ac{prisma} 2020 checklist of items, guaranteeing that every aspect of the research was conducted with the highest standards of integrity and transparency. By synthesising the latest uncovered findings, the \ac{slr} offers not only a comprehensive understanding of the current landscape but also valuable insights that can inform the design of a \ac{lfms} system. The \ac{slr} later resulted in the production of a document directly aligned with this dissertation's scope, named \textit{"Designing an Intelligent Solution for Lost Property Management: A Systematic Review"}.
 
-As previously mentioned, this research is separated into key stages. This section outlines the beginning of the design of the system's structure by defining its architecture, features, and workflows. To meet the acceptance criteria for this stage and take into account the volume of this research, a strategic framework was selected to guide the architectural design of the proposed solution. By leveraging the principles and steps of \ac{acdm}, this chapter defines the solution's initial requirements, stakeholders, challenges and architecture.
-
-\section{\acl{acdm}} \label{section:acdm}
-
-The \ac{acdm} is a software development methodology, mainly inspired by Quality Attribute Workshop, Architecture Tradeoff Analysis Method and Attribute Driven Design, that emphasises the use of software architecture as a primary driver for the development process \cite{Lattanze2005}. It integrates architectural design into the overall lifecycle of software development, aiming to improve quality, predictability, and efficiency. Below are the key aspects of \ac{acdm} based on the provided paper. \ac{acdm} is structured around the concept that software architecture serves as the backbone of the system, providing a framework for ensuring consistency, scalability, and alignment with business goals. The architecture is not only a technical construct but also a means of communication among stakeholders.
-
-% ------------------------ Definition ------------------------
-
-\subsection{Definition}
-
-As shown in Figure \ref{fig:acdm_workflow}, the \ac{acdm} organises the architectural design process into clearly defined stages that evolve iteratively to ensure a robust, well-aligned system architecture. \ac{acdm} is inherently iterative, with the flexibility to revisit earlier stages based on findings or changing requirements.
-
-\begin{figure}[!htb]
-    \includegraphics[width=0.6\textwidth]{figs/chapter3/acdm_workflow.png}
-    \centering
-    \caption[\acl{acdm} Workflow]{\ac{acdm} workflow, illustrating the iterative stages, the flow of artifacts, decisions, and refinements through the development process. Adapted from \citeauthoryear{Lattanze2005}.}
-    \label{fig:acdm_workflow}
-\end{figure}
-
-\subsubsection{Architectural Drivers}
-
-According to \citeauthoryear{Lattanze2005}, the process begins with discovering the architectural drivers, where critical factors such as functional requirements, quality attributes (e.g., performance, scalability, security), and constraints are identified. These drivers form the foundation for all subsequent design decisions. 
-
-\subsubsection{Project Scope}
-
-Following this, the project scope is established to define the system's boundaries, objectives, deliverables, and constraints, ensuring all stakeholders have a shared understanding of the project's limits and expectations.
-
-\subsubsection{Notional Architecture}
-
-Once the drivers and scope are defined, a notional architecture is created as a high-level conceptual design. This step involves decomposing the system into components, defining their responsibilities, interactions, and dependencies, and adopting appropriate architectural styles and patterns. The notional architecture serves as a blueprint for early-stage validation.
-
-\subsubsection{Architectural Review}
-
-The design is then subjected to an architectural review, where it is assessed against the architectural drivers and project scope. Scenario-based evaluations, risk assessments, and stakeholder feedback are key activities during this stage. The outcome is a decision to either proceed to production or refine the architecture further.
-
-\subsubsection{Refinement Phase}
-
-If the architecture is deemed insufficient during the review, the process enters a refinement phase. This phase begins with the \textbf{experiment planning}, where targeted experiments are designed to address specific weaknesses or uncertainties, such as performance bottlenecks or scalability challenges. These experiments are executed in the \textbf{experiment execution} and subsequent \textbf{architecture refinement} stage, with findings informing updates to the architecture. Once refined, the updated architecture undergoes another review to ensure it meets the required standards before moving forward.
-
-\subsubsection{Production Phase}
-
-If the architecture passes the review, the process transitions to the production phase, beginning with the \textbf{production planning}, which involves preparing the system for deployment by developing detailed plans, establishing monitoring mechanisms, and ensuring operational readiness. Finally, the system is deployed during the \textbf{production} stage, when it becomes operational and accessible to end-users. Post-deployment, the architecture is continuously monitored for performance and feedback, allowing iterative improvements as needed.
-
-% ------------------------ Quality Attributes ------------------------
-
-\subsection{Quality Attributes} \label{section:quality_attributes}
-
-The quality attributes serve as a foundation for developing the platform. The selection of the following attributes was guided by their critical role in ensuring the solution's success and addressing the key challenges identified in the problem domain.
-
-The following quality attributes were selected based on their priority to the solution's success and the challenges identified in the problem domain.
-
-\subsubsection{Scalability}
-
-The platform must accommodate a growing user base and increased item-tracking demands across diverse locations. A microservices architecture is proposed to enable independent scaling of critical system components, such as user management and item management. This scalability aligns with the goal of creating a community-oriented system capable of handling high-traffic scenarios and fluctuations in demand without compromising performance.
-
-\subsubsection{Reliability} 
-
-Consistent performance is critical, even in adverse conditions like network failures. Ensuring reliability contributes to fostering user trust, a cornerstone of a lost property management system, aiming to build credibility among stakeholders. Fault-tolerant mechanisms, such as distributed databases and redundant servers, will be integrated to ensure high availability (targeting 99\% uptime) and minimise the "mean time to repair"\footnote{\url{https://www.atlassian.com/incident-management/kpis/common-metrics}}. Automated monitoring and self-healing protocols will detect and address faults proactively.
-
-\subsubsection{Security}
-
-Handling sensitive data, such as user information and potentially high-value lost items, requires a security-first approach. Security measures further reinforce the platform's reliability and address concerns like identity theft and elevated access, two key pain points identified in this research. End-to-end encryption for secure authentication and granular authorisation mechanisms will protect data privacy. Due to the sensitivity of the data the system is going to handle, it is obliged to adhere to \ac{gdpr}\footnote{\url{https://gdpr-info.eu/}} and other relevant regulations to ensure the lawful handling of personal information.
-
-\subsubsection{Usability}
-
-The system targets a broad spectrum of users, including non-technical individuals, necessitating an intuitive and accessible interface. Implementing \ac{ui} and \ac{ux} best practices and ongoing feedback loops will ensure an iterative improvement of the platform's interface. Multilingual support and visual guidance will also cater to diverse user demographics.
-
-\subsubsection{Observability}
-
-Incorporating observability tools to collect logs, metrics, and traces will allow real-time and long-term monitoring of the system's performance and user interactions. Observability also allows quick detection and resolution of operational issues, providing insights for continuous improvement.
-
-% ------------------------ Requirements ------------------------
-
-\subsection{System Requirements} \label{section:requirements}
-
-The system's design and implementation are guided by its requirements, which can also be used to measure the research progress and value. When correctly specified, they help the developer understand the expected result, and the stakeholders evaluate the system's performance. These requirements are divided into two categories: functional and non-functional. Table \ref{tab:functional_requirements} lists the functional requirements that define the core features of the system, focusing on enabling users to interact with and manage data effectively.
-
-\begin{table}[!htb]
-\centering
-\begin{tabular}{|p{0.1\textwidth}|p{0.80\textwidth}|}
-\hline
-\textbf{ID} & \textbf{Functional Requirement Description} \\ \hline
-FR1 & Support three user roles: ordinary users, local managers, and administrators. \\ \hline
-FR2 & Enable secure account management for all user types. \\ \hline
-FR3 & Implement authentication and authorization mechanisms, including multi-factor authentication. \\ \hline
-FR4 & Allow users to browse and search lost items based on categories and filters (e.g., location, type). \\ \hline
-FR5 & Provide personalized suggestions for matching items using \ac{ai}. \\ \hline
-FR6 & Facilitate item status updates and notifications to users about item matches or updates. \\ \hline
-FR7 & Enable users to schedule appointments for item retrieval. \\ \hline
-FR8 & Allow administrators to audit system logs and manage user roles effectively. \\ \hline
-FR9 & Integrate community-driven features for collaborative lost item recovery. \\ \hline
-\end{tabular}
-\caption[Functional Requirements]{Functional requirements defining the core system features.}
-\label{tab:functional_requirements}
-\end{table}
-
-On the other hand, Table \ref{tab:nonfunctional_requirements} presents the non-functional requirements, which ensure that the system remains with the expected quality levels.
-
-\begin{table}[!htb]
-\centering
-\begin{tabular}{|p{0.1\textwidth}|p{0.80\textwidth}|}
-\hline
-\textbf{ID} & \textbf{Non-Functional Requirement Description} \\ \hline
-NFR1 & Ensure a response time of less than 2 seconds for critical operations under peak load. \\ \hline
-NFR2 & Support scalability to accommodate up to 10,000 concurrent users. \\ \hline
-NFR3 & Comply with data privacy regulations such as \ac{gdpr}. \\ \hline
-NFR4 & Maintain 99\% uptime through fault tolerance and disaster recovery mechanisms. \\ \hline
-NFR5 & Adhere to \ac{ux} and \ac{ui} best practices. \\ \hline
-NFR6 & Implement modular and maintainable architecture for easier updates and debugging. \\ \hline
-NFR7 & Incorporate monitoring tools for real-time performance tracking and troubleshooting. \\ \hline
-NFR8 & Ensure compatibility across devices. \\ \hline
-\end{tabular}
-\caption[Non-Functional Requirements]{Non-functional requirements defining the system's quality attributes.}
-\label{tab:nonfunctional_requirements}
-\end{table}
-
-% TODO: Reference the appendix where the remaining requirements are detailed.
-
-The remaining requirements are fully detailed in the appendix.
-
-% ------------------------ Constraints ------------------------
-
-\subsection{Constraints} \label{section:constraints}
-
-The development of the system is governed by two primary constraints that shape its scope, deliverables, and quality:
-
-\subsubsection{C1: Timeframe Limitation}
-
-The development is restricted to a 10-month timeframe in which it is embedded.
-
-\subsubsection{C2: Verifiable Quality}
-
-Both software and design quality must be verifiable, meaning the stakeholders must test the system and review its code.
-
-% ------------------------ Notional Architecture ------------------------
-
-\subsection{Notional Architecture} \label{section:notional_architecture}
-
-The proposed architecture, visible in Figure \ref{fig:notional_arch}, is designed as a microservices-based system, i.e., it divides the application into distinct, independent services, each responsible for a specific functionality. It is possible to group the architecture's components into three main layers: the frontend, backend, and support infrastructure, as follows:
-
-\begin{figure}[!htb]
-    \includegraphics[width=0.8\textwidth]{figs/chapter3/notional_arch.png}
-    \centering
-    \caption[Notional Architecture]{High Level View of the First Iteration of the Notional Architecture.}
-    \label{fig:notional_arch}
-\end{figure}
-
-\subsubsection{Frontend}
-
-The frontend provides users with a seamless and intuitive interface for both web and mobile platforms, enabling easy access to all system features and smooth interaction with the backend services.
-
-\subsubsection{Backend}
-
-The backend is the core of the system and is structured as a collection of microservices that include:
+The review sought to answer the central research question \textit{"How can intelligent technologies enhance the efficiency and user experience of lost property management systems?"}, which refers to how \ac{ai}-based technologies such as \ac{cv} and \ac{nlp} and many others can provide solutions to the inefficiencies in \ac{lf} management. The \ac{slr} analysed numerous articles and integrated 18 high-quality studies that demonstrated the capacity to provide new insights into the investigation area. The mentioned research question was then separated into the following three major objectives:
 
 \begin{itemize}
-    \item Authentication Service: Through the use of role-based access control, it handles user authentication and authorisation, ensuring secure access to the system;
-    \item Users Management Service: Manages user profiles, including registration and updates;
-    \item Items Management Service: The most likely core service of the system focuses on fetching, storing and updating lost items. It integrates with other services to provide seamless item tracking and retrieval functionalities;
-    \item Community Management Service: Handles the direct communication between ordinary users and the chat spaces available for each community;
-    \item \ac{ai}/\ac{ml} Categorization and Recommendation Service: Automatically identifies and categorises items based on images and descriptions. Processes user inputs and interactions to actively match and recommend items to ordinary users who search for an item.
+\item Evaluating the applicability of the selected technologies;
+\item Examining existing challenges in implementing these technologies;
+\item Identifying best practices to inform the design and development of a proposed system.
 \end{itemize}
 
-\subsubsection{Support Infrastructure}
-
-The infrastructure provides the foundation for deploying and managing the system. It includes the following key components:
-
-\begin{itemize}
-    \item Reverse Proxy: Routes incoming requests to the appropriate services. It also provides load balancing and enhances the system's overall security by handling HTTPS termination;
-    \item Message Queue: Facilitates asynchronous communication between microservices, ensuring that each service operates independently, even during high data throughput;
-    \item Monitoring: Collects performance metrics and provides a dashboard for real-time visualisation.
-\end{itemize}
-
-\subsubsection{Tech Stack}
-
-For the frontend, React\footnote{\url{https://react.dev/}} is used to build dynamic and interactive web applications, while Flutter enables cross-platform mobile application development, ensuring consistent user experiences across devices. The backend is powered by FastAPI\footnote{\url{https://fastapi.tiangolo.com/}}, a Python\footnote{\url{https://www.python.org/}}-based framework that excels at building high-performance \acp{api}, supporting asynchronous operations, and type validation. Authentication is secured using OAuth 2.0\footnote{\url{https://oauth.net/2/}}, a widely adopted protocol for granting and managing secure access.
-
-The system relies on Supabase\footnote{\url{https://supabase.com/}}, an open-source backend-as-a-service, for handling database operations, real-time data sync, and authentication, complemented by Redis\footnote{\url{https://redis.io/}} for caching and session management, ensuring fast data access and reducing backend load. For \ac{ai}-driven functionalities, \ac{llava}\footnote{\url{https://llava-vl.github.io/}} combines language and vision processing. Data analytics are supported by DuckDB\footnote{\url{https://duckdb.org/}}, an in-process analytical database that efficiently processes the complex embeddings generated by \ac{llava}.
-
-To ensure robust monitoring, Prometheus\footnote{\url{https://prometheus.io/}} collects metrics across the system, and Grafana\footnote{\url{https://grafana.com/}} provides intuitive dashboards for real-time visualisation and performance tracking. The entire infrastructure is containerised using Docker\footnote{\url{https://www.docker.com/}}, ensuring consistency across environments and simplifying deployment. Nginx\footnote{\url{https://nginx.org/en/}} acts as a reverse proxy and load balancer, enhancing request routing, security, and scalability. Finally, RabbitMQ\footnote{\url{https://www.rabbitmq.com/}} serves as the message broker, enabling asynchronous and reliable communication between microservices, which is critical for the system's modular and distributed architecture.
-
-% ------------------------ Future Work and Work Plan ------------------------
-
-\section{Future Work and Work Plan} \label{section:future_work_and_work_plan}
-
-The next phase involves the implementation of the proposed architecture, starting by creating a \ac{mvp} to test the initial functionalities. The \ac{mvp} will focus on the item management service, user registration and authentication, and the community management service. The \ac{mvp} will be iteratively refined based on user feedback and performance metrics, ensuring that the system meets the acceptance criteria defined in this research. This \ac{mvp} will integrate most of the \ac{ims} features and is expected to be a full \ac{lfms}, capable of handling lost items and user interactions. The \ac{ai}/\ac{ml} categorisation and recommendation service will be developed in parallel to the \ac{mvp} testing and will be integrated into the system once it reaches a stable state, resulting from the feedback and improvements made. Once the service responsible for the system's intelligence is integrated, the system will, once again, be tested and refined to ensure that the functionalities are working as expected and that the system meets the acceptance criteria and fulfils the architectural drivers and the dissertation's objectives.
-
-The dissertation document will be continuously updated throughout the system's development to reflect the progress made. It will also include the system's testing results and the feedback received from users and stakeholders. The final version of the document will include a detailed analysis of the system's performance and usability, as well as a discussion of the lessons learned and the potential for future research.
-
-Figure \ref{fig:gantt_diagram} illustrates the work plan for the next phase, outlining the key activities and milestones to be achieved.
+The \ac{slr} employed a comprehensive four-phase approach associated with the selected \ac{prisma} framework. During the identification phase, academic databases such as Scopus and Web of Science were queried using targeted keywords like \ac{lf} Management, \ac{ims}, \ac{ai}, \ac{nlp}, and \ac{llm}, resulting in an initial yield of 476 studies. These were screened for relevance through the removal of duplicates and an abstract examination. In the eligibility phase, full-text articles were meticulously assessed against predefined inclusion criteria, which focused exclusively on studies published between 2020 and 2024 that addressed \ac{ai}-based solutions. Non-peer-reviewed works and studies lacking empirical validation were excluded. Additionally, to ensure the strength of the \ac{slr}, a quality assessment framework evaluated the methodological rigour and relevance of each study. Each study was rated on its technological contributions and practical applicability. Only those scoring consistently high across all criteria were included. Ultimately, in the inclusion phase, 18 studies were selected and categorised based on the technologies employed. This categorisation can be better analysed in Figure \ref{fig:prisma_results}, which includes the distribution of the technologies and frameworks explored and the most signigicant challenges pointed out. Figure \ref{fig:prisma_workflow} illustrates the \ac{prisma} flowchart, summarising the selection process. A thematic analysis was conducted, extracting valuable results into the contributions of each technological domain.
 
 \begin{figure}[!htb]
-    \includegraphics[width=0.95\textwidth]{figs/chapter3/gantt_diagram.png}
+    \includegraphics[width=0.95\textwidth]{figs/chapter2/prisma.png}
     \centering
-    \caption[Expected dissertation's work plan expressed in a Gantt diagram]{Expected dissertation's work plan expressed in a Gantt diagram.}
-    \label{fig:gantt_diagram}
+    \caption[\acs{prisma} 2020 flow diagram with a described quantity of research in each step.]{\acs{prisma} 2020 flow diagram with a described quantity of research in each step.}
+    \label{fig:prisma_workflow}
 \end{figure}
 
-% \section{Study Case} \label{section:case_study}
+\begin{figure}[!htb]
+    \begin{subfigure}{1\linewidth}
+        \begin{tikzpicture}
+            \pie[sum=auto,rotate=180,text=legend,radius=1.5]{13/\acs{yolo}, 4/\acs{resnet}-50, 1/Traditional Feature-Based Methods, 1/Cosine Similarity, 1/Euclidean Distance}
+        \end{tikzpicture}
+        \centering
+        \caption{Technologies and Frameworks}
+    \end{subfigure}
 
-% TODO: Write this section
+    \vspace{0.5cm}
 
-% \section{Work Environment} \label{section:work_environment}
+    \begin{subfigure}{1\linewidth}
+        \begin{tikzpicture}
+            \pie[sum=auto,text=legend,radius=1.5]{5/Computational Intensity, 5/Dataset Quality Bias, 4/Scalability, 3/Multimodal Integration Complexity, 1/Ethical and Privacy Concerns, 1/Cost of Implementation and Integration}
+        \end{tikzpicture}
+        \centering
+        \caption{Challenges}
+    \end{subfigure}
+    \centering
+    \caption{Distribution of technologies and frameworks explored and mentioned biggest challenges in the selected studies incorporating the \acl{slr}.}
+    \label{fig:prisma_results}
+\end{figure}
 
-% TODO: Write this section
+\section{Object Recognition and Categorisation} \label{subsec:object-recognition}
 
-% \section{Summary} \label{section:chapter3_summary}
+Object recognition and categorisation are processes in the domain of \ac{ai} and \ac{cv}. Object recognition involves identifying objects within an image or video and distinguishing them based on predefined features. Categorisation goes a step further by grouping identified objects into classes and/or groups of classes based on shared attributes or relationships \cite{Liu2021}. These tasks are foundational to numerous applications, including autonomous vehicles, facial recognition, surveillance systems, and many others.
 
-% TODO: Write this section
+The origins of object recognition can be traced back to the early experiments in pattern recognition during the 1950s and 1960s. Early approaches relied heavily on rule-based systems, where objects were identified using manually defined features such as edges, corners, or textures. \citeauthoryear{Marr1982}'s seminal work on computational vision in the 1980s introduced the concept of multi-level processing, exposing the importance of integrating both low-level (e.g., edge detection) and high-level (e.g., semantic) features. The field evolved significantly in the 1990s with the advent of statistical methods and \ac{ml}. Techniques like support vector machines and decision trees provided more robust frameworks for categorisation \cite{Bishop2006}. Concurrently, datasets such as MNIST\footnote{\url{https://yann.lecun.com/exdb/mnist/}} and ImageNet\footnote{\url{https://www.image-net.org/}} emerged, enabling standardised benchmarking and driving advancements in recognition accuracy.
+
+The evolution of object recognition and categorisation has been marked by the rise of \ac{dl} in the 2010s. \acp{cnn}, such as AlexNet\footnote{\ac{cnn} architecture, designed by Alex Krizhevsky in collaboration with Ilya Sutskever and Geoffrey Hinton at the University of Toronto in 2012} and \ac{resnet}, models capable of leveraging feature extraction, revolutionised this field by achieving human-like performance on challenging tasks. These models finally enabled the recognition of complex patterns and relationships in data \cites{He2015, Krizhevsky2017}. More recently, transformer-based architectures, exemplified by vision transformers, have further enhanced the capabilities of recognition systems. These models utilise attention mechanisms to capture long-range dependencies and contextual information, surpassing the limitations of traditional \acp{cnn} \cite{Dosovitskiy2020}.
+
+\acp{cnn}, particularly \ac{resnet}-50, are widely utilised due to their remarkable capability to extract visual features. Studies have shown that ResNet-50 achieves high accuracy in identifying objects with varying attributes and appearances, a critical aspect for handling the heterogeneity of \ac{lf} items such as electronics, accessories, or apparel \cites{Prawira2024, Ghazal2016, Liu2022}. Similarly, \ac{yolo} models, including \ac{yolo}v7, are renowned for their real-time detection capabilities, ensuring low-latency processing and high precision even in challenging environments such as low light or cluttered backgrounds \cites{Sharma2024, Vedanth2024}.
+
+\ac{resnet}-50, short for \acl{resnet} with 50 layers, has a \ac{dl} architecture designed to address the vanishing gradient problem in very deep neural networks. It introduces shortcut connections, or residual blocks, that allow gradients to flow more effectively during backpropagation, securing better convergence during training. \ac{resnet}-50 has become a standard in computer vision tasks due to its balance of depth and computational efficiency, making it suitable for extracting intricate visual features from diverse datasets \cite{He2015}. Its ability to generalise across object categories makes it a reliable choice for \ac{lf} management applications. \ac{yolo} is an object detection algorithm known for its speed and accuracy. Unlike traditional methods that scan an image region by region, \ac{yolo} processes the entire image in a single pass, predicting bounding boxes and class probabilities simultaneously, which significantly reduces computation time while maintaining high detection precision. \ac{yolo}v7, a more recent iteration, builds on these strengths by introducing architectural improvements for better performance in real-time scenarios, including high-density environments like traffic monitoring \cites{Redmon2015, Wang2022}.
+
+Object recognition models can struggle with computational intensity, requiring significant resources for training and deployment \cites{Lubna2021, Mezhenin2021}. Lightweight versions of models are being developed to mitigate these issues, particularly for mobile applications, which are essential for systems designed to be universally accessible. Mobile-compatible frameworks, using optimised \ac{cnn}, provide the added advantage of enabling real-time item reporting and retrieval through user-friendly interfaces, expanding the reach of such systems \cites{Stout2024, Ghazal2016}.
+
+Furthermore, these systems still need to contend with the diverse characteristics of objects. Items with subtle features or ambiguous shapes often pose difficulties for detection algorithms. Addressing this requires extensive and diverse datasets for training and validating in order to ensure that models can generalise effectively without overfitting to specific item categories \cites{Prawira2024, Liu2022, Sharma2024}. Hybrid approaches that integrate multiple algorithms or modalities are emerging as strategies to overcome these limitations. For instance, combining cloud-based data synchronisation with multimodal recognition has improved retrieval rates by facilitating large-scale processing and analysis \cite{Liu2024, Vedanth2024}.
+
+\section{\acl{nlp}} \label{subsec:nlp}
+
+\ac{nlp} is a multidisciplinary field at the intersection of linguistics, computer science, and artificial intelligence, enabling machines to process, understand, and generate human language. \ac{nlp} encompasses two core subfields: \ac{nlu} and \ac{nlg} \cite{Khurana2023}. \ac{nlu} focuses on interpreting and extracting meaning from textual or spoken language, including tasks such as sentiment analysis, intent recognition, and entity extraction, allowing systems to comprehend user input and respond accordingly \cite{Khurana2023}. In contrast, \ac{nlg} involves creating coherent and contextually appropriate textual or spoken output from structured data, such as generating summaries, reports, or conversational responses \cite{Dong2021}.
+
+The origins of \ac{nlp} date back to the 1950s, when \citeauthoryear{Turing1950} proposed the concept of machine intelligence in his seminal work "Computing Machinery and Intelligence". One of the early milestones was the development of the Georgetown-IBM experiment in 1954, which demonstrated automatic translation between Russian and English, albeit limited to a small vocabulary and specific grammatical constructs. This marked the beginning of using computers to process and understand human language \cite{Hutchins2004}. About 50 years later, in the 1990s and early 2000s, \ac{ml} algorithms, mainly supervised learning, began to dominate \ac{nlp}, enhancing part-of-speech tagging, named entity recognition, and sentiment analysis. This era also witnessed the rise of the first large-scale resources for \ac{nlp}, including the Penn Treebank\footnote{https://catalog.ldc.upenn.edu/docs/LDC95T7/cl93.html} and WordNet\footnote{https://wordnet.princeton.edu/}, which provided valuable training data and lexical knowledge \cite{Marcus1993, Fellbaum1998}.
+
+More recently, the new era has been characterised by a revolution in \ac{nlp} fueled by \ac{dl}. Neural network architectures, particularly recurrent neural networks and their derivatives, long short-term memory networks, demonstrated remarkable capabilities in sequence-to-sequence tasks such as translation and text summarisation \cite{Bahdanau2015}. Furthermore, the introduction of attention mechanisms and transformer-based models, such as \ac{bert} and \ac{gpt}, has drastically improved the state of the art, enabling unprecedented performance across a wide range of \ac{nlp} tasks \cite{Vaswani2017, Devlin2019}. Today, \ac{nlp} continues to evolve, integrating cutting-edge advancements in \ac{ai}, including transfer learning and pre-trained language models, to achieve higher accuracy and efficiency in a variety of complex tasks, namely sentiment analysis, machine translation, and conversational agents \cite{Howard2018}.
+
+The systematic review highlights the growing role of \ac{nlp} in intelligent systems, particularly in enhancing human-computer interaction and automating complex processes. For instance, \ac{nlu} is central to enabling systems to interpret user input, extracting key entities, sentiments, and intents. \citeauthoryear{Prawira2024} and \citeauthoryear{Ghazal2016}, have already adopted these capabilities in their \ac{lfms} to streamline the reporting and retrieval of lost items. By leveraging \ac{nlu} models, their systems can process user descriptions into structured data that, once properly stored and indexed, can later be matched against found items.
+
+Despite these advancements, several challenges remain. Scalability and computational efficiency are ongoing concerns, particularly when deploying \ac{nlp} models in real-time applications. Additionally, ethical considerations, including bias in language models and data privacy, require attention to ensure the responsible use of \ac{nlp} technologies \cite{Prawira2024}.
+
+
+\section{Multimodal Matching} \label{subsec:multimodal-matching}
+
+Embeddings play a pivotal role in modern artificial intelligence, particularly for applications requiring the integration of multimodal data such as images and text. These embeddings transform high-dimensional data into a lower-dimensional vector space while preserving semantic relationships. For example, image embeddings are often generated using \ac{cnn}, whereas text embeddings leverage transformer-based models \cite{He2015, Devlin2019}. This dimensionality reduction enables efficient and meaningful comparisons across large datasets.
+
+Similarity search is a cornerstone technique in embedding-based systems. \citeauthoryear{Prawira2024} and \citeauthoryear{Ghazal2016} have experimented with metrics such as cosine similarity and Euclidean distance in order to quantify the proximity between embeddings, offering probabilistic measures of match likelihood between simulated \ac{lf} items. A high cosine similarity score, for instance, suggests strong alignment between query and database entries. Probabilistic models can further refine these measures, incorporating confidence intervals that guide the decision-making \cite{Dosovitskiy2020}.
+
+Considering the domain of \ac{lf} management, embeddings would facilitate the matching of user-provided data to stored items or records. Visual embeddings derived from processed, uploaded images would be compared against a database of known items. Similarly, textual embeddings generated from user descriptions and interactions could be matched to metadata or textual entries in the database. When combined, these approaches improve the accuracy of the matching process \cite{Prawira2024, Radford2021}. For instance, the integration of image and text embeddings through models like \ac{clip} enables effective multimodal matching by aligning visual and textual information in a unified vector space \cite{Radford2021}.
+
+On the one hand, embedding-based systems face challenges related to scalability, bias, and computational demands. Scaling these systems to handle large datasets requires optimisation techniques such as lightweight models or distributed computing \cite{Lubna2021}. Moreover, biases inherent in pre-trained models can affect fairness, mainly when embeddings are derived from imbalanced datasets \cite{Prawira2024}. On the other hand, despite these challenges, empirical studies underscore the efficacy of multimodal matching in \acp{lfms}. For instance, \citeauthoryear{Prawira2024} achieved a 97.92\% matching accuracy by integrating \ac{resnet} embeddings with cosine similarity. \citeauthoryear{Ghazal2016} demonstrated an 89.2\% retrieval accuracy using a multi-feature image matching approach that incorporated texture, shape, and colour features.
+
+% \section{Privacy and Security} \label{subsec:privacy-security}
+
+% Todo: Write this section.
+
+% \section{User Experience} \label{subsec:user-experience}
+
+% Todo: Write this section.
+
+% \section{Gamification} \label{subsec:gamification}
+
+% Todo: Write this section.
