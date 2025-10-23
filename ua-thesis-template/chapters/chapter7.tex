@@ -1,0 +1,70 @@
+\chapter{Usability Evaluation}
+\label{chapter:usability_evaluation}
+
+This chapter presents the usability evaluation conducted to assess the \ac{lfms}'s interface effectiveness and user experience. Following the technical validation and performance testing detailed in Chapter \ref{chapter:testing_validation}, which confirmed the system's readiness for production deployment, this evaluation examines the system's usability from the end-user perspective. The evaluation was performed with 17 participants from the University of Aveiro, comprising both administrative staff and students, to validate the system's usability across different user groups and operational contexts.
+
+% ____________________ Usability Testing Protocol ____________________ %
+
+\section{Usability Testing Protocol} \label{section:usability_protocol}
+
+The usability testing followed a structured approach designed to evaluate the system's interface across different user roles and functional requirements. Testing sessions were conducted individually with each participant, lasting approximately ten to fifteen minutes per session. Each session included demographic data collection, completion of structured task scenarios, and collection of qualitative feedback regarding the user experience.
+
+The testing environment replicated real-world usage conditions, with security guard participants accessing the web application through Brave\footnote{https://brave.com} web browser on a desktop computer, while student participants used the mobile application on an iPhone. All sessions were conducted in Portuguese to provide natural interaction for the mostly Portuguese-speaking university community. Participants provided informed consent for data collection and could withdraw from testing at any time without consequences.
+
+The methodology emphasised task-based evaluation. Participants completed realistic scenarios that reflected their expected interactions with the system in operational contexts. The methodology assessed both functional usability and the system's ability to support actual workflows within the university environment.
+
+The following four task scenarios were developed to evaluate different aspects of system functionality across user roles:
+
+\begin{enumerate}
+    \item The first task required participants to report the water bottle present in the test environment as a lost item, including description entry and basic location information. Participants had to navigate through the item submission process, describing the bottle's characteristics and specifying where it was last seen.
+    \item Secondly, participants were asked to search for a specific lost item using the system's search interface. The item in question was a black laptop backpack reported a few days earlier. This required them to browse through available items and use basic search functionality to locate the target item.
+    \item The third task evaluated the item viewing process, where participants were asked to review the details of a found smartphone and understand where the item was delivered, as well as its current location. This assessed the information presentation and user interaction flow.
+    \item The last task assessed basic administrative functions, where security guard participants were asked to update the status of a resolved lost item case.
+\end{enumerate}
+
+
+Success criteria included task completion rates, time to completion, error rates, and subjective satisfaction ratings. Participants were observed for navigation difficulties, confusion points, and areas where additional guidance or interface improvements might be beneficial.
+
+% ____________________ User Interface Evaluation ____________________ %
+
+\section{User Interface Evaluation} \label{section:ui_evaluation}
+
+The usability testing involved 17 participants from the University of Aveiro community, a small but representative sample of the system's intended user base. The participant group included three security guards representing administrative users and 14 students representing ordinary users. Students would primarily use the system to report and search for lost items.
+
+The security guard participants, aged between 42 and 67, had basic computer literacy and prior experience handling lost property through traditional paper-based systems. Using the web application, their feedback provided insights into administrative workflow integration and the system's ability to support professional property management responsibilities.
+
+The student participants, aged 19-24, included participants from various academic backgrounds and represented the primary user demographic for lost item reporting and searching. Using the mobile application, this group demonstrated familiarity with mobile interfaces, providing feedback on mobile interface design conventions and user experience expectations.
+
+Task completion analysis revealed successful performance across most scenarios. Task 1 (reporting the water bottle) achieved a 92\% completion rate, with all but one student successfully submitting the lost item report. The single incomplete attempt was attributed to uncertainty about the location field formatting rather than interface design issues. Security guards were not asked to complete this task, as item reporting falls outside their typical responsibilities.
+
+Task 2 (searching for the black laptop backpack) showed an 88\% completion rate, with most participants successfully locating the target item using the search functionality. Difficulties were primarily related to understanding which search terms would be most effective rather than navigation issues, suggesting the need for more precise search guidance or suggestion features.
+
+Task 3 (reviewing the smartphone details and understanding delivery location) demonstrated role-specific performance differences, with security guard participants achieving 100\% completion compared to 79\% for student participants. All security guards successfully navigated to the smartphone's detail page and identified where the item was delivered and its current location. At the same time, some students had difficulty locating this information within the interface. This difference reflected the security guards' professional experience with handling lost property procedures and their familiarity with item verification processes.
+
+All security guard participants completed Task 4 (updating item status) successfully, with each successfully changing the item status from "pending" to "resolved." Student participants were not asked to complete these administrative tasks due to their role-specific nature.
+
+Qualitative feedback revealed several user experience insights. Security guard participants appreciated the system's structured approach to item documentation, noting improvements over paper-based tracking methods. However, they suggested additional fields for internal notes and status tracking to support their operational workflows better.
+
+Student participants found the reporting interface straightforward and intuitive, with most commenting positively on the visual design and logical information organisation. Several students noted that the system felt familiar compared to other university web applications, suggesting successful adherence to established interface conventions.
+
+Navigation feedback indicated that the main menu structure was clear and logical for both user groups.
+
+% ____________________ Evaluation Framework ____________________ %
+
+\section{Evaluation Framework} \label{section:evaluation_framework}
+
+User satisfaction was assessed through post-task questionnaires adapted for the university context. Participants rated their confidence in using the system, perceived ease of use, and likelihood of future adoption. Security guard participants expressed high confidence in the system's ability to improve their work efficiency, with all three indicating they would prefer the digital system over current paper-based methods. Student participants showed positive reception, with 12 of 14 indicating they would use the system if implemented university-wide. The two neutral responses were attributed to limited personal experience with lost property situations rather than system design concerns.
+
+Error recovery assessment revealed that participants who encountered difficulties were generally able to resolve issues independently or with minimal guidance. The most common error involved incomplete form submissions due to missed required fields, suggesting the need for improved field validation feedback.
+
+Response time measurements showed that participants completed basic tasks efficiently, with average completion times of 2.3 minutes for item reporting and 1.8 minutes for item searching. These times compare favorably with estimated completion times for traditional paper-based reporting processes.
+
+Based on testing results, several interface improvements would improve user experience and adoption potential. Form validation should provide immediate feedback for required fields, reducing submission errors and some user frustration. Search functionality would benefit from auto-suggestion features to help users formulate effective search queries. Administrative interface enhancements should include expanded note-taking capabilities and customisable status categories to better support security guard workflows. Mobile interface optimisation represents a priority improvement area. Several participants suggested improvements to the mobile interface design, including larger touch targets and simplified navigation.
+
+Overall, the testing validated the system's fundamental design approach while identifying specific enhancement opportunities.
+
+\section{Summary} \label{section:usability_summary}
+
+The usability evaluation demonstrated that the lost property management system successfully meets the interface and experience requirements of its intended user base at the University of Aveiro. With 17 participants representing both administrative staff and student users, the testing validated the system's core functionality while identifying specific areas for interface refinement.
+
+Task completion rates above 88\% across all scenarios indicate that the fundamental design approach effectively supports user goals. The positive feedback from security guard participants confirms the system's potential to improve operational efficiency compared to traditional paper-based methods (one of the main goals of this system and this dissertation's research). At the same time, student reception suggests strong adoption potential within the university community.

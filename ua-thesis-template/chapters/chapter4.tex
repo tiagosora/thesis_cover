@@ -9,7 +9,7 @@ if not always in the way we expect"
 - J.K. Rowling, Harry Potter and the Order of the Phoenix (2003)
 \end{introduction}
 
-This section begins by defining the phases that constitute the research. Following that, it outlines the beginning of the design of the system's structure by defining its architecture, features, and workflows. To meet the acceptance criteria for this stage and take into account the volume of this research, a strategic framework was selected to guide the architectural design of the proposed solution. By leveraging the principles and steps of \ac{acdm}, this chapter defines the solution's initial requirements, stakeholders, challenges and architecture.
+This section begins by defining the phases that constitute the research. Following that, it outlines the beginning of the design of the system's structure by defining its architecture, features, and workflows. To meet the acceptance criteria for this stage and take into account the volume of this research, a strategic framework was selected to guide the architectural design of the proposed solution. Using \ac{acdm} principles and methodology, this chapter defines the solution's initial requirements, stakeholders, challenges and architecture.
 
 % ____________________ Phases of the Research ____________________ %
 
@@ -19,7 +19,7 @@ To realise the previously mentioned objectives, the proposed research can be con
 
 \begin{outline}[enumerate]
     \1 Study the State-of-the-Art and identify design approaches:
-        \2 Review existing ;
+        \2 Review existing;
         \2 \aclp{lfms};
         \2 In-production solutions;
         \2 Available and recommended technologies;
@@ -77,17 +77,15 @@ If the architecture passes the review, the process transitions to the production
 
 \subsection{Quality Attributes} \label{section:quality_attributes}
 
-The quality attributes serve as a foundation for developing the platform. The selection of the following attributes was guided by their crucial role in guaranteeing the solution's success and addressing the key challenges identified in the problem domain.
-
-The following quality attributes were selected based on their priority to the solution's success and the challenges identified in the problem domain.
+The quality attributes form the foundation for platform development. These attributes were selected based on their priority for solution success and their relevance to the key challenges identified in the problem domain.
 
 \subsubsection{Scalability}
 
-The platform must accommodate a growing user base and increased item-tracking demands across diverse locations. A microservices architecture is proposed to enable independent scaling of critical system components, such as user management and item management. This scalability aligns with the goal of creating a community-oriented system capable of handling high-traffic scenarios and fluctuations in demand without compromising performance.
+The platform must accommodate a growing user base and increased item-tracking demands across diverse locations. A microservices architecture is proposed to enable independent scaling of critical system components, such as user management and item management \cite{Al-Debagy2021}. This scalability aligns with the goal of creating a community-oriented system capable of handling high-traffic scenarios and fluctuations in demand without compromising performance.
 
 \subsubsection{Reliability} 
 
-Consistent performance is essential, even in adverse conditions like network failures. Ensuring reliability contributes to promoting user trust, a cornerstone of a lost property management system, aiming to build credibility among stakeholders. Fault-tolerant mechanisms, such as distributed databases and redundant servers, will be integrated to secure high availability (targeting 99\% uptime) and minimise the "mean time to repair"\footnote{\url{https://www.atlassian.com/incident-management/kpis/common-metrics}}. Automated monitoring and self-healing protocols will detect and address faults proactively.
+Consistent performance is essential, even in adverse conditions like network failures. Reliable performance builds user trust, which is fundamental to any lost property management system. Fault-tolerant mechanisms, including distributed databases and redundant servers, will ensure high availability (targeting 99\% uptime) and minimize the "mean time to repair"\footnote{\url{https://www.atlassian.com/incident-management/kpis/common-metrics}}. Automated monitoring and self-healing protocols will detect and address faults proactively.
 
 \subsubsection{Security}
 
@@ -95,17 +93,17 @@ Handling sensitive data, such as user information and potentially high-value los
 
 \subsubsection{Usability}
 
-The system targets a broad spectrum of users, including non-technical individuals, necessitating an intuitive and accessible interface. Implementing \ac{ui} and \ac{ux} best practices and ongoing feedback loops will promote an iterative improvement of the platform's interface. Multilingual support and visual guidance will also cater to diverse user demographics.
+The system targets a broad spectrum of users, including non-technical individuals, requiring an intuitive and accessible interface. Following \ac{ui} and \ac{ux} best practices with ongoing feedback loops will support iterative platform improvements. Multilingual support and visual guidance will also cater to diverse user demographics.
 
 \subsubsection{Observability}
 
-Incorporating observability tools to collect logs, metrics, and traces will allow real-time and long-term monitoring of the system's performance and user interactions. Observability also allows quick detection and resolution of operational issues, providing insights for continuous improvement.
+Incorporating observability tools to collect logs, metrics, and traces will allow real-time and long-term monitoring of the system's performance and user interactions \cite{Niedermaier2023}. Observability also allows quick detection and resolution of operational issues, providing insights for continuous improvement.
 
 % ____________________ Requirements ____________________ %
 
 \subsection{System Requirements} \label{section:requirements}
 
-The system's design and implementation are guided by its requirements, which can also be used to measure the research progress and value. When correctly specified, they help the developer understand the expected result, and the stakeholders evaluate the system's performance. These requirements are divided into two categories: functional and non-functional. Table \ref{tab:functional_requirements} lists the functional requirements that define the core features of the system, focusing on enabling users to interact with and manage data effectively.
+The system's design and implementation are guided by its requirements, which can also be used to measure the research progress and value. When correctly specified, they help the developer understand the expected result, and the stakeholders evaluate the system's performance. These requirements fall into two categories: functional and non-functional. Table \ref{tab:functional_requirements} lists the functional requirements that define the core features of the system, focusing on enabling users to interact with and manage data effectively.
 
 \begin{table}[!htb]
 \centering
@@ -138,7 +136,7 @@ NFR2 & Support scalability to accommodate up to 10,000 concurrent users. \\ \hli
 NFR3 & Comply with data privacy regulations such as \ac{gdpr}. \\ \hline
 NFR4 & Maintain 99\% uptime through fault tolerance and disaster recovery mechanisms. \\ \hline
 NFR5 & Adhere to \ac{ux} and \ac{ui} best practices. \\ \hline
-NFR6 & Implement modular and maintainable architecture for easier updates and debugging. \\ \hline
+NFR6 & Implement modular and extensible architecture for easier updates and debugging. \\ \hline
 NFR7 & Incorporate monitoring tools for real-time performance tracking and troubleshooting. \\ \hline
 NFR8 & Secure compatibility across devices. \\ \hline
 \end{tabular}
@@ -163,80 +161,76 @@ Both software and design quality must be verifiable, meaning the stakeholders mu
 
 % ____________________ Notional Architecture ____________________ %
 
-\subsection{Notional Architecture} \label{section:notional_architecture}
+\section{Notional Architecture} \label{section:notional_architecture}
 
-The proposed architecture, visible in Figure \ref{fig:notional_arch}, is designed as a microservices-based system, i.e., it divides the application into distinct, independent services, each responsible for a specific functionality. It is possible to group the architecture's components into three main layers: the frontend, backend, and support infrastructure, as follows:
+As previously mentioned, the architecture is iteratively refined. The initially proposed architecture, visible in Figure \ref{fig:initial_arch}, was designed as a microservices-based system, dividing the application into distinct, independent services, each responsible for a specific functionality \cite{Al-Debagy2021,Söylemez2024}. This planned architecture grouped the system's components into three main layers: the frontend, backend, and support infrastructure, as follows:
 
 \begin{figure}[!htb]
-    \includegraphics[width=0.8\textwidth]{figs/chapter3/notional_arch.png}
+    \includegraphics[width=0.8\textwidth]{figs/chapter3/initial_arch.png}
     \centering
-    \caption[Notional Architecture]{High Level View of the First Iteration of the Notional Architecture.}
-    \label{fig:notional_arch}
+    \caption[Initial Microservices Architecture]{High Level View of the Initially Planned Microservices Architecture.}
+    \label{fig:initial_arch}
 \end{figure}
 
-\subsubsection{Frontend}
+\subsection{Frontend}
 
 The frontend provides users with a seamless and intuitive interface for both web and mobile platforms, enabling easy access to all system features and smooth interaction with the backend services.
 
-\subsubsection{Backend}
+\subsection{Initial Backend Architecture}
 
-The backend is the core of the system and is structured as a collection of microservices that include:
+The backend was initially designed as a collection of microservices that would provide distinct functionalities across the system. The Authentication Service was planned to handle user authentication and authorisation through role-based access control, securing controlled access to the system. A dedicated Users Management Service would manage user profiles, including registration and updates, ensuring comprehensive user lifecycle management. The Items Management Service was conceived as the core service of the system, focusing on fetching, storing and updating lost items while integrating with other services to provide seamless item tracking and retrieval functionalities. Additionally, a Community Management Service was designed to handle direct communication between ordinary users and the chat spaces available for each community, fostering collaborative recovery efforts. Finally, an AI/ML Categorization and Recommendation Service was planned to automatically identify and categorise items based on images and descriptions, processing user inputs and interactions to actively match and recommend items to ordinary users searching for lost property.
 
-\begin{itemize}
-    \item Authentication Service: Through the use of role-based access control, it handles user authentication and authorisation, securing controlled access to the system;
-    \item Users Management Service: Manages user profiles, including registration and updates;
-    \item Items Management Service: The most likely core service of the system focuses on fetching, storing and updating lost items. It integrates with other services to provide seamless item tracking and retrieval functionalities;
-    \item Community Management Service: Handles the direct communication between ordinary users and the chat spaces available for each community;
-    \item \ac{ai}/\ac{ml} Categorization and Recommendation Service: Automatically identifies and categorises items based on images and descriptions. Processes user inputs and interactions to actively match and recommend items to ordinary users who search for an item.
-\end{itemize}
+\subsubsection{Initial Support Infrastructure}
 
-\subsubsection{Support Infrastructure}
-
-The infrastructure provides the foundation for deploying and managing the system. It includes the following key components:
-
-\begin{itemize}
-    \item Reverse Proxy: Routes incoming requests to the appropriate services. It also provides load balancing and enhances the system's overall security by handling HTTPS termination;
-    \item Message Queue: Facilitates asynchronous communication between microservices to ensure that each service operates independently, even during high data throughput;
-    \item Monitoring: Collects performance metrics and provides a dashboard for real-time visualisation.
-\end{itemize}
+The infrastructure was planned to provide the foundation for deploying and managing the microservices system through several key components. A reverse proxy was designed to route incoming requests to the appropriate services, providing load balancing and enhancing the system's overall security by handling HTTPS termination. The architecture also included a message queue system that would facilitate asynchronous communication between microservices, ensuring that each service operates independently even during periods of high data throughput. Furthermore, a comprehensive monitoring solution was planned to collect performance metrics and provide dashboards for real-time visualisation of system health and performance indicators.
 
 % ____________________ Technology Stack ____________________ %
 
-\subsubsection{Proposed Technologies to be Used}
+\subsection{Proposed Technologies to be Used}
 
 The selection of technologies is based on their alignment with the architectural drivers and the system's requirements. The proposed technology stack is as follows:
 
 For the frontend, React\footnote{\url{https://react.dev/}} will be used to build a dynamic and interactive web application, mainly for administrative uses inside the platform. At the same time, Flutter will enable cross-platform mobile application development, ensuring an accessible and consistent user experience across locations and devices.
 
-The backend will be essentially powered by FastAPI\footnote{\url{https://fastapi.tiangolo.com/}}, a Python\footnote{\url{https://www.python.org/}}-based framework that excels at building high-performance \acp{api} for small/medium projects, which main propose is supporting asynchronous operations. Authentication will be secured using OAuth 2.0\footnote{\url{https://oauth.net/2/}}, a widely adopted protocol, that will capable of granting and managing secure access and role-based access control. The system will rely on Pocketbase\footnote{\url{https://pocketbase.io/}}, an open-source Backend-as-a-Service, for handling database operations, real-time data sync, complemented by Redis\footnote{\url{https://redis.io/}} for caching and session management, in order to guarantee a fast data access and reduce the backend load. For \ac{ai}-driven functionalities, \ac{llava}\footnote{\url{https://llava-vl.github.io/}}, an end-to-end trained large multimodal, will combine language and vision processing. Data analytics will be supported by DuckDB\footnote{\url{https://duckdb.org/}}, an in-process analytical database that efficiently processes the complex embeddings generated by \ac{llava}. Considering the necessity of valuable monitoring, Prometheus\footnote{\url{https://prometheus.io/}} will collect metrics across the system, and, using Grafana\footnote{\url{https://grafana.com/}}, it will ale to have intuitive dashboards for real-time visualisation and performance tracking. 
+The backend was planned to be essentially powered by FastAPI\footnote{\url{https://fastapi.tiangolo.com/}}, a Python\footnote{\url{https://www.python.org/}}-based framework that excels at building high-performance \acp{api} for small/medium projects, with the main purpose of supporting asynchronous operations. Authentication was planned to be secured using OAuth 2.0, a widely adopted protocol, that would be capable of granting and managing secure access and role-based access control. The system was planned to rely on Pocketbase\footnote{\url{https://pocketbase.io/}}, an open-source Backend-as-a-Service, for handling database operations and real-time data sync, complemented by Redis\footnote{\url{https://redis.io/}} for caching and session management, in order to guarantee fast data access and reduce the backend load. For \ac{ai}-driven functionalities, \ac{llava}\footnote{\url{https://llava-vl.github.io/}}, an end-to-end trained large multimodal model, would combine language and vision processing. Data analytics was planned to be supported by DuckDB\footnote{\url{https://duckdb.org/}}, an in-process analytical database that would efficiently process the complex embeddings generated by \ac{llava}. Considering the necessity of valuable monitoring, Prometheus\footnote{\url{https://prometheus.io/}} would collect metrics across the system, and, using Grafana\footnote{\url{https://grafana.com/}}, would enable intuitive dashboards for real-time visualisation and performance tracking. 
 
-The entire infrastructure will be containerised using Docker\footnote{\url{https://www.docker.com/}}, ensuring consistency across environments and simplifying deployment. Nginx\footnote{\url{https://nginx.org/en/}} will act as a reverse proxy and load balancer, enhancing request routing. Finally, RabbitMQ\footnote{\url{https://www.rabbitmq.com/}} will serve as the unique message broker, enabling asynchronous and reliable communication between the microservices.
+The entire infrastructure was planned to be containerised using Docker\footnote{\url{https://www.docker.com/}}, ensuring consistency across environments and simplifying deployment. Nginx\footnote{\url{https://nginx.org/en/}} would act as a reverse proxy and load balancer, enhancing request routing. Finally, RabbitMQ\footnote{\url{https://www.rabbitmq.com/}} would serve as the unique message broker, enabling asynchronous and reliable communication between the microservices.
 
-% ____________________ Future Work and Work Plan ____________________ %
+% ____________________ Architectural Evolution ____________________ %
 
-\section{Future Work and Work Plan} \label{section:future_work_and_work_plan}
+\section{Architectural Evolution and Implementation Reality} \label{section:architectural_evolution}
 
-The next phase involves the implementation of the proposed architecture, starting by creating a \ac{mvp} to test the initial functionalities. The \ac{mvp} will focus on the item management service, user registration and authentication, and the community management service. The \ac{mvp} will be iteratively refined based on user feedback and performance metrics, ensuring that the system meets the acceptance criteria defined in this research. This \ac{mvp} will integrate most of the \ac{ims} features and is expected to be a full \ac{lfms}, capable of handling lost items and user interactions. The \ac{ai}/\ac{ml} categorisation and recommendation service will be developed in parallel to the \ac{mvp} testing and will be integrated into the system once it reaches a stable state, resulting from the feedback and improvements made. Once the service responsible for the system's intelligence is integrated, the system will, once again, be tested and refined to guarantee that the functionalities are working as expected and that the system meets the acceptance criteria and fulfils the architectural drivers and the dissertation's objectives.
+During the development process, several constraints and practical considerations necessitated an evolution from the initially planned microservices architecture to a more pragmatic implementation approach.
 
-The dissertation document will be continuously updated throughout the system's development to reflect the progress made. It will also include the system's testing results and the feedback received from users and stakeholders. The final version of the document will include a detailed analysis of the system's performance and usability, as well as a discussion of the lessons learned and the potential for future research.
+\subsection{Development Constraints and Reality Assessment}
 
-Figure \ref{fig:gantt_diagram} illustrates the work plan for the next phase, outlining the key activities and milestones to be achieved.
+The transition from the planned microservices architecture was driven by several critical constraints that became apparent during the initial development phases. The limited development timeline, combined with the solo developer context, created significant constraints on the complexity of infrastructure that could be realistically implemented and supported.
 
-\begin{figure}[!htb]
-    \includegraphics[width=0.95\textwidth]{figs/chapter3/gantt_diagram.png}
-    \centering
-    \caption[Expected dissertation's work plan expressed in a Gantt diagram]{Expected dissertation's work plan expressed in a Gantt diagram.}
-    \label{fig:gantt_diagram}
-\end{figure}
+Research indicates that microservices architectures introduce significant infrastructure overhead, with each new microservice requiring its own test suite, deployment playbooks, hosting infrastructure, and monitoring tools, leading to exponential infrastructure costs \cite{ServiceCostOverhead2023}. Studies comparing monolithic and microservice architectures show that microservices can require 4.22x more runtime processing time and exhibit 2.69x more overhead in Java EE applications \cite{MonolithicVsMicroservices2020}. In the context of academic dissertation evaluation, the primary focus is on demonstrating problem-solving capabilities, domain knowledge, and feature completeness rather than infrastructure complexity. The microservices approach, while architecturally sophisticated, would divert resources from delivering a functional system with comprehensive features or even a minimum viable product.
 
-% \section{Study Case} \label{section:case_study}
+The planned microservices architecture would require managing 9+ separate services, databases, and deployment pipelines, which, for a solo developer, represents a significant operational burden that could compromise system reliability and long-term viability within the project timeline.
 
-% TODO: Write this section
+%TODO: Add figure showing the final implementation architecture here
 
-% \section{Work Environment} \label{section:work_environment}
+\subsection{Final Implementation Architecture}
 
-% TODO: Write this section
+Based on the constraint analysis, the system was implemented using a modular monolithic architecture that preserves microservices design principles while consolidating deployment and operational complexity.
 
-% \section{Summary} \label{section:chapter3_summary}
+The system uses a single FastAPI application implementing a Router-Service-Repository pattern, which provides clear domain boundaries equivalent to microservices while preserving operational simplicity. The API incorporates an integrated authentication system that combines user authentication and authorization with role-based access control for three distinct user types: ordinary users, local managers, and system administrators. A unified item management approach consolidates item \ac{crud} operations, status tracking, and AI-powered matching within a cohesive service layer, ensuring seamless data flow and consistency. The system embeds community features by integrating real-time communication and community management as internal modules, preserving the collaborative aspects without requiring separate service deployment. Additionally, internal queue processing implements asynchronous operations using an internal queue system rather than external message brokers, reducing infrastructure complexity while preserving system responsiveness.
 
-% TODO: Write this section
+PocketBase serves as a unified data layer with real-time synchronization capabilities, eliminating the need for separate database management systems. Authentication is handled through PocketBase's built-in authentication system with JWT token management, providing secure and efficient user session management. AI integration utilizes the LLaVA model accessed through Ollama for multimodal processing, enabling intelligent item recognition, categorization, grouping, and matching. Nginx functions as the API gateway, providing security, SSL termination, and traffic management capabilities. System monitoring is achieved through Prometheus and Grafana for comprehensive performance tracking, while Docker and Docker Compose ensure consistent deployment across different environments.
+
+
+% ____________________ Summary ____________________ %
+
+\section{Summary} \label{section:methodology_summary}
+
+This chapter has outlined the methodology used in developing the intelligent lost and found management system, showing how \ac{acdm} principles guided the design and implementation process. The research progressed through four distinct phases, from state-of-the-art analysis to system deployment and validation.
+
+The methodology encompassed the identification of architectural drivers, including critical quality attributes such as scalability, reliability, security, usability, and observability, which guided all subsequent design decisions. The system requirements were systematically defined, establishing both functional capabilities and non-functional performance criteria that align with the identified challenges in lost property management.
+
+A significant aspect of this methodology was the architectural evolution process, which demonstrated how theoretical design must adapt to practical constraints while preserving core architectural principles. The transition from the initially planned microservices architecture to a modular monolithic implementation was driven by a realistic assessment of development timeline and resource constraints, ensuring that the platform remained feasible within the academic context. Throughout this process, the preservation of scalability and modularity principles was prioritized to ensure opportunities for future system enhancement and, mainly, evolution.
+
+The final implementation architecture successfully balances sophisticated functionality with operational simplicity, delivering a comprehensive system that addresses the identified research objectives while remaining within the leveraged constraints. This transformation demonstrates engineering maturity by prioritizing feature delivery and system reliability over infrastructure complexity. The Router-Service-Repository pattern employed ensures clear separation of concerns through well-defined service boundaries, enabling selective scaling or extraction when system growth demands it. Error containment mechanisms isolate failures at the domain level, preventing cascading issues across the entire application while establishing the foundation for future architectural evolution as system demands grow.
+
+Additionally, this method provides a replicable framework for similar medium-sized academic and professional projects, demonstrating how architectural decisions should be guided by empirical analysis rather than purely theoretical considerations, ultimately resulting in more successful and sustainable software systems.
