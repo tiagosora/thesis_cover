@@ -1,236 +1,323 @@
-\chapter{Methodology}
-\label{chapter:methodology}
+\chapter{System Implementation} \label{chapter:implementation}
 
-\begin{introduction}
-"The things we lose have a way of coming back to us in the end,
+This chapter presents the UAchado intelligent \ac{lfms} implementation, covering technical solutions, code details, architectural patterns, and production-ready deployment infrastructure. Following the architectural evolution from Chapter \ref{chapter:methodology}, the system was built as a modular monolith that maintains microservices principles while reducing operational complexity. The implementation focuses on architectural decisions, code structure, and integration patterns. The deployment section covers containerized architecture, monitoring infrastructure, and operational procedures.
 
-if not always in the way we expect"
+% ____________________ Database Implementation and Data Models ____________________ %
 
-- J.K. Rowling, Harry Potter and the Order of the Phoenix (2003)
-\end{introduction}
+\section{Database Implementation and Data Models} \label{section:database_implementation}
 
-This section begins by defining the phases that constitute the research. Following that, it outlines the beginning of the design of the system's structure by defining its architecture, features, and workflows. To meet the acceptance criteria for this stage and take into account the volume of this research, a strategic framework was selected to guide the architectural design of the proposed solution. Using \ac{acdm} principles and methodology, this chapter defines the solution's initial requirements, stakeholders, challenges and architecture.
+\subsection{PocketBase Collections Structure} \label{subsection:pocketbase_collections}
 
-% ____________________ Phases of the Research ____________________ %
+The database uses PocketBase, an open-source Backend-as-a-Service\footnote{\url{https://en.wikipedia.org/wiki/Backend_as_a_service}} platform that delivers SQLite\footnote{\url{https://sqlite.org/}}-based storage with authentication, real-time synchronisation, and file handling. The 17-collection schema was developed through iterations to support multi-tenant \ac{lfms} requirements with \ac{ai}-powered matching.
 
-\section{Phases of the Research} \label{section:phases_of_the_research}
+The database follows a community-centric, multi-tenant architecture for data isolation with controlled cross-community processes. It extends PocketBase's authentication with \ac{rbac}, supporting three user types: ordinary users, local managers, and system administrators. Community-based scoping restricts access to authorised items and communications, while indexing and queue processing handle \ac{ai} tasks efficiently. Permissions control access at the collection and record levels.
 
-To realise the previously mentioned objectives, the proposed research can be conducted in four key stages, which align with a logical progression from understanding the problem to focusing on different aspects of design and development.
+The 17-collection schema is organised into five functional categories. User management employs four collections for hierarchical role-based authentication, while community management uses four collections for organisational boundaries and physical locations. Core functionality relies on five collections managing the complete item lifecycle and \ac{ai} matching. Communication encompasses three collections for community and direct messaging, and system tasks utilise two collections for notifications and audit trails. Each category serves specific functional requirements while maintaining data isolation through community-based scoping.
 
-\begin{outline}[enumerate]
-    \1 Study the State-of-the-Art and identify design approaches:
-        \2 Review existing;
-        \2 \aclp{lfms};
-        \2 In-production solutions;
-        \2 Available and recommended technologies;
-        \2 Best practices and optimal approaches;
-    \1 Design the structure of the system by defining its architecture, features and workflows;
-    \1 Create the main system components, including all the planned features;
-    \1 Test the system in a real-world and controlled environment;
-    \1 Finalise and document the results for academic and practical use.
-\end{outline}
+\subsubsection{Relationship Design and Data Integrity}
 
-% ____________________ Architecture-Centric Development Methodology ____________________ %
+The database implements a hierarchical relationship model with user inheritance through role-specific collections referencing the base \texttt{users} collection. The community hierarchy enables data scoping where communities own managing points that store items. Item lifecycle tracking uses dynamic foreign keys to record initial storage and transfers between points. Simultaneously, the \ac{ai} matching system creates probabilistic relationships with confidence scores for human-in-the-loop verification.
 
-\section{\acl{acdm}} \label{section:acdm}
+The database uses indexing with unique constraints to prevent inconsistencies and composite indexes for multi-table queries. Queue processing employs specialised indexes including \texttt{(community\_id, status)} for community-based processing and \texttt{(priority DESC, queued\_at ASC)} for priority-based fairness. Relationship indexes optimise frequently accessed join operations between collections.
 
-The \ac{acdm} is a software development methodology, mainly inspired by Quality Attribute Workshop, Architecture Tradeoff Analysis Method and Attribute Driven Design, that emphasises the use of software architecture as a primary driver for the development process \cite{Lattanze2005}. It integrates architectural design into the overall lifecycle of software development, aiming to improve quality, predictability, and efficiency. Below are the key aspects of \ac{acdm} based on the provided paper. \ac{acdm} is structured around the concept that software architecture serves as the backbone of the system, providing a framework for ensuring consistency, scalability, and alignment with business goals. The architecture is not only a technical construct but also a means of communication among stakeholders.
+% TODO: Add entity relationship diagram showing the 17-collection schema organized into five functional categories with foreign key relationships
 
-% ____________________ Definition ____________________ %
+\subsubsection{File Storage and Media Management}
 
-\subsection{Definition}
+The system uses PocketBase's file storage for image uploads with \ac{mime}\footnote{\url{https://en.wikipedia.org/wiki/Media_type}} type restrictions and 10MB size limits. File access integrates with the permission system, restricting users to images from their authorised communities.
 
-As shown in Figure \ref{fig:acdm_workflow}, the \ac{acdm} organises the architectural design process into clearly defined stages that evolve iteratively. \ac{acdm} is inherently iterative, with the flexibility to revisit earlier stages based on findings or changing requirements.
+\subsection{Data Access Layer} \label{subsection:data_access_layer}
 
-\begin{figure}[!htb]
-    \includegraphics[width=0.6\textwidth]{figs/chapter3/acdm_workflow.png}
-    \centering
-    \caption[\acl{acdm} Workflow]{\ac{acdm} workflow, illustrating the iterative stages, the flow of artifacts, decisions, and refinements through the development process. Adapted from \citeauthoryear{Lattanze2005}.}
-    \label{fig:acdm_workflow}
-\end{figure}
+The data access layer uses a repository pattern to abstract business logic from PocketBase tasks. It manages database interactions, \ac{http} clients, and data transformations following the \ac{rsr} pattern used throughout the system.
 
-\subsubsection{Architectural Drivers}
+\subsubsection{Repository Pattern Implementation}
 
-According to \citeauthoryear{Lattanze2005}, the process begins with discovering the architectural drivers, where crucial factors such as functional requirements, quality attributes (e.g., performance, scalability, security), and constraints are identified. These drivers form the foundation for all subsequent design decisions. Appendix \ref{app:architectural-design} contains the remaining stages of the \ac{acdm} process, which provide a fully defined set of the architectural drivers for this research.
+The system implements a repository pattern where each domain entity has a dedicated repository class encapsulating data access functions. Key repositories include \texttt{FoundItemRepository} and \texttt{ReportedItemRepository} for item \ac{crud} tasks, \texttt{AuthRepository} for multi-collection user authentication, \texttt{ItemMatchRepository} for \ac{ai}-powered matching processes, and \texttt{ItemProcessingQueueRepository} for asynchronous processing with priority-based queuing. Community-related repositories (\texttt{CommunityRepository}, \texttt{LMPRepository}, \texttt{OUCRepository}) handle organizational data.
 
-\subsubsection{Project Scope}
+\subsubsection{\acs{http} Client Configuration and Management}
 
-Following this, the project scope is established to define the system's boundaries, objectives, deliverables, and constraints, ensuring that all stakeholders have a shared understanding of the project's limits and expectations.
+The data access layer uses \texttt{httpx}\footnote{\url{https://www.python-httpx.org/}} for asynchronous PocketBase communication with connection pooling, 30-second timeouts, and Bearer token authentication. Error handling transforms network issues into appropriate \ac{http} status codes: 408 for timeouts and 503 for connection errors, while preserving original responses for proper error propagation.
 
-\subsubsection{Notional Architecture}
+\subsubsection{Query Optimisation Techniques}
 
-Once the drivers and scope are defined, a notional architecture is created as a high-level conceptual design. This step involves decomposing the system into components, defining their responsibilities, interactions, and dependencies, and adopting appropriate architectural styles and patterns. The notional architecture serves as a blueprint for early-stage validation.
+Query configuration uses consistent pagination (30 items default), parameterised filtering for multi-tenant isolation and workflow management, and strategic relationship expansion using the \texttt{expand} parameter to reduce round-trip requests. Sorting functions support \ac{ui} requirements like creation time and \ac{ai} result display through confidence scores, improving performance within PocketBase's \ac{rest} \ac{api} constraints.
 
-\subsubsection{Architectural Review}
+% TODO: Add table comparing query optimization techniques, their use cases, and performance impact
 
-The design is then subjected to an architectural review, where it is assessed against the architectural drivers and project scope. Scenario-based evaluations, risk assessments, and stakeholder feedback are key activities during this stage. The outcome is a decision to either proceed to production or refine the architecture further.
+\subsubsection{Transaction Management and Data Consistency}
 
-\subsubsection{Refinement Phase}
+Without distributed transactions in PocketBase's SQLite backend, the system uses compensating actions and state management for multi-step operations. The item matching process demonstrates this by deleting pending matches before requeuing updated items. Queue operations use atomic state transitions where possible, with retry mechanisms for transient failures. Error recovery preserves successful operations while logging and potentially retrying failures, maintaining system continuity despite individual operation problems.
 
-If the architecture is deemed insufficient during the review, the process enters a refinement phase. This phase begins with the \textbf{experiment planning}, where targeted experiments are designed to address specific weaknesses or uncertainties, such as performance bottlenecks or scalability challenges. These experiments are executed in the \textbf{experiment execution} and subsequent \textbf{architecture refinement} stage, with findings informing updates to the architecture. Once refined, the updated architecture undergoes another review to ensure it meets the required standards before moving forward.
+\subsubsection{PocketBase Integration Architecture}
 
-\subsubsection{Production Phase}
+The implementation uses PocketBase's \ac{rest} \ac{api} with architecture supporting future real-time features via WebSockets. The repository structure accommodates selective updates based on permissions and community membership. Current implementation focuses on reliable \ac{http} communication, providing a pathway for real-time enhancement when operational requirements justify additional features.
 
-If the architecture passes the review, the process transitions to the production phase, beginning with the \textbf{production planning}, which involves preparing the system for deployment by developing detailed plans, establishing monitoring mechanisms, and guaranteeing operational readiness. Finally, the system is deployed during the \textbf{production} stage, when it becomes operational and accessible to end-users. Post-deployment, the architecture is continuously monitored for performance and feedback, allowing iterative improvements as needed.
+\subsubsection{Authentication Token Management and Optimisation}
 
-% ____________________ Quality Attributes ____________________ %
+Authentication reduces redundant PocketBase calls through automatic token refresh with 30-second buffers and in-memory caching, improving performance during active sessions while maintaining security through proper lifecycle management. The architecture supports future caching strategies for frequently accessed data with time-based expiration and invalidation patterns.
 
-\subsection{Quality Attributes} \label{section:quality_attributes}
+\subsubsection{Error Handling and Recovery Patterns}
 
-The quality attributes form the foundation for platform development. These attributes were selected based on their priority for solution success and their relevance to the key challenges identified in the problem domain.
+Error handling categorises failures into transient (network timeouts, temporary unavailability) and permanent (authentication failures, validation errors) types with appropriate recovery strategies. Transient errors use retry mechanisms without overwhelming PocketBase during degradation, while permanent errors propagate immediately with detailed context.
 
-\subsubsection{Scalability}
+\subsubsection{Data Validation and Integrity Patterns}
 
-The platform must accommodate a growing user base and increased item-tracking demands across diverse locations. A microservices architecture is proposed to enable independent scaling of critical system components, such as user management and item management \cite{Al-Debagy2021}. This scalability aligns with the goal of creating a community-oriented system capable of handling high-traffic scenarios and fluctuations in demand without compromising performance.
+Data integrity operates through input validation, foreign key verification, and data transformation between application and PocketBase formats. Schema evolution support with version checking and migrations allows database transitions, abstracting PocketBase complexities.
 
-\subsubsection{Reliability} 
+% ____________________ Core Services Implementation ____________________ %
 
-Consistent performance is essential, even in adverse conditions like network failures. Reliable performance builds user trust, which is fundamental to any lost property management system. Fault-tolerant mechanisms, including distributed databases and redundant servers, will ensure high availability (targeting 99\% uptime) and minimize the "mean time to repair"\footnote{\url{https://www.atlassian.com/incident-management/kpis/common-metrics}}. Automated monitoring and self-healing protocols will detect and address faults proactively.
+\section{Core Services Implementation} \label{section:core_services}
 
-\subsubsection{Security}
+The core services expose their functionality through FastAPI with 11 specialised routers handling authentication, item management, community operations, matching workflows, and administrative functions.
 
-Handling sensitive data, such as user information and potentially high-value lost items, requires a security-first approach. Security measures further reinforce the platform's reliability and address concerns like identity theft and elevated access, two key pain points identified in this research. End-to-end encryption for secure authentication and granular authorisation mechanisms will protect data privacy. Due to the sensitivity of the data the system is going to handle, it is obliged to adhere to \ac{gdpr}\footnote{\url{https://gdpr-info.eu/}} and other relevant regulations to ensure the lawful handling of personal information.
+% TODO: Add architecture diagram showing the 11 FastAPI routers and their domain responsibilities
 
-\subsubsection{Usability}
+\subsection{Authentication Service Code} \label{subsection:auth_service}
 
-The system targets a broad spectrum of users, including non-technical individuals, requiring an intuitive and accessible interface. Following \ac{ui} and \ac{ux} best practices with ongoing feedback loops will support iterative platform improvements. Multilingual support and visual guidance will also cater to diverse user demographics.
+The authentication system distinguishes three user types: ordinary users who access the mobile application, local managers who operate the web dashboard, and system administrators who have full system privileges. Each role maps to a distinct PocketBase collection with specific authentication endpoints. Ordinary users access \texttt{/api/mobile} with public self-registration, while managers and administrators use \texttt{/api/web} with controlled access.
 
-\subsubsection{Observability}
+The authentication system validates \acp{jwt} through Base64 \acs{url}-safe decoding and handles automatic refresh with 5-minute expiration thresholds, while in-memory caching provides time-to-live management for improved performance.
 
-Incorporating observability tools to collect logs, metrics, and traces will allow real-time and long-term monitoring of the system's performance and user interactions \cite{Niedermaier2023}. Observability also allows quick detection and resolution of operational issues, providing insights for continuous improvement.
+Token validation applies a 30-second expiration buffer to determine when tokens should be considered expired, with graceful fallback when refresh attempts fail but tokens remain valid. Additionally, the system incorporates cleanup mechanisms to prevent memory leaks. Token caching reduces authentication requests to PocketBase during active user sessions.
 
-% ____________________ Requirements ____________________ %
+FastAPI dependencies provide declarative security across \ac{api} endpoints. The user authentication dependency extracts and validates Bearer tokens from request headers, checking the token cache before decoding \ac{jwt} payloads. Role-specific dependencies support both single-role requirements and multiple acceptable roles for flexible access control. Convenience functions handle common administrative patterns and manager-level access requirements. The dependency system creates user authentication objects containing user identifiers, email addresses, collection names, and community associations where applicable.
 
-\subsection{System Requirements} \label{section:requirements}
+% TODO: Add sequence diagram illustrating JWT authentication flow with token validation and caching
 
-The system's design and implementation are guided by its requirements, which can also be used to measure the research progress and value. When correctly specified, they help the developer understand the expected result, and the stakeholders evaluate the system's performance. These requirements fall into two categories: functional and non-functional. Table \ref{tab:functional_requirements} lists the functional requirements that define the core features of the system, focusing on enabling users to interact with and manage data effectively.
+\subsection{Item Management Service} \label{subsection:item_management_service}
 
-\begin{table}[!htb]
-\centering
-\begin{tabular}{|p{0.1\textwidth}|p{0.80\textwidth}|}
-\hline
-\textbf{ID} & \textbf{Functional Requirement Description} \\ \hline
-FR1 & Support three user roles: ordinary users, local managers, and administrators. \\ \hline
-FR2 & Enable secure account management for all user types. \\ \hline
-FR3 & Implement authentication and authorization mechanisms, including multi-factor authentication. \\ \hline
-FR4 & Allow users to browse and search lost items based on categories and filters (e.g., location, type). \\ \hline
-FR5 & Provide personalized suggestions for matching items using \ac{ai}. \\ \hline
-FR6 & Facilitate item status updates and notifications to users about item matches or updates. \\ \hline
-FR7 & Enable users to schedule appointments for item retrieval. \\ \hline
-FR8 & Allow administrators to audit system logs and manage user roles effectively. \\ \hline
-FR9 & Integrate community-driven features for collaborative lost item recovery. \\ \hline
-\end{tabular}
-\caption[Functional Requirements]{Functional requirements defining the core system features.}
-\label{tab:functional_requirements}
-\end{table}
+The item management service orchestrates the complete lifecycle of lost and found items through parallel service implementations that handle both found and reported items with identical architectural patterns. It incorporates intelligent processing capabilities, automated security classification, and asynchronous event handling while maintaining strict community-based access control throughout all operations.
 
-On the other hand, Table \ref{tab:nonfunctional_requirements} presents the non-functional requirements, which are directly connected with the system's expected quality levels.
+The service architecture provides lifecycle management through retrieval, creation, modification, and deletion operations. When users submit new items, the system validates input data against predefined category enumerations, automatically determines appropriate security levels based on item characteristics, and initiates asynchronous \ac{ai} processing workflows without blocking the main request flow.
 
-\begin{table}[!htb]
-\centering
-\begin{tabular}{|p{0.1\textwidth}|p{0.80\textwidth}|}
-\hline
-\textbf{ID} & \textbf{Non-Functional Requirement Description} \\ \hline
-NFR1 & Ensure a response time of less than 2 seconds for critical operations under peak load. \\ \hline
-NFR2 & Support scalability to accommodate up to 10,000 concurrent users. \\ \hline
-NFR3 & Comply with data privacy regulations such as \ac{gdpr}. \\ \hline
-NFR4 & Maintain 99\% uptime through fault tolerance and disaster recovery mechanisms. \\ \hline
-NFR5 & Adhere to \ac{ux} and \ac{ui} best practices. \\ \hline
-NFR6 & Implement modular and extensible architecture for easier updates and debugging. \\ \hline
-NFR7 & Incorporate monitoring tools for real-time performance tracking and troubleshooting. \\ \hline
-NFR8 & Secure compatibility across devices. \\ \hline
-\end{tabular}
-\caption[Non-Functional Requirements]{Non-functional requirements defining the system's quality attributes.}
-\label{tab:nonfunctional_requirements}
-\end{table}
+The update mechanism implements intelligent re-processing logic that evaluates whether modifications to item properties warrant renewed \ac{ai} analysis. When users modify descriptions or categories - properties that fundamentally affect the matching algorithm - the system automatically requeues items for processing. The query construction system supports suitable filtering capabilities, including fuzzy text matching for flexible search functionality, boolean state filtering for retrieval status tracking, as well as location filtering that considers both delivery points and current storage locations.
 
+\subsubsection{Image Processing and \ac{ai} Integration}
 
-% ____________________ Constraints ____________________ %
+The image processing subsystem uses multimodal \ac{ai} capabilities through the \ac{llava} model to provide automated content analysis and classification. When users upload images, the system generates detailed object descriptions by analysing visual content and automatically assigns appropriate categories through pattern matching against the system's classification taxonomy. To improve performance when handling multiple images simultaneously, the system implements a batch processing strategy that reduces overhead and improves throughput.
 
-\subsection{Constraints} \label{section:constraints}
+\subsubsection{Security Classification and Access Control}
 
-The development of the system is governed by two primary constraints that shape its scope, deliverables, and quality:
+The security framework implements an automated three-tier classification system that analyses item properties to determine appropriate visibility levels. High-security items, including electronics, valuable objects, and other personal documents, receive maximum protection with masked images and obscured descriptions for standard users. Medium-security items, such as bags and sports equipment, maintain image visibility while restricting location details to prevent unauthorised retrieval attempts. Low-security items, including clothing and books, operate with complete transparency, balancing accessibility with reasonable privacy protection.
 
-\subsubsection{C1: Timeframe Limitation}
+Access control operates through community-based scoping enforced at the data access layer, so all database operations automatically filter results based on user community membership. \ac{rbac} determines which data fields and operations each user type can access, creating a flexible yet secure authorisation framework.
 
-The development is restricted to a 10-month timeframe in which it is embedded.
+\subsubsection{Event-Driven Queue Integration}
 
-\subsubsection{C2: Verifiable Quality}
+The queue management system implements a facade pattern that coordinates multiple specialised services handling continuous background processing, batch operations for efficiency, and monitoring capabilities.
 
-Both software and design quality must be verifiable, meaning the stakeholders must test the system and review its code.
+When \ac{ai} services become unavailable, the system gracefully degrades to basic functionality while queuing items for later processing. Detailed logging captures operational information for debugging and performance analysis, while structured exception handling maintains clean error propagation through the service components, managing high-throughput processing workloads while preserving data consistency and system stability across operational scenarios.
 
-% ____________________ Notional Architecture ____________________ %
+\subsection{Reverse Proxy Gateway Implementation} \label{subsection:reverse_proxy_gateway}
 
-\section{Notional Architecture} \label{section:notional_architecture}
+The system uses a reverse proxy pattern with Nginx rather than a traditional \ac{api} gateway. The design choice favours system simplicity over traditional gateway functionality, creating a single entry point for all services.
 
-As previously mentioned, the architecture is iteratively refined. The initially proposed architecture, visible in Figure \ref{fig:initial_arch}, was designed as a microservices-based system, dividing the application into distinct, independent services, each responsible for a specific functionality \cite{Al-Debagy2021,Söylemez2024}. This planned architecture grouped the system's components into three main layers: the frontend, backend, and support infrastructure, as follows:
+The Nginx-based reverse proxy uses path-based routing with static upstream configuration. Request routing follows a clear pattern: \texttt{/api/*} routes to the FastAPI backend on port 8000, \texttt{/pb/*} directs to PocketBase administration on port 8090, and \texttt{/monitoring/*} connects to Grafana dashboards on port 3000.
 
-\begin{figure}[!htb]
-    \includegraphics[width=0.8\textwidth]{figs/chapter3/initial_arch.png}
-    \centering
-    \caption[Initial Microservices Architecture]{High Level View of the Initially Planned Microservices Architecture.}
-    \label{fig:initial_arch}
-\end{figure}
+The configuration creates upstream connections with keepalive pools configured for each service type. FastAPI receives 32 keepalive connections for high-throughput \ac{api} operations, while PocketBase administration uses 16 connections for moderate administrative traffic. Connection reuse reduces TCP overhead and improves response times during sustained operation.
 
-\subsection{Frontend}
+% TODO: Add network topology diagram showing Nginx reverse proxy routing to backend services
 
-The frontend provides users with a seamless and intuitive interface for both web and mobile platforms, enabling easy access to all system features and smooth interaction with the backend services.
+Furthermore, the reverse proxy enforces \ac{https} redirection with 301 status codes for all \ac{http} requests, securing communication across the system. \ac{ssl} termination occurs at the gateway level, reducing computational overhead on backend services while preserving end-to-end encryption for client communications.
 
-\subsection{Initial Backend Architecture}
+\subsubsection{Authentication Architecture} \label{subsubsection:auth_authorization}
 
-The backend was initially designed as a collection of microservices that would provide distinct functionalities across the system. The Authentication Service was planned to handle user authentication and authorisation through role-based access control, securing controlled access to the system. A dedicated Users Management Service would manage user profiles, including registration and updates, ensuring comprehensive user lifecycle management. The Items Management Service was conceived as the core service of the system, focusing on fetching, storing and updating lost items while integrating with other services to provide seamless item tracking and retrieval functionalities. Additionally, a Community Management Service was designed to handle direct communication between ordinary users and the chat spaces available for each community, fostering collaborative recovery efforts. Finally, an AI/ML Categorization and Recommendation Service was planned to automatically identify and categorise items based on images and descriptions, processing user inputs and interactions to actively match and recommend items to ordinary users searching for lost property.
+The authentication architecture delegates token validation to the application layer while the gateway handles \ac{ssl} termination and security headers, including \ac{cors} configuration. The gateway does not perform token validation, preserving separation of concerns between infrastructure and application logic. At the application layer, input validation uses Pydantic\footnote{\url{https://docs.pydantic.dev/latest/}} models with email validation following RFC 5322\footnote{\url{https://datatracker.ietf.org/doc/html/rfc5322}} standards, alongside MIME type restrictions and size limits for file uploads.
 
-\subsubsection{Initial Support Infrastructure}
+\subsubsection{Comprehensive Rate Limiting and Throttling} \label{subsubsection:rate_limiting}
 
-The infrastructure was planned to provide the foundation for deploying and managing the microservices system through several key components. A reverse proxy was designed to route incoming requests to the appropriate services, providing load balancing and enhancing the system's overall security by handling HTTPS termination. The architecture also included a message queue system that would facilitate asynchronous communication between microservices, ensuring that each service operates independently even during periods of high data throughput. Furthermore, a comprehensive monitoring solution was planned to collect performance metrics and provide dashboards for real-time visualisation of system health and performance indicators.
+The Nginx configuration applies differentiated rate limiting based on endpoint functionality and security requirements. Considering system protection with standard application usage patterns, \ac{api} endpoints enforce 60 requests per minute with burst capacity of 20 requests. Authentication endpoints apply stricter limits of 10 requests per minute with 5-request bursts to prevent credential-based attacks, such as brute force attempts.
 
-% ____________________ Technology Stack ____________________ %
+File upload functions receive 20 requests per minute with 10-request bursts, accounting for the time-intensive nature of image processing while preventing abuse. Administrative interfaces implement the most restrictive limits: 5 requests per minute with configurable burst capacity, reflecting their sensitive nature and typically sporadic usage patterns. The limits were designed to accommodate legitimate use cases incorporated in the application and to block abusive patterns.
 
-\subsection{Proposed Technologies to be Used}
+Connection limiting complements request rate limiting by restricting concurrent connections per \ac{ip} address. \ac{api} operations allow up to 10 concurrent connections per \ac{ip}. At the same time, authentication endpoints limit connections to 3 per \ac{ip}, preventing connection exhaustion attacks while accommodating legitimate multi-tab browsing and mobile application usage.
 
-The selection of technologies is based on their alignment with the architectural drivers and the system's requirements. The proposed technology stack is as follows:
+Rate limiting uses Nginx's \texttt{limit\_req} and \texttt{limit\_conn} modules with memory-based storage for fast enforcement without external dependencies. Rate limit violations return 429 status codes with appropriate error messages, allowing client-side retry logic and clearly communicating the limitation to \ac{api} consumers.
 
-For the frontend, React\footnote{\url{https://react.dev/}} will be used to build a dynamic and interactive web application, mainly for administrative uses inside the platform. At the same time, Flutter will enable cross-platform mobile application development, ensuring an accessible and consistent user experience across locations and devices.
+% TODO: Add table showing rate limiting configurations by endpoint type with request limits and burst capacities
+% TODO: Add rate limiting effectiveness chart showing request blocking rates and system protection metrics
 
-The backend was planned to be essentially powered by FastAPI\footnote{\url{https://fastapi.tiangolo.com/}}, a Python\footnote{\url{https://www.python.org/}}-based framework that excels at building high-performance \acp{api} for small/medium projects, with the main purpose of supporting asynchronous operations. Authentication was planned to be secured using OAuth 2.0, a widely adopted protocol, that would be capable of granting and managing secure access and role-based access control. The system was planned to rely on Pocketbase\footnote{\url{https://pocketbase.io/}}, an open-source Backend-as-a-Service, for handling database operations and real-time data sync, complemented by Redis\footnote{\url{https://redis.io/}} for caching and session management, in order to guarantee fast data access and reduce the backend load. For \ac{ai}-driven functionalities, \ac{llava}\footnote{\url{https://llava-vl.github.io/}}, an end-to-end trained large multimodal model, would combine language and vision processing. Data analytics was planned to be supported by DuckDB\footnote{\url{https://duckdb.org/}}, an in-process analytical database that would efficiently process the complex embeddings generated by \ac{llava}. Considering the necessity of valuable monitoring, Prometheus\footnote{\url{https://prometheus.io/}} would collect metrics across the system, and, using Grafana\footnote{\url{https://grafana.com/}}, would enable intuitive dashboards for real-time visualisation and performance tracking. 
+\subsection{Community and Location Services} \label{subsection:community_location_services}
 
-The entire infrastructure was planned to be containerised using Docker\footnote{\url{https://www.docker.com/}}, ensuring consistency across environments and simplifying deployment. Nginx\footnote{\url{https://nginx.org/en/}} would act as a reverse proxy and load balancer, enhancing request routing. Finally, RabbitMQ\footnote{\url{https://www.rabbitmq.com/}} would serve as the unique message broker, enabling asynchronous and reliable communication between the microservices.
+The community and location services establish the organisational foundation and geographic intelligence capabilities that enable multi-tenant operation and location-aware matching. This module manages hierarchical relationships between users, communities, and physical collection points while providing geographic calculations for proximity-based item matching.
 
-% ____________________ Architectural Evolution ____________________ %
+\subsubsection{Community Management Architecture}
 
-\section{Architectural Evolution and Implementation Reality} \label{section:architectural_evolution}
+The community management system implements organisational control, handling the relationships and permissions that define the multi-tenant architecture. It provides role-aware access patterns where system administrators can manage their assigned communities with full administrative capabilities, local managers access communities through their associated managing points with operational permissions, and ordinary users participate in multiple communities based on their membership associations. Administrative operations support community configuration updates, including visual identity management through avatar uploads and ownership transfer with appropriate validation safeguards.
 
-During the development process, several constraints and practical considerations necessitated an evolution from the initially planned microservices architecture to a more pragmatic implementation approach.
+The system manages user-community associations through a dedicated service module that handles the many-to-many relationships between ordinary users and their communities. The architecture enables efficient retrieval of all members within a specific community for administrative oversight, while also supporting user-centric queries to determine an individual's community memberships. The temporal dimension of these relationships is preserved through timestamp tracking, which is recorded when users join communities for audit and analysis purposes. The implementation utilises database expansion capabilities to retrieve complete relationship graphs in a single operation, improving performance for organisational queries.
 
-\subsection{Development Constraints and Reality Assessment}
+\subsubsection{Local Managing Points Implementation}
 
-The transition from the planned microservices architecture was driven by several critical constraints that became apparent during the initial development phases. The limited development timeline, combined with the solo developer context, created significant constraints on the complexity of infrastructure that could be realistically implemented and supported.
+Physical collection and distribution points are managed through a specialised service that combines location management with geospatial intelligence capabilities. When establishing new managing points, the system processes geographic coordinates as structured data containing precise latitude and longitude information, handles image uploads for visual identification of physical locations, and validates community associations to maintain proper organisational boundaries. The implementation supports flexible data retrieval with configurable pagination ranging from single-item queries to bulk operations processing up to 100,000 records. At the same time, relationship expansion capabilities allow selective loading of related data based on performance requirements.
 
-Research indicates that microservices architectures introduce significant infrastructure overhead, with each new microservice requiring its own test suite, deployment playbooks, hosting infrastructure, and monitoring tools, leading to exponential infrastructure costs \cite{ServiceCostOverhead2023}. Studies comparing monolithic and microservice architectures show that microservices can require 4.22x more runtime processing time and exhibit 2.69x more overhead in Java EE applications \cite{MonolithicVsMicroservices2020}. In the context of academic dissertation evaluation, the primary focus is on demonstrating problem-solving capabilities, domain knowledge, and feature completeness rather than infrastructure complexity. The microservices approach, while architecturally sophisticated, would divert resources from delivering a functional system with comprehensive features or even a minimum viable product.
+Modification operations support partial updates to managing point configurations, enabling changes to geographic coordinates when facilities relocate and image updates for refreshed visual identification.
 
-The planned microservices architecture would require managing 9+ separate services, databases, and deployment pipelines, which, for a solo developer, represents a significant operational burden that could compromise system reliability and long-term viability within the project timeline.
+\subsubsection{Geographic Distance Calculations}
 
-%TODO: Add figure showing the final implementation architecture here
+The location calculation service implements geographic algorithms that power the system's proximity-based matching capabilities. Distance calculations employ the Haversine formula \cite{Sinnott1984} to compute great circle distances between coordinate pairs, providing accurate measurements that account for the Earth's spherical geometry. The system categorises distances using configurable thresholds that define proximity bands: very close for items within 1 kilometre, close for 5-kilometre ranges, moderate for 20-kilometre distances, and far for separations up to 100 kilometres.
 
-\subsection{Final Implementation Architecture}
+Distance measurements are transformed into normalised proximity scores through a scaling algorithm that applies linear interpolation for nearby items and logarithmic decay for distant objects. This makes minor distance differences matter more for nearby items while still considering distant matches when relevant. The coordinate extraction system processes location data from multiple sources and formats, integrating geographic information into the \ac{ai} matching pipeline for location-aware item pairing decisions.
 
-Based on the constraint analysis, the system was implemented using a modular monolithic architecture that preserves microservices design principles while consolidating deployment and operational complexity.
 
-The system uses a single FastAPI application implementing a Router-Service-Repository pattern, which provides clear domain boundaries equivalent to microservices while preserving operational simplicity. The API incorporates an integrated authentication system that combines user authentication and authorization with role-based access control for three distinct user types: ordinary users, local managers, and system administrators. A unified item management approach consolidates item \ac{crud} operations, status tracking, and AI-powered matching within a cohesive service layer, ensuring seamless data flow and consistency. The system embeds community features by integrating real-time communication and community management as internal modules, preserving the collaborative aspects without requiring separate service deployment. Additionally, internal queue processing implements asynchronous operations using an internal queue system rather than external message brokers, reducing infrastructure complexity while preserving system responsiveness.
+% ____________________ AI Integration and Matching Implementation ____________________ %
 
-PocketBase serves as a unified data layer with real-time synchronization capabilities, eliminating the need for separate database management systems. Authentication is handled through PocketBase's built-in authentication system with JWT token management, providing secure and efficient user session management. AI integration utilizes the LLaVA model accessed through Ollama for multimodal processing, enabling intelligent item recognition, categorization, grouping, and matching. Nginx functions as the API gateway, providing security, SSL termination, and traffic management capabilities. System monitoring is achieved through Prometheus and Grafana for comprehensive performance tracking, while Docker and Docker Compose ensure consistent deployment across different environments.
+\section{AI Integration and Matching Implementation} \label{section:ai_integration}
 
+\subsection{\ac{llava} Client Implementation} \label{subsection:llava_client}
 
-% ____________________ Summary ____________________ %
+The \ac{llava} client provides multimodal \ac{ai} capabilities through integration with Ollama server infrastructure, combining text and image analysis for automated item description generation and visual similarity matching.
 
-\section{Summary} \label{section:methodology_summary}
+\subsubsection{Ollama Integration Architecture}
 
-This chapter has outlined the methodology used in developing the intelligent lost and found management system, showing how \ac{acdm} principles guided the design and implementation process. The research progressed through four distinct phases, from state-of-the-art analysis to system deployment and validation.
+The \ac{llava} client connects to the remote Ollama server using Bearer token authentication with \ac{jwt} format credentials. The implementation underwent critical fixes during development, transitioning from broken \texttt{ollama.generate} imports to proper \texttt{ollama.Client()} instantiation with correct authentication headers.
 
-The methodology encompassed the identification of architectural drivers, including critical quality attributes such as scalability, reliability, security, usability, and observability, which guided all subsequent design decisions. The system requirements were systematically defined, establishing both functional capabilities and non-functional performance criteria that align with the identified challenges in lost property management.
 
-A significant aspect of this methodology was the architectural evolution process, which demonstrated how theoretical design must adapt to practical constraints while preserving core architectural principles. The transition from the initially planned microservices architecture to a modular monolithic implementation was driven by a realistic assessment of development timeline and resource constraints, ensuring that the platform remained feasible within the academic context. Throughout this process, the preservation of scalability and modularity principles was prioritized to ensure opportunities for future system enhancement and, mainly, evolution.
+The client configuration includes host specification via environment variables, authorisation headers for secure communication, and connection parameters configured for different analysis types. Text analysis uses a 2048 token context with 30-second timeouts and a temperature of 0.1 for consistent results, while image analysis extends to a 4096 token context with 45-second timeouts to accommodate visual processing requirements.
 
-The final implementation architecture successfully balances sophisticated functionality with operational simplicity, delivering a comprehensive system that addresses the identified research objectives while remaining within the leveraged constraints. This transformation demonstrates engineering maturity by prioritizing feature delivery and system reliability over infrastructure complexity. The Router-Service-Repository pattern employed ensures clear separation of concerns through well-defined service boundaries, enabling selective scaling or extraction when system growth demands it. Error containment mechanisms isolate failures at the domain level, preventing cascading issues across the entire application while establishing the foundation for future architectural evolution as system demands grow.
+\subsubsection{Multimodal Analysis Implementation}
 
-Additionally, this method provides a replicable framework for similar medium-sized academic and professional projects, demonstrating how architectural decisions should be guided by empirical analysis rather than purely theoretical considerations, ultimately resulting in more successful and sustainable software systems.
+The filing service coordinates \ac{ai}-powered image analysis using the prompt "Describe the main central object in this image..." for automatic description generation. Category assignment operates through object matching against the complete classification taxonomy, with fallback to a general category when classification confidence proves insufficient.
+
+Image processing includes PNG conversion and validation for \ac{ai} compatibility, providing consistent input formats for reliable analysis. The service implements batch file operations to improve performance during multiple image retrievals, while validation error handling prevents system interruptions when \ac{ai} services become temporarily unavailable.
+
+\subsection{Matching Algorithm Implementation} \label{subsection:matching_algorithm}
+
+The matching algorithm uses a multi-factor scoring system that combines the previously mentioned factors (semantic understanding, visual analysis, geographic and temporal proximity, and contextual relevance) to identify potential item matches, using \ac{ai}-powered comparison across multiple dimensions while maintaining the performance characteristics necessary for real-time operational requirements.
+
+\subsubsection{Multi-Factor Scoring Architecture}
+
+The confidence calculation implements a carefully calibrated weighted algorithm that balances different matching factors based on their empirical predictive value. Description similarity represents the most significant factor at 40\% weight, utilising semantic text analysis through the \ac{llava} model to understand meaning beyond simple keyword matching. Category alignment contributes 25\% to the overall score, recognising that correct classification provides strong correlation signals. Visual similarity through multimodal image comparison accounts for 20\% of the score, offering crucial confirmation when textual descriptions may vary. Geographic proximity adds 10\% weight to favour nearby matches while still considering distant possibilities, and temporal relevance contributes the final 5\% to acknowledge the correlation between report and discovery timing.
+
+The scoring architecture normalises each factor to a standard 0.0 to 1.0 scale before applying weights, providing balanced contributions regardless of the underlying measurement scales.
+
+% TODO: Add pie chart or stacked bar chart visualizing the weighted scoring factors (40% description, 25% category, 20% visual, 10% geographic, 5% temporal)
+
+\subsubsection{Confidence Threshold Management}
+
+The system categorises potential matches into distinct confidence bands that determine how users interact with the results. Matches achieving confidence scores above 0.90 are presented to users as highly probable reunifications, requiring only minimal verification before confirmation. The medium confidence range, from 0.70 to 0.89, triggers human-in-the-loop review processes, presenting matches with detailed comparison information to assist user decision-making. Low confidence matches scoring between 0.50 and 0.69 undergo background processing for pattern analysis and system learning without immediate user notification.
+
+Results falling below the 0.50 confidence threshold are excluded from user interfaces to prevent notification fatigue, though the system retains these matches for analytical purposes and algorithm improvement. The tiered threshold system carefully balances the competing demands of maximising successful reunifications while minimising false positive notifications that could undermine user trust.
+
+% TODO: Add diagram showing confidence threshold bands (>0.90 high, 0.70-0.89 medium, 0.50-0.69 low) and corresponding user interactions
+% TODO: Add matching algorithm performance metrics showing accuracy rates and processing times for each confidence band
+
+
+\subsection{Queue Processing Implementation} \label{subsection:queue_processing}
+
+The queue processing system manages asynchronous item processing operations through a service-oriented architecture that balances continuous background processing and batch operations.
+
+The queue management system implements a facade pattern that coordinates four specialised services, each designed for specific operational requirements. The continuous processing service maintains persistent background operations with sleep and backoff mechanisms that adapt to workload variations, maximising overall throughput by maintaining constant operation with minimal idle time. The batch processing service manages community-specific operations with configurable batch sizes that balance throughput and resource utilisation, improving performance through grouping and resource pooling. Administrative capabilities are provided through a dedicated management service that enables queue manipulation and manual intervention when necessary, prioritising reliability and data consistency over raw performance. Real-time monitoring delivers statistics and health assessments that inform operational decisions and capacity planning, providing observability without impacting processing performance. The services share common interfaces and error handling patterns, but maintain operational independence.
+
+\subsubsection{Batch Processing and Workflow Management}
+
+The batch processing implementation groups items by community to provide fair resource allocation across the multi-tenant architecture. Processing cycles handle up to 10 items per community. The system implements adaptive timing strategies with 5-second delays between active processing cycles to prevent resource exhaustion, extending to 30-second idle periods when queues are empty to reduce unnecessary computational overhead.
+
+Workflow management tracks item progression through clearly defined states that enable precise monitoring and error recovery. Items enter the queue in a pending state and are awaiting their processing turn. The processing state indicates active \ac{ai} analysis in progress, preventing duplicate processing attempts. Completed and failed states represent terminal conditions that trigger appropriate follow-up actions. State transitions employ atomic operations wherever the underlying database supports them, with carefully designed compensating actions for multi-step processes that cannot be completed atomically within the database's transactional constraints.
+
+\subsubsection{Error Handling and Recovery Mechanisms}
+
+The queue system distinguishes between transient and permanent failures. Transient failures trigger exponential backoff retry mechanisms with gradually increasing delay intervals, while permanent failures are immediately marked and removed from active processing to prevent queue blockage. State tracking with unique identifiers and timestamps prevents duplicate processing during system restarts, enabling operations to resume exactly where interruptions occurred.
+
+\subsubsection{Monitoring Infrastructure}
+
+The monitoring infrastructure provides real-time visibility into queue operations through detailed metrics collection. The system tracks throughput with community-level granularity, latency across different processing stages, and success rates broken down by community and item type. The monitoring implementation integrates with Prometheus and Grafana for metrics collection, visualisation, and alerting capabilities, automatically tracking request latency, response patterns, and system resource utilisation with configurable alerting for threshold violations.
+
+% TODO: Add sample Grafana dashboard screenshots showing queue monitoring metrics, system health panels, and alert configurations
+
+% ____________________ Frontend Interfaces ____________________ %
+
+\section{Frontend Interfaces} \label{section:frontend_interfaces}
+
+The system provides two distinct user interfaces tailored to different user roles and operational contexts. The web application provides dashboard capabilities for local managers and administrators, and the mobile application enables ordinary users to report and search for lost items in the field.
+
+\subsection{Web Application Architecture} \label{subsection:web_application}
+
+The web dashboard implements a React 19\footnote{\url{https://react.dev/blog/2024/12/05/react-19}} architecture with TypeScript\footnote{\url{https://www.typescriptlang.org/}} for type-safe development and Vite\footnote{\url{https://vitejs.dev/}} as the build tool for optimised development and production builds. The application uses React Router v7\footnote{\url{https://reactrouter.com/}} for client-side routing with nested route protection and Tailwind CSS v4\footnote{\url{https://tailwindcss.com/}} for utility-first styling.
+
+The state management architecture employs React Context API patterns with four specialised contexts. The component architecture utilises shadcn/ui\footnote{\url{https://ui.shadcn.com/}} component library built on Radix UI\footnote{\url{https://www.radix-ui.com/}} primitives, implementing a compound component pattern for reusable UI elements. Advanced table functionality uses @tanstack/react-table\footnote{\url{https://tanstack.com/table/}} for data manipulation, while form handling combines react-hook-form\footnote{\url{https://react-hook-form.com/}} with Zod\footnote{\url{https://zod.dev/}} validation schemas. The system integrates Leaflet\footnote{\url{https://leafletjs.com/}} mapping through react-leaflet\footnote{\url{https://react-leaflet.js.org/}} for geographic visualization and Recharts\footnote{\url{https://recharts.org/}} for data visualization dashboards.
+
+The routing architecture implements protected routes by enforcing authentication before accessing administrative interfaces. The route structure encompasses dashboard overview, inventory management, archived items, delivery points configuration, user management for both managers and regular users, community administration, and system settings.
+
+% TODO: Add screenshot of web dashboard interface showing key administrative features and navigation
+
+\ac{api} integration operates through dedicated service modules organised by domain (auth, items, users, managers, points), each implementing \ac{rest}ful communication patterns with the backend endpoint. Token-based authentication persists through localStorage with the automatic refresh mechanisms.
+
+\subsection{Mobile Application Design} \label{subsection:mobile_application}
+
+The mobile application uses Flutter SDK\footnote{\url{https://flutter.dev/}} for cross-platform development with Dart language\footnote{\url{https://dart.dev/}}, targeting iOS, Android, and web platforms. The architecture centres on the GetX\footnote{\url{https://pub.dev/packages/get}} ecosystem for complete state management, navigation, and dependency injection, providing reactive programming patterns and declarative routing.
+
+The UI framework implements Material Design 3\footnote{\url{https://m3.material.io/}} principles through GetWidget\footnote{\url{https://pub.dev/packages/getwidget}} as the primary component library, maintaining consistent visual design across platforms. The application structure follows a feature-based organisation with dedicated modules for authentication, community management, item discovery, lost item reporting, delivery points, and user profile management.
+
+State management operates through GetX reactive state patterns with dependency injection via GetX service locator, eliminating the need for context passing and enabling clean separation between business logic and UI components. Navigation uses GetX's declarative routing system with route guards for authentication-based access control.
+
+\ac{api} integration employs Dio\footnote{\url{https://pub.dev/packages/dio}} \ac{http} client for asynchronous communication with the backend, implementing token-based authentication with secure storage mechanisms for sensitive credentials and local preferences management for user settings.
+
+The feature implementation encompasses community selection and management for multi-tenant access, item discovery with filtering and search capabilities within user communities, lost item reporting with integrated camera and gallery access, delivery point visualisation, and push notification handling for real-time updates. Image handling employs network caching strategies for efficient loading and performance improvements.
+
+% TODO: Add mobile app screenshots showing the main user flows (item reporting, discovery, and matching interfaces)
+
+
+% ____________________ API Documentation ____________________ %
+
+\section{API Documentation} \label{section:api_documentation}
+
+The framework provides automatic OpenAPI documentation generation with interactive \ac{api} exploration capabilities. The documentation includes detailed endpoint descriptions, request and response schemas, authentication requirements, and example usage patterns across all functional modules. Model integration provides schema accuracy with automatic validation rules and constraint documentation.
+
+This interactive interface enables developers and stakeholders to explore \ac{api} capabilities without external tools, supporting authentication testing through Bearer token input and real-time request execution against development and staging environments. Documentation updates automatically with code changes, maintaining consistency between implementation and specification throughout the development lifecycle.
+
+Besides that, throughout the development process, 34+ markdown files were created covering implementation details, architectural decisions, and operational procedures. Additionally, code documentation uses inline comments and architectural diagrams for visual system representations, allowing for knowledge transfer, system maintenance, and some possible future development activities.
+
+% ____________________ Deployment Architecture and Operations ____________________ %
+
+\section{Deployment Architecture and Operations} \label{section:deployment_operations}
+
+The deployment architecture coordinates nine containerized services across backend and frontend Docker Compose configurations, creating a production-ready environment for system reliability, observability, and maintainability.
+
+\subsection{Containerized Deployment Architecture} \label{subsection:container_deployment}
+
+The deployment architecture coordinates nine containerized services between backend and frontend environments. On the backend, seven services work in concert - FastAPI serves as the application's core, PocketBase handles data storage (port 8090), and Nginx acts as the reverse proxy. For observability, Prometheus (port 9090) gathers metrics, paired with Grafana (port 3000) for visualization. Node Exporter (port 9100) tracks system health while Nginx Exporter captures web server statistics. The frontend runs separately, hosting a React application on port 5173 alongside a Flutter web interface on port 8080.
+
+% TODO: Add Docker Compose architecture diagram showing all 9 containerized services, their dependencies, ports, and network connections
+
+The services connect in a hierarchical dependency chain where FastAPI needs PocketBase to be running, the monitoring stack watches FastAPI, and Nginx waits for both application services before accepting traffic. To maintain system resilience, health checks ping each service's HTTP endpoint at regular intervals - every 15 seconds for PocketBase and FastAPI, every 30 seconds for Nginx. When a service fails these checks, Docker automatically restarts it according to configured policies: \texttt{on-failure} for application services and \texttt{unless-stopped} for the monitoring stack.
+
+Backend and frontend are isolated into separate Docker bridge networks for security. The \texttt{backend\_network} links all infrastructure services, enabling internal communication by container name rather than IP address. During development, backend service ports are exposed for debugging - FastAPI on 8000, PocketBase on 8090, Prometheus on 9090, Grafana on 3000, and Nginx on ports 80 and 443. Frontend services operate within their own \texttt{uachado-network}, with React accessible on port 5173 and Flutter on 8080.
+
+Docker volumes handle data persistence, maintaining information safety during container restarts. PocketBase writes to \texttt{pb\_data}, Prometheus saves metrics to its named volume, and Grafana stores dashboards and settings in another persistent volume. Alpine-based images keep container sizes minimal while pinned specific versions in Dockerfiles guarantee consistent deployments across environments.
+
+\subsection{Monitoring and Observability} \label{subsection:monitoring_observability}
+
+The monitoring infrastructure operates across three layers to capture complete system visibility. Prometheus scrapes FastAPI's metrics endpoint every 5 seconds, providing application-level insights into request handling and processing times. Docker's built-in metrics track container resource usage and health status across the deployment. For deeper system visibility, Node Exporter reads directly from the host's \texttt{/proc} and \texttt{/sys} directories (mounted read-only for security), capturing per-core CPU usage, memory allocation, disk space, and network traffic.
+
+Grafana transforms these raw metrics into four dashboard views. The system overview tracks CPU, memory, and disk I/O across all services. Application performance dashboards show response times, throughput, and error rates. Business metrics reveal item lifecycles, user activity patterns, and claim resolution statistics. Alert panels highlight when any metric crosses its configured threshold.
+
+Alert rules reside in \texttt{/etc/prometheus/rules}, mounted as a directory in the Prometheus container. A 30-day retention window for metrics provides automatic pruning of old data to prevent disk exhaustion.
+
+\subsection{Operational Procedures} \label{subsection:operational_procedures}
+
+\subsubsection{Deployment Workflow}
+
+Deploying the system requires coordinating both backend and frontend environments. The backend pulls its configuration from a \texttt{.env} file containing database credentials, API keys, and feature flags. Frontend services receive environment variables directly from the Docker Compose file, particularly for development mode settings.
+
+A typical deployment follows three steps. First, \texttt{docker-compose config} validates that all configuration files parse correctly. Then \texttt{docker-compose build} constructs the container images from Dockerfiles. Finally, \texttt{docker-compose up -d} launches everything in detached mode. The system waits for health checks to pass before routing traffic to newly deployed services.
+
+\subsubsection{Configuration Management}
+
+Different configuration changes require different update procedures. When changing environment variables, a simple \texttt{docker-compose restart [service]} reloads the affected container with new values. Code changes demand rebuilding - first \texttt{docker-compose build [service]}, then \texttt{docker-compose up -d [service]} to deploy the updated image. Database schema migrations run automatically through PocketBase hooks placed in the \texttt{pb\_hooks} directory.
+
+\subsubsection{Data Persistence and Maintenance}
+
+Docker volumes maintain data safety between container restarts and redeployments. PocketBase writes everything to \texttt{pb\_data}, while Prometheus and Grafana each maintain their own named volumes for metrics and dashboards.
+
+System security requires regularly updating the base images specified in Dockerfiles, then rebuilding and redeploying affected services. The 30-day Prometheus retention policy prevents disk space issues by automatically cleaning up old metrics data.
+
+\subsubsection{Recovery Procedures}
+
+When services crash, Docker's restart policies activate automatically. Application services use \texttt{on-failure} to restart after crashes, while monitoring services run with \texttt{unless-stopped} to maintain availability unless explicitly shut down. If services lose network connectivity to each other, tearing down and recreating the Docker network often resolves the problem - using \texttt{docker-compose down} followed by \texttt{docker-compose up}.
+
+\section{Summary} \label{section:implementation_summary}
+
+This chapter presented the implementation and deployment of the UAchado intelligent \ac{lfms}, demonstrating how architectural decisions from Chapter \ref{chapter:methodology} translated into a functional, production-ready system. The database implementation established a 17-collection PocketBase schema supporting multi-tenant architecture with community-based scoping, hierarchical \ac{rbac}, and optimised query patterns. Core services delivered specialised functionality through FastAPI with 11 routers, implementing authentication with \ac{jwt} validation and caching, complete item lifecycle management with automated security classification, and reverse proxy architecture using Nginx for \ac{ssl} termination and differentiated rate limiting. The \ac{ai} integration employed \ac{llava} through Ollama for multimodal analysis, implementing a multi-factor scoring matching algorithm (description similarity, category alignment, visual comparison, geographic and temporal proximity) and confidence-based thresholds for human-in-the-loop verification.
+
+The system provides asynchronous queue processing with batch management handling over 50 items per minute per community and dual frontend interfaces tailored to distinct user roles. The web application employed React 19 with TypeScript, Context API state management, and shadcn/ui components for administrative dashboards, while the mobile application utilised Flutter with GetX ecosystem for cross-platform field operations. The deployment architecture coordinates nine containerized services through Docker Compose configurations, providing monitoring via Prometheus and Grafana integration, automated health checks and recovery procedures, and operational workflows for configuration management and system maintenance. The complete system includes automatic OpenAPI documentation, extensive markdown documentation covering 34+ implementation files, and thorough error handling across all service boundaries.

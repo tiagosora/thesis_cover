@@ -9,8 +9,8 @@
 
 % Remove 'coverdepname' parameter to remove department name from cover pages
 % Add 'final' parameter to remove "DOCUMENTO PROVISÓRIO" from cover page
-\documentclass[11pt,a4paper]{report}
-% \documentclass[11pt,a4paper,final]{report}
+% \documentclass[11pt,a4paper]{report}
+\documentclass[11pt,a4paper,final]{report}
 
 %% Import the UA thesis template
 \usepackage[engineering,deti]{uaThesisTemplate}
@@ -64,10 +64,11 @@
 
 %% First Member will be the President of the Jury
 % \JuriMember{Prof. Doutor João Antunes da Silva}{professor associado da Universidade de Aveiro}
+\JuriMember{Prof. Doutor }{-}
 
 %% Additional members of the Jury
-% \JuriMember{Prof. Doutor João Antunes da Silva}{professor associado da Universidade de Aveiro}
-% \JuriMember{Prof. Doutor João Antunes da Silva}{professor associado da Universidade de Aveiro}
+\JuriMember{Prof. Doutor }{-}
+\JuriMember{Prof. Doutor Eurico Farinha Pedrosa}{professor associado da Universidade de Aveiro}
 % \JuriMember{Prof. Doutor João Antunes da Silva}{professor associado da Universidade de Aveiro}
 % \JuriMember{Prof. Doutor João Antunes da Silva}{professor associado da Universidade de Aveiro}
 % \JuriMember{Prof. Doutor João Antunes da Silva}{professor associado da Universidade de Aveiro}
@@ -76,13 +77,51 @@
 
 %% Optional Acknowledgement text
 
-% \Acknowledgements{Gostaria de agradecer aos meus orientadores, Dr. Eurico Pedrosa e Dr. Mário Antunes, pela sua orientação, paciência e encorajamento ao longo desta investigação. Os seus conhecimentos e sugestões úteis melhoraram muito o meu trabalho e posso seguramente dizer que tiveram um impacto imenso no resultado deste trabalho.
+\Acknowledgements{To my family, particularly to my mother, for supporting me in every single moment and for being my greatest inspiration.
 
-% Muito obrigado aos meus colegas e amigos do DETI-UA pelo seu apoio. Quero também agradecer a todos os que me ajudaram durante as fases de recolha de dados, teste e revisão deste projeto.
+To Professor Eurico Pedrosa and Professor Mário Antunes, for believing in and guiding me, for all the knowledge they have shared, and essentially for making this work possible.
 
-% Estou profundamente grato à minha família e amigos pela sua compreensão e amor, que me motivaram a concluir esta dissertação.
+To my most precious friends who have been with me since day one and even before:
 
-% Obrigado a todos os que contribuíram para o sucesso deste projeto.}
+João Monteiro, for always staying by my side and showing me the joy of living life intensively.
+
+Raquel, for being with me in the best and worst moments, and for being the older sister I never had.
+
+Paulo, for all the silly moments and for joining me in countless gaming sessions.
+
+Beatriz, for making my craziest ideas twice as crazy every time.
+
+Sandra, for showing me the value of hard work.
+
+Vitória, for reminding me of home and my friends there.
+
+To the friends I wish I had met on the first day:
+
+Daniel, for every endless laugh and every meal we shared together.
+
+Vânia, for being the sweetest person in the world and making my days brighter.
+
+Manco, for randomly making all situations more interesting.
+
+Vicente, for the laughs and jokes and for creating "Super Sora".
+
+Pylance and Rui, for all the drinks and talks we shared and for the friends you introduced me to.
+
+The other "Otários": Gonçalo, Joana, João, Lia, Lili, and Passivo. What started as a group for taking breaks from university work turned into memorable moments I will never forget.
+
+To all those who "Faina" gave me, especially:
+
+Priscila, for teaching me how to perfectly balance responsibility with partying and for every minute of our everlasting phone calls.
+
+Bernardo, for every piece of life advice and lesson.
+
+To those who have been part of my journey in AETTUA and haven't been mentioned, mainly Roldão, Maria, Duarte, Pedro Mendes, and Leal. You have made this experience unforgettable.
+
+I would also like to thank everyone I have met from DETI and UA during these years, for making me who I am today. I could go on naming every single one of you, but you know who you are.
+
+And, finally, to those I have sung "Bem-vindo a Aveiro" with and who have made this city truly the "cidade dos meus olhos".
+
+\textbf{"Aveiro é nosso, e há-de ser, Aveiro é nosso, até morrer."}}
 
 %%% Edit the keywords and abstract in Portuguese
 %%% Don't forget to remove the \blindtext[3]
@@ -90,8 +129,8 @@
 %%% Don't remove the \selectlanguage statement or you will end with incorrect hyphenation
 %% Mandatory Keywords and Abstract in Portuguese
 
-% \Abstract{palavras-chave}{texto livro, arquitetura, história, construção, materiais de construção, saber tradicional.}
-%          {resumo}{\selectlanguage{portuguese}Um resumo é um pequeno apanhado de um trabalho mais longo (como uma tese, dissertação ou trabalho de pesquisa). O resumo relata de forma concisa os objetivos e resultados da sua pesquisa, para que os leitores saibam exatamente o que se aborda no seu documento.\\Embora a estrutura possa variar um pouco dependendo da sua área de estudo, o seu resumo deve descrever o propósito do seu trabalho, os métodos que você usou e as conclusões a que chegou.\\Uma maneira comum de estruturar um resumo é usar a estrutura IMRaD. Isso significa: \begin{itemize} \item Introdução \item Métodos \item Resultados \item Discussão \end{itemize} Veja mais pormenores aqui:\\\texttt{https://www.scribbr.com/dissertation/abstract/}}
+\Abstract{palavras-chave}{Sistemas de Gestão de Inventário Inteligentes, Gestão de Perdidos e Achados, Metodologia de Design Centrado na Arquitetura, Visão por Computador, Processamento de Linguagem Natural, Reconhecimento Multimodal}
+         {resumo}{\selectlanguage{portuguese}A gestão de objetos perdidos e achados continua a ser um desafio significativo para instituições, particularmente aquelas que dependem de sistemas manuais baseados em papel que se revelam ineficientes e propensos a erros. Esta dissertação explora o desenvolvimento de um sistema inteligente de gestão de achados e perdidos que integra tecnologias de visão por computador (CV) e processamento de linguagem natural (NLP) através do modelo multimodal LLaVA. Utilizando a Metodologia de Design Centrado na Arquitetura (ACDM), foi desenvolvida uma solução modular que suporta a identificação automática, categorização e correspondência de objetos perdidos. A metodologia incluiu uma revisão sistemática do estado da arte, design arquitetural, implementação do sistema e validação empírica através de testes técnicos e avaliação com utilizadores. Os resultados demonstram que a integração de inteligência artificial permite transformar a gestão convencional de objetos perdidos num serviço comunitário eficiente e escalável. Este trabalho contribui para o discurso técnico sobre sistemas inteligentes de gestão, oferecendo uma solução extensível para as necessidades evolutivas das organizações.}
 
 %%% OPTIONAL: you can write the keywords and
 %%%  abstract in other languages. You can repeat
@@ -101,14 +140,14 @@
 %%% You can modify the language to any other supported by Latex
 %% Optional Keywords and Abstract in additional languages.
 
-% \Abstract{keywords}{textbook, architecture, history, construction, construction materials, traditional knowledge.}
-%          {abstract}{\selectlanguage{english}An abstract is a short summary of a longer work (such as a thesis, dissertation or research paper).\\The abstract concisely reports the aims and outcomes of your research, so that readers know exactly what your paper is about.\\Although the structure may vary slightly depending on your discipline, your abstract should describe the purpose of your work, the methods you’ve used, and the conclusions you’ve drawn.\\One common way to structure your abstract is to use the IMRaD structure. This stands for: \begin{itemize} \item Introduction \item Methods \item Results \item Discussion \end{itemize} Check for more details here:\\\texttt{https://www.scribbr.com/dissertation/abstract/}}
+\Abstract{keywords}{Intelligent Inventory Management Systems, Lost and Found Management, Architecture-Centric Design Methodology, Computer Vision, Natural Language Processing, Multimodal Recognition.}
+         {abstract}{\selectlanguage{english}Lost and found property management remains a significant challenge for institutions, particularly those relying on manual paper-based systems that prove inefficient and error-prone. This dissertation explores the development of an intelligent lost and found management system integrating computer vision (CV) and natural language processing (NLP) technologies through the LLaVA multimodal model. Using Architecture-Centric Design Methodology (ACDM), a modular solution was developed supporting automatic identification, categorization, and matching of lost items. The methodology included a systematic review of state-of-the-art solutions, architectural design, system implementation, and empirical validation through technical testing and user evaluation. Results demonstrate that artificial intelligence integration enables the transformation of conventional lost property management into an efficient and scalable community service. This work contributes to the technical discourse on intelligent inventory management systems, offering an extensible solution for the evolving organizational needs.}
 
 
 %%% OPTIONAL: Acknowledge the use of AI Tools
 
 \AIUse{I acknowledge the use of Grammarly (Grammarly, https://www.grammarly.com/) to improve and correct some sentences and paragraphs, pontuation and vocabulary.
-I acknowledge the use of ChatGPT-3.5 to improve the overall deliver of this Dissertation document.}
+I acknowledge the use of ChatGPT o1 (OpenAI, https://openai.com/) and Claude (Anthropic, https://www.claude.com/) to improve the overall deliver of this Dissertation document.}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
