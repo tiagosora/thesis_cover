@@ -9,12 +9,22 @@ This chapter presents testing and validation results that demonstrate the system
 
 \subsection{Unit Testing Framework} \label{subsection:unit_testing_framework}
 
-The testing infrastructure uses pytest\footnote{\url{https://docs.pytest.org/}} with pytest-asyncio\footnote{\url{https://pytest-asyncio.readthedocs.io/}} for asynchronous testing patterns required by the \ac{ai}-powered matching system and multi-tenant architecture. The framework includes 44 test files organised across three architectural layers with 551 test functions.
-% TODO: Add testing architecture diagram showing the three layers (service, repository, router) with coverage metrics for each layer (service 77%, repository 46%, router) and total coverage 60.44%
+The testing infrastructure uses pytest\footnote{\url{https://docs.pytest.org/}} with pytest-asyncio\footnote{\url{https://pytest-asyncio.readthedocs.io/}} for asynchronous testing patterns required by the \ac{ai}-powered matching system and multi-tenant architecture. The framework includes 43 test files organised across three architectural layers with 551 test functions.
+
+Figure \ref{fig:testing_architecture} illustrates the three-layer testing architecture with coverage metrics for each layer, showing how the pytest framework supports testing across all system components.
+
+TODO: Fix this figure 
+
+% \begin{figure}[htbp]
+% \centering
+% \includegraphics[width=\textwidth]{figs/chapter5/testing_architecture_diagram.png}
+% \caption{Testing Architecture: Three-Layer Coverage Analysis with pytest Framework}
+% \label{fig:testing_architecture}
+% \end{figure}
 
 \subsubsection{Framework Configuration and Test Organisation}
 
-The pytest configuration defines seven test markers for selective execution: unit, integration, e2e, slow, ai, security, and performance. Test discovery follows standard Python conventions with automatic detection of \texttt{test\_*.py} files and \texttt{Test*} classes. The service layer contains 15 test files with 77\% component coverage, the repository layer has 10 files with 46\% coverage, and the router layer includes 11 files focused on unit testing.
+The pytest configuration defines seven test markers for selective execution: unit, integration, e2e, slow, ai, security, and performance. Test discovery follows standard Python conventions with automatic detection of \texttt{test\_*.py} files and \texttt{Test*} classes. The service layer contains 15 test files with 50.49\% component coverage, the repository layer has 10 files with 62.49\% coverage, and the router layer includes 11 files with 68.17\% coverage focused on unit testing.
 
 \subsubsection{Testing Patterns and Mock Infrastructure}
 
@@ -30,9 +40,9 @@ Configuration management via \texttt{conftest.py} handles environment setup, dep
 
 Integration testing validates the interaction between system components through real database connections and \ac{api} endpoint verification. The test suite includes 47 integration tests using \texttt{@pytest.mark.integration} markers, covering database operations with PocketBase, multi-service coordination, and \ac{ai} processing pipelines.
 
-Database integration tests operate against a test PocketBase instance with real \ac{crud} operations and schema validation. Tests confirm the complete database schema implementation, including both successful operations and constraint violations, maintaining data integrity across the multi-tenant boundaries.
+Database integration tests operate against a test PocketBase instance with real \ac{crud} operations and schema validation. Tests confirm the database schema implementation, including both successful operations and constraint violations, maintaining data integrity across the multi-tenant boundaries.
 
-Endpoint integration testing uses FastAPI's TestClient\footnote{\url{https://fastapi.tiangolo.com/tutorial/testing/}} for full request-response cycle validation, covering all \ac{api} endpoints with complete request-response cycle validation.
+Endpoint integration testing uses FastAPI's TestClient\footnote{\url{https://fastapi.tiangolo.com/tutorial/testing/}} for full request-response cycle validation, covering all \ac{api} endpoints with request-response cycle validation.
 
 Lastly, external service integration focuses on Ollama and \ac{llava} \ac{ai} services through controlled test environments. Tests validate image processing workflows, queue management systems, and error handling for service unavailability. The implementation includes circuit breaker patterns and fallback mechanisms to maintain stability during possible external service disruptions.
 
@@ -42,23 +52,42 @@ Lastly, external service integration focuses on Ollama and \ac{llava} \ac{ai} se
 
 \subsection{Test Execution Performance} \label{subsection:test_execution_performance}
 
-Test execution performance supports efficient development workflow with complete suite execution in 47 seconds for unit tests and 3.2 minutes, including integration tests. Database integration tests show consistent execution times with standard deviation under 150ms, indicating stable test environment performance. Mock service implementations execute 95\% faster than live service calls while preserving test accuracy through realistic response simulation.
+Test execution performance supports efficient development workflow with suite execution in 47 seconds for unit tests and 3.2 minutes, including integration tests. Database integration tests show consistent execution times with standard deviation under 150ms, indicating stable test environment performance. Mock service implementations execute 95\% faster than live service calls while preserving test accuracy through realistic response simulation.
 
 Test isolation prevents interdependencies through automatic mock state reset between executions, achieving 100\% test independence verification. Performance bottlenecks occur during database schema setup and \ac{ai} service mock initialisation, addressed through shared fixture caching and parallel test execution, respectively.
 
 \subsection{System Load Testing and Throughput Analysis} \label{subsection:system_load_testing}
 
-System load testing shows the system handles 850 concurrent connections with consistent performance across different endpoint types. Authentication endpoints show P95 response times of 113ms during login operations, while standard \ac{crud} operations exhibit P95 latency of 6.65ms. Database operations reach P95 response times of 15.83ms, representing 6x better performance than the 100ms target threshold.
+System load testing demonstrates stable performance up to 500 concurrent connections using the test framework. Authentication endpoints maintain response times under 467ms even at maximum load, while standard \ac{crud} operations achieve consistently low latency with P95 times reaching 148ms at peak concurrent usage. Database operations perform well, staying under 278ms response times across all tested load scenarios.
 
-% TODO: Add load testing results graph showing response times vs concurrent connections with performance curves for different endpoint types
+Figure \ref{fig:load_testing_results} illustrates the performance characteristics for standard operations and shows the AI processing performance under concurrent load conditions.
 
-Throughput measurements demonstrate 2,400 requests per second for standard operations and 180 requests per second for \ac{ai}-enhanced search functionality. Stress testing confirms system stability under sustained load with 99.7\% uptime during 6-hour continuous operation tests. Resource utilisation peaks at 72\% \ac{cpu} and 68\% memory during maximum concurrent load scenarios.
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figs/chapter5/load_testing_standard.png}
+        \caption{Standard Operations Performance}
+        \label{fig:load_testing_standard}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figs/chapter5/load_testing_ai.png}
+        \caption{AI Processing Performance}
+        \label{fig:load_testing_ai}
+    \end{subfigure}
+    \caption{Load Testing Results}
+    \label{fig:load_testing_results}
+\end{figure}
+
+Throughput measurements show 767 requests per second for standard operations under optimal conditions, with \ac{ai}-enhanced search functionality achieving 4.2 requests per second due to external processing requirements. Stress testing confirms system stability under sustained load with continuous 5-minute operation tests maintaining consistent performance. The testing framework validates production readiness through monitoring of response times, error rates, and resource utilisation patterns.
 
 \subsection{AI Processing Performance Validation} \label{subsection:ai_processing_validation}
 
-\ac{ai} processing performance testing focuses on Ollama and \ac{llava} integration with measured image processing latency averaging 2.3 seconds per image analysis. Queue processing efficiency reaches 85\% utilisation with 12 concurrent \ac{ai} tasks, processing 156 images per hour under normal load conditions.
+\ac{ai} processing performance testing focuses on Ollama and \ac{llava} integration with measured image processing latency averaging 18-52 seconds per image analysis depending on load conditions. Queue processing manages \ac{ai} tasks efficiently through asynchronous processing, with response times scaling significantly under concurrent load due to external service dependencies.
 
-The system degrades gracefully under capacity limits without complete failure. \ac{ai} matching accuracy remains consistent at 94.2\% under both light and heavy load conditions, showing predictable performance scaling without compromising result quality during peak demand.
+The system degrades gracefully under capacity limits without failure. \ac{ai} matching accuracy remains consistent at 94.2\% under both light and heavy load conditions, showing predictable performance scaling without compromising result quality during peak demand.
 
 \subsection{System Monitoring and Performance Tracking} \label{subsection:monitoring_performance}
 
@@ -90,17 +119,36 @@ Rate limiting and access control testing show the system supports 1,604 requests
 
 \subsection{Coverage Analysis and Metrics} \label{subsection:coverage_analysis}
 
-Test coverage analysis shows 60.44\% overall coverage across 551 test functions distributed across 44 test files organised into three architectural layers. The service layer contains 15 test files with 77\% component coverage, the repository layer has 10 files with 46\% coverage, and the router layer includes 11 files focused on unit testing.
+Test coverage analysis shows 60.44\% overall coverage across 551 test functions distributed across 43 test files organised into three architectural layers. The service layer contains 15 test files with 50.49\% component coverage, the repository layer has 10 files with 62.49\% coverage, and the router layer includes 11 files with 68.17\% coverage focused on unit testing.
 
-% TODO: Add coverage breakdown chart showing coverage percentages by component (service layer 77%, repository 46%, router layer) with detailed metrics per module
+Figure \ref{fig:coverage_breakdown} provides a breakdown of coverage percentages across architectural layers and key components, illustrating the testing depth for critical system components.
 
-Critical authentication components achieve 95\% coverage for token management and community repository operations, while service layer components like CommunityService reach 84\% coverage. The exception handling utilities maintain 82\% coverage, and analytics services achieve 77\% coverage. Coverage gaps primarily occur in error handling, edge cases, and administrative functions with lower usage frequency.
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figs/chapter5/coverage_by_layer.png}
+        \caption{Coverage by Architectural Layer}
+        \label{fig:coverage_by_layer}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figs/chapter5/coverage_by_component.png}
+        \caption{Coverage by Key Components}
+        \label{fig:coverage_by_component}
+    \end{subfigure}
+    \caption{Test Coverage Breakdown}
+    \label{fig:coverage_breakdown}
+\end{figure}
 
-The testing suite reaches a 98.2\% pass rate, including integration tests and end-to-end scenarios. Static analysis integration through pytest-cov\footnote{\url{https://pytest-cov.readthedocs.io/}} generates detailed coverage reports identifying untested code paths and potential quality improvements.
+Critical authentication components achieve 95\% coverage for token management and community repository operations, while service layer components like CommunityService reach 84\% coverage. The exception handling utilities maintain 90\% coverage, and analytics services achieve 77\% coverage. Coverage gaps primarily occur in error handling, edge cases, and administrative functions with lower usage frequency.
+
+The testing suite reaches a 98.2\% pass rate, including integration tests and end-to-end scenarios. Static analysis integration through pytest-cov\footnote{\url{https://pytest-cov.readthedocs.io/}} generates coverage reports identifying untested code paths and potential quality improvements.
 
 \subsection{Quality Assurance and System Reliability} \label{subsection:quality_reliability}
 
-Static analysis quality metrics show 92.5\% confidence across tested components, indicating production readiness. Quality assurance results include zero critical security findings during vulnerability scanning and 100\% uptime during sustained testing periods. Error handling completeness testing verifies proper exception propagation across service boundaries with sanitised error messages, preventing sensitive data exposure.
+Static analysis quality metrics show 92.5\% confidence across tested components, indicating production readiness. Quality assurance results include zero critical security findings during vulnerability scanning and 100\% uptime during sustained testing periods. Error handling testing verifies proper exception propagation across service boundaries with sanitised error messages, preventing sensitive data exposure.
 
 Coverage prioritisation targets high-impact authentication and data processing components over administrative functions. The testing gaps primarily affect business logic components with lower usage frequency and router tests that experience import dependencies. Coverage reports guided prioritisation of additional test cases, improving system reliability while de-prioritising tests for less critical paths with minimal impact on system quality.
 
@@ -133,7 +181,26 @@ Success criteria included task completion rates, time to completion, error rates
 
 The usability testing involved 17 participants from the University of Aveiro community, a small but representative sample of the system's intended user base. The participant group included three security guards representing administrative users and 14 students representing ordinary users. Students would primarily use the system to report and search for lost items.
 
-% TODO: Add user demographics breakdown visualization showing participant distribution (3 security guards, 14 students) with age ranges and experience levels
+Figure \ref{fig:user_demographics} presents a breakdown of participant demographics, illustrating the distribution between user types, age ranges, experience levels, and platform usage patterns.
+
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figs/chapter5/demographics_distribution.png}
+        \caption{Participant Distribution}
+        \label{fig:demographics_distribution}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figs/chapter5/demographics_age.png}
+        \caption{Age Distribution}
+        \label{fig:demographics_age}
+    \end{subfigure}
+    \caption{User Demographics Breakdown}
+    \label{fig:user_demographics}
+\end{figure}
 
 The security guard participants, aged between 42 and 67, had basic computer literacy and prior experience handling lost property through traditional paper-based systems. Using the web application, their feedback provided insights into administrative workflow integration and the system's ability to support professional property management responsibilities.
 
@@ -141,11 +208,18 @@ The student participants, aged 19-24, included participants from various academi
 
 Task completion analysis revealed successful performance across most scenarios. Task 1 (reporting the water bottle) achieved a 92\% completion rate, with all but one student successfully submitting the lost item report. The single incomplete attempt was attributed to uncertainty about the location field formatting rather than interface design issues. Security guards were not asked to complete this task, as item reporting falls outside their typical responsibilities.
 
-% TODO: Add task completion rate chart showing success rates for each of the 4 testing scenarios with breakdown by user type (students vs security guards)
+Figure \ref{fig:task_completion} provides an analysis of task completion rates across the four testing scenarios, comparing performance between student and security guard participants.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{figs/chapter5/comprehensive_task_completion.png}
+    \caption{Task Completion Analysis}
+    \label{fig:task_completion}
+\end{figure}
 
 Task 2 (searching for the black laptop backpack) showed an 88\% completion rate, with most participants successfully locating the target item using the search functionality. Difficulties were primarily related to understanding which search terms would be most effective rather than navigation issues, suggesting the need for more precise search guidance or suggestion features.
 
-Task 3 (reviewing the smartphone details and understanding delivery location) demonstrated role-specific performance differences, with security guard participants achieving 100\% completion compared to 79\% for student participants. All security guards successfully navigated to the smartphone's detail page and identified where the item was delivered and its current location. At the same time, some students had difficulty locating this information within the interface. This difference reflected the security guards' professional experience with handling lost property procedures and their familiarity with item verification processes.
+Task 3 (reviewing the smartphone details and understanding delivery location) demonstrated role-specific performance differences, with security guard participants achieving 100\% completion compared to 79\% for student participants. All security guards successfully navigated to the smartphone's detail page and identified where the item was delivered and its current location. At the same time, some students had difficulty locating this information within the interface.
 
 All security guard participants completed Task 4 (updating item status) successfully, with each successfully changing the item status from "pending" to "resolved." Student participants were not asked to complete these administrative tasks due to their role-specific nature.
 
@@ -159,7 +233,7 @@ Navigation feedback indicated that the main menu structure was clear and logical
 
 User satisfaction was assessed through post-task questionnaires adapted for the university context. Participants rated their confidence in using the system, perceived ease of use, and likelihood of future adoption. Security guard participants expressed high confidence in the system's ability to improve their work efficiency, with all three indicating they would prefer the digital system over current paper-based methods. Student participants showed positive reception, with 12 of 14 indicating they would use the system if implemented university-wide. The two neutral responses were attributed to limited personal experience with lost property situations rather than system design concerns.
 
-Error recovery assessment revealed that participants who encountered difficulties were generally able to resolve issues independently or with minimal guidance. The most common error involved incomplete form submissions due to missed required fields, suggesting the need for improved field validation feedback.
+Error recovery assessment revealed that participants who encountered difficulties were generally able to resolve issues independently or with minimal guidance. The most common error involved form submissions due to missed required fields, suggesting the need for improved field validation feedback.
 
 Response time measurements showed that participants completed basic tasks efficiently, with average completion times of 2.3 minutes for item reporting and 1.8 minutes for item searching. These times compare favorably with estimated completion times for traditional paper-based reporting processes.
 
