@@ -36,23 +36,23 @@ Finally, the security of manual systems poses significant concerns. As the volum
 
 Fundamentally, an \ac{ims} aims to address some challenges, such as maintaining inventory levels, reducing holding costs, mitigating risks and many others associated with collections and stocks. Techniques like safety stock determination and lot-sizing methods have been widely adopted \cite{Prabakaran2023}. Such systems have historically evolved to incorporate some technological advancements, obtaining the capability to predict, plan, and execute inventory operations automatically and effectively \cite{Chebet2019}.
 
-While conventional \acp{ims} primarily focus on physical products, their underlying principles can be effectively applied to tracking and managing \ac{lf} items. This intersection becomes particularly relevant in environments where the inventory (in this case, lost items) exhibits variability in value, volume, and retrieval demand. Inventory management principles, such as classification and optimisation, can be applied to \acp{lfms} to streamline processes and enhance user experiences. For instance, using the classification method mentioned before, in a \ac{lfms}, items could be categorised using an adapted ABC-XYZ\footnote{Suryaputri Z. and Gabriel, D.S. and Nurcahyo R., Integration of ABC-XYZ Analysis in Inventory Management Optimization: A Case Study in the Health Industry, Proceedings of the International Conference on Industrial Engineering and Operations Management, 2020, \url{https://ieomsociety.org/proceedings/2022nigeria/70.pdf}}framework that enables prioritisation of storage, retrieval, and notification efforts \cite{Khobragade2018}. The Table \ref{tab:abc_xyz} illustrates a potential result of that association:
+While conventional \acp{ims} primarily focus on physical products, their underlying principles can be effectively applied to tracking and managing \ac{lf} items. This intersection becomes particularly relevant in environments where the inventory (in this case, lost items) exhibits variability in value, volume, and retrieval demand. Inventory management principles, such as classification and optimisation, can be applied to \acp{lfms} to streamline processes and enhance user experiences. For instance, using the classification method mentioned before, in a \ac{lfms}, items could be categorised using an adapted ABC-XYZ framework \cite{Suryaputri2020} that enables prioritisation of storage, retrieval, and notification efforts \cite{Khobragade2018}. The Table \ref{tab:abc_xyz} illustrates a potential result of that association:
 
 \begin{table}[H]
-\centering
-\caption{Classification of \ac{lf} items using the ABC-XYZ framework}
-\begin{tabular}{|c|c|c|c|c|}
-\hline
-\textbf{Class} & \textbf{Value} & \textbf{Volume} & \textbf{Retrieval Demand} & \textbf{Examples} \\ 
-\hline
-A-X & High & Low & Consistent & Electronic devices, jewellery \\ 
-\hline
-B-Y & Moderate & Moderate & Fluctuating & Wallets, bags, clothing \\ 
-\hline
-C-Z & Low & High & Irregular & Umbrellas, stationery \\ 
-\hline
-\end{tabular}
-\label{tab:abc_xyz}
+    \centering
+    \caption{Classification of \ac{lf} items using the ABC-XYZ framework}
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        \textbf{Class} & \textbf{Value} & \textbf{Volume} & \textbf{Retrieval Demand} & \textbf{Examples} \\ 
+        \hline
+        A-X & High & Low & Consistent & Electronic devices, jewellery \\ 
+        \hline
+        B-Y & Moderate & Moderate & Fluctuating & Wallets, bags, clothing \\ 
+        \hline
+        C-Z & Low & High & Irregular & Umbrellas, stationery \\ 
+        \hline
+    \end{tabular}
+    \label{tab:abc_xyz}
 \end{table}
 
 The insights from \citeauthoryear{Plinere2016} further support the integration of these methodologies into \acp{lfms}. Their case study emphasises the significance of structured inventory management practices for improving operational efficiency. For instance, high-priority items, such as class A-X items, can benefit from focused attention and expedited claim processes, guaranteeing user satisfaction while reducing storage costs. Furthermore, their findings highlight the value of predictive analytics in addressing slow-moving or stagnant inventory, matching to unclaimed items \cite{Plinere2016}. Technological integration, as illustrated in the case study, offers another avenue for improvement. The use of Radio-Frequency Identification (RFID) and Quick Response (QR) codes in conventional inventory systems ensures accurate tracking and categorisation of items \cite{Plinere2016, Sohail2018}. Moreover, the adoption of resource planning principles, such as imposing a centralised warehouse, would improve transparency and decision-making, possibly enabling a seamless synchronisation of data across departments. Lastly, the \citeauthoryear{Plinere2016} study underlines the importance of standardisation in inventory management policies, e.g., uniform intake procedures, categorisation standards, and clear guidelines for item disposition.
@@ -64,25 +64,21 @@ Building on these foundational principles, open-source \acp{ims} have evolved to
 The following Table \ref{tab:ims_comparison} summarises the key features of these systems, emphasising their areas of strength and limitations:
 
 \begin{table}[!htb]
-\centering
-\caption{Summarised comparison of open source \acl{ims} by features}
-\begin{tabular}{lllllll}
-\hline
-\textbf{\ac{ims}} & \textbf{MWS} & \textbf{BI} & \textbf{DF} & \textbf{BT} & \textbf{ERPI} & \textbf{UFI} \\
-\hline
-Odoo & Yes & Yes & Yes & Yes & Yes & Yes \\
-\hline
-Snipe-IT & No & No & No & No & No & Yes \\
-\hline
-InvenTree & No & Yes & No & Yes & No & Yes \\
-\hline
-SkuNexus & Yes & Yes & Yes & Yes & Yes & No \\
-\hline
-PartKeepr & No & Yes & No & Yes & No & No \\
-\hline
-\end{tabular}
-\caption*{\\MWS - Multi-Warehouse Support, BI - Barcode Integration, DF - Demand Forecasting, BT - Batch Tracking, ERPI - Enterprise Resource Planning Integration, UFI - User-Friendly Interface.}
-\label{tab:ims_comparison}
+    \centering
+    \caption{Summarised comparison of open source \acl{ims} by features}
+    \begin{tabular}{llllllll}
+    \toprule
+    \textbf{\ac{ims}} & \textbf{MWS} & \textbf{BI} & \textbf{DF} & \textbf{BT} & \textbf{ERPI} & \textbf{UFI} & \textbf{Total} \\
+    \midrule
+    Odoo & Yes & Yes & Yes & Yes & Yes & Yes & 6/6 \\
+    Snipe-IT & No & No & No & No & No & Yes & 1/6 \\
+    InvenTree & No & Yes & No & Yes & No & Yes & 3/6 \\
+    SkuNexus & Yes & Yes & Yes & Yes & Yes & No & 5/6 \\
+    PartKeepr & No & Yes & No & Yes & No & No & 2/6 \\
+    \bottomrule
+    \end{tabular}
+    \caption*{\\MWS - Multi-Warehouse Support, BI - Barcode Integration, DF - Demand Forecasting, BT - Batch Tracking, ERPI - Enterprise Resource Planning Integration, UFI - User-Friendly Interface.}
+    \label{tab:ims_comparison}
 \end{table}
 
 %% ____________________ Lost-And-Found Management Systems ____________________ %%
@@ -116,25 +112,25 @@ In contrast to enterprise-focused solutions, LostMyStuff\footnote{\url{http://ww
 The Table \ref{tab:lfms_features} summarising the features of these \ac{lfms} platforms provides a detailed comparison of their features and capabilities, highlighting the strengths and limitations of each solution.
 
 \begin{table}[!htb]
-\centering
-\caption{Feature Availability in \acl{lfms}s}
-\begin{tabular}{lllllllllllll}
-    \toprule
-    {} & ILIM & AMS & UFI & CT & ISR & DSC & SMSA & DRM & RA & VCE & CFC & TS \\
-    \midrule
-    NotLost & Yes & Yes & Yes & Yes & Yes & Yes & Yes & No & Yes & - & - & - \\
-    iLost & Yes & No & Yes & Yes & Yes & - & - & No & - & - & No & - \\
-    ILeftMyStuff & Yes & - & Yes & Yes & Yes & - & - & No & - & No & - & Yes \\
-    ReclaimHub & Yes & No & Yes & Yes & Yes & - & No & Yes & Yes & No & - & No \\
-    Crowdfind & Yes & Yes & Yes & Yes & Yes & - & Yes & - & No & No & - & - \\
-    Chargerback & Yes & Yes & Yes & Yes & Yes & - & Yes & Yes & Yes & No & No & Yes \\
-    MissingX & Yes & No & Yes & Yes & Yes & - & Yes & Yes & Yes & - & - & - \\
-    FoundHero & Yes & No & Yes & Yes & Yes & Yes & - & - & Yes & - & Yes & - \\
-    LostMyStuff & Yes & - & Yes & - & Yes & - & - & No & - & Yes & - & No \\
-    \bottomrule
-\end{tabular}
-\caption*{\\ILIM - Item Logging and Inventory Management, AMS - Automated Matching and Search, UFI - User-Friendly Interfaces, CT - Communication Tools, ISR - Integrated Shipping and Returns, DSC - Data Security and Compliance, SMSA - Scalability and Multi-Sector Adaptability, DRM - Disposal and Recycling Management, RA - Reporting and Analytics, VCE - Volunteer and Community Engagement, CFC - Customer Feedback Collection, TS - Training and Support.}
-\label{tab:lfms_features}
+    \centering
+    \caption{Feature Availability in \aclp{lfms}}
+    \begin{tabular}{lllllllllllll}
+        \toprule
+        \textbf{System} & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 \\
+        \midrule
+        NotLost & Yes & Yes & Yes & Yes & Yes & Yes & Yes & No & Yes & ? & ? & ? \\
+        iLost & Yes & No & Yes & Yes & Yes & ? & ? & No & ? & ? & No & ? \\
+        ILeftMyStuff & Yes & ? & Yes & Yes & Yes & ? & ? & No & ? & No & ? & Yes \\
+        ReclaimHub & Yes & No & Yes & Yes & Yes & ? & No & Yes & Yes & No & ? & No \\
+        Crowdfind & Yes & Yes & Yes & Yes & Yes & ? & Yes & ? & No & No & ? & ? \\
+        Chargerback & Yes & Yes & Yes & Yes & Yes & ? & Yes & Yes & Yes & No & No & Yes \\
+        MissingX & Yes & No & Yes & Yes & Yes & ? & Yes & Yes & Yes & ? & ? & ? \\
+        FoundHero & Yes & No & Yes & Yes & Yes & Yes & ? & ? & Yes & ? & Yes & ? \\
+        LostMyStuff & Yes & ? & Yes & ? & Yes & ? & ? & No & ? & Yes & ? & No \\
+        \bottomrule
+    \end{tabular}
+    \caption*{\\\textbf{Yes} - Feature is included, \textbf{No} - Feature is not included, \textbf{?} - No information\\\textbf{1} - Item Logging and Inventory Management, \textbf{2} - Automated Matching and Search, \textbf{3} - User-Friendly Interfaces, \textbf{4} - Communication Tools, \textbf{5} - Integrated Shipping and Returns, \textbf{6} - Data Security and Compliance, \textbf{7} - Scalability and Multi-Sector Adaptability, \textbf{8} - Disposal and Recycling Management, \textbf{9} - Reporting and Analytics, \textbf{10} - Volunteer and Community Engagement, \textbf{11} - Customer Feedback Collection, \textbf{12} - Training and Support.}
+    \label{tab:lfms_features}
 \end{table}
 
 %% ____________________ Systematic Literature Review ____________________ %%
@@ -150,19 +146,21 @@ This chapter summarises a \ac{slr} conducted using \ac{prisma} 2020 \cite{Page20
 The review sought to answer the central research question \textit{"How can intelligent technologies enhance the efficiency and user experience of lost property management systems?"}, which refers to how \ac{ai}-based technologies such as \ac{cv} and \ac{nlp} and many others can provide solutions to the inefficiencies in \ac{lf} management. The \ac{slr} analysed numerous articles and integrated 18 high-quality studies that demonstrated the capacity to provide new insights into the investigation area. The mentioned research question was then separated into the following three major objectives:
 
 \begin{itemize}
-\item Evaluating the applicability of the selected technologies;
-\item Examining existing challenges in implementing these technologies;
-\item Identifying best practices to inform the design and development of a proposed system.
+    \item Evaluating the applicability of the selected technologies;
+    \item Examining existing challenges in implementing these technologies;
+    \item Identifying best practices to inform the design and development of a proposed system.
 \end{itemize}
 
-The \ac{slr} employed a comprehensive four-phase approach associated with the selected \ac{prisma} framework. During the identification phase, academic databases such as Scopus and Web of Science were queried using targeted keywords like \ac{lf} Management, \ac{ims}, \ac{ai}, \ac{nlp}, and \ac{llm}, resulting in an initial yield of 476 studies. These were screened for relevance through the removal of duplicates and an abstract examination. In the eligibility phase, full-text articles were meticulously assessed against predefined inclusion criteria, which focused exclusively on studies published between 2020 and 2024 that addressed \ac{ai}-based solutions. Non-peer-reviewed works and studies lacking empirical validation were excluded. Additionally, to ensure the strength of the \ac{slr}, a quality assessment framework evaluated the methodological rigour and relevance of each study. Each study was rated on its technological contributions and practical applicability. Only those scoring consistently high across all criteria were included. Ultimately, in the inclusion phase, 18 studies were selected and categorised based on the technologies employed. This categorisation can be better analysed in Figure \ref{fig:prisma_results}, which includes the distribution of the technologies and frameworks explored and the most signigicant challenges pointed out. Figure \ref{fig:prisma_workflow} illustrates the \ac{prisma} flowchart, summarising the selection process. A thematic analysis was conducted, extracting valuable results into the contributions of each technological domain.
+The \ac{slr} employed a comprehensive four-phase approach associated with the selected \ac{prisma} framework, as illustrated in Figure \ref{fig:prisma_workflow}.
 
 \begin{figure}[!htb]
-    \includegraphics[width=0.95\textwidth]{figs/chapter2/prisma.png}
+    \includegraphics[width=\textwidth]{figs/chapter2/prisma.png}
     \centering
     \caption[\acs{prisma} 2020 flow diagram with a described quantity of research in each step.]{\acs{prisma} 2020 flow diagram with a described quantity of research in each step.}
     \label{fig:prisma_workflow}
 \end{figure}
+
+During the identification phase, academic databases such as Scopus and Web of Science were queried using targeted keywords like \ac{lf} Management, \ac{ims}, \ac{ai}, \ac{nlp}, and \ac{llm}, resulting in an initial yield of 476 studies. These were screened for relevance through the removal of duplicates and an abstract examination. In the eligibility phase, full-text articles were meticulously assessed against predefined inclusion criteria, which focused exclusively on studies published between 2020 and 2024 that addressed \ac{ai}-based solutions. Non-peer-reviewed works and studies lacking empirical validation were excluded. Additionally, to ensure the strength of the \ac{slr}, a quality assessment framework evaluated the methodological rigour and relevance of each study. Each study was rated on its technological contributions and practical applicability. Only those scoring consistently high across all criteria were included. Ultimately, in the inclusion phase, 18 studies were selected and categorised based on the technologies employed. This categorisation can be better analysed in Figure \ref{fig:prisma_results}, which includes the distribution of the technologies and frameworks explored and the most signigicant challenges pointed out. A thematic analysis was conducted, extracting valuable results into the contributions of each technological domain.
 
 \begin{figure}[!htb]
     \begin{subfigure}{1\linewidth}
@@ -212,17 +210,30 @@ The origins of \ac{nlp} date back to the 1950s, when \citeauthoryear{Turing1950}
 
 More recently, the new era has been characterised by a revolution in \ac{nlp} fueled by \ac{dl}. Neural network architectures, particularly recurrent neural networks and their derivatives, long short-term memory networks, demonstrated remarkable capabilities in sequence-to-sequence tasks such as translation and text summarisation \cite{Bahdanau2015}. Furthermore, the introduction of attention mechanisms and transformer-based models, such as Bidirectional Encoder Representations from Transformers (BERT) and Generative Pre-trained Transformer (GPT), has drastically improved the state of the art, enabling unprecedented performance across a wide range of \ac{nlp} tasks \cite{Vaswani2017, Devlin2019}. Today, \ac{nlp} continues to evolve, integrating cutting-edge advancements in \ac{ai}, including transfer learning and pre-trained language models, to achieve higher accuracy and efficiency in a variety of complex tasks, namely sentiment analysis, machine translation, and conversational agents \cite{Howard2018}.
 
-The systematic review highlights the growing role of \ac{nlp} in intelligent systems, particularly in enhancing human-computer interaction and automating complex processes. For instance, \ac{nlu} is central to enabling systems to interpret user input, extracting key entities, sentiments, and intents. \citeauthoryear{Prawira2024} and \citeauthoryear{Ghazal2016}, have already adopted these capabilities in their \ac{lfms} to streamline the reporting and retrieval of lost items. By leveraging \ac{nlu} models, their systems can process user descriptions into structured data that, once properly stored and indexed, can later be matched against found items.
+The systematic review demonstrates the expanding role of \ac{nlp} in intelligent systems, particularly for enhancing human-computer interaction and automating complex processes. \ac{nlu} capabilities have become essential for interpreting user input, extracting key entities, sentiments, and intents from natural language queries. Modern \ac{lfms} leverage these advances to streamline item reporting and retrieval processes. \citeauthoryear{Prawira2024} and \citeauthoryear{Ghazal2016} have integrated \ac{nlu} models into their systems to process user descriptions into structured data that can be efficiently indexed and later matched against found items. Recent developments in large language models have further enhanced the capability to understand context, handle ambiguous descriptions, and extract meaningful semantic information from informal user inputs.
 
-Despite these advancements, several challenges remain. Scalability and computational efficiency are ongoing concerns, particularly when deploying \ac{nlp} models in real-time applications. Additionally, ethical considerations, including bias in language models and data privacy, require attention to ensure the responsible use of \ac{nlp} technologies \cite{Prawira2024}.
+Contemporary \ac{nlp} systems face several challenges that impact their deployment in real-world applications. Scalability and computational efficiency remain primary concerns, particularly when deploying large transformer-based models in real-time environments with limited computational resources. The inference latency of modern language models can impede user experience in interactive systems. Furthermore, ethical considerations have gained prominence, including bias mitigation in language models, data privacy protection, and ensuring fair representation across diverse user populations. The responsible deployment of \ac{nlp} technologies requires careful consideration of these factors, particularly in systems that process personal information and descriptions of valuable items \cite{Prawira2024}.
 
 
 \subsection{Multimodal Matching} \label{subsec:multimodal-matching}
 
-Embeddings play a pivotal role in modern artificial intelligence, particularly for applications requiring the integration of multimodal data such as images and text. These embeddings transform high-dimensional data into a lower-dimensional vector space while preserving semantic relationships. For example, image embeddings are often generated using \ac{cnn}, whereas text embeddings leverage transformer-based models \cite{He2015, Devlin2019}. This dimensionality reduction enables efficient and meaningful comparisons across large datasets.
+Multimodal matching integrates diverse data modalities such as images, text, and audio for modern artificial intelligence applications. Advances in embedding techniques transform high-dimensional data into lower-dimensional vector spaces while preserving semantic relationships. Traditional approaches rely on modality-specific encoders: \acp{cnn} for image embeddings and transformer-based models for text embeddings \cite{He2015, Devlin2019}. However, recent developments have focused on unified architectures that can process multiple modalities within a single framework.
 
-Similarity search is a cornerstone technique in embedding-based systems. \citeauthoryear{Prawira2024} and \citeauthoryear{Ghazal2016} have experimented with metrics such as cosine similarity and Euclidean distance in order to quantify the proximity between embeddings, offering probabilistic measures of match likelihood between simulated \ac{lf} items. A high cosine similarity score, for instance, suggests strong alignment between query and database entries. Probabilistic models can further refine these measures, incorporating confidence intervals that guide the decision-making \cite{Dosovitskiy2020}.
+The evolution of vision-language models has been particularly influential in advancing multimodal matching capabilities. \ac{clip} learns joint representations of images and text through contrastive learning on large-scale web data \cite{Radford2021}. This methodology enables zero-shot classification and cross-modal retrieval by mapping visual and textual concepts into a shared embedding space. Building upon \ac{clip}'s foundation, subsequent models have addressed various limitations and expanded capabilities. Bootstrapping Language-Image Pre-training (BLIP) presents a unified multimodal framework that enables both understanding and generation through encoder-decoder components, incorporating synthetic caption generation to improve data quality \cite{Li2022}. Align Before Fuse (ALBEF) employs momentum distillation for data cleaning as its primary innovation, using momentum-updated pseudo-targets to filter noisy web data before alignment \cite{Li2021}.
 
-Considering the domain of \ac{lf} management, embeddings would facilitate the matching of user-provided data to stored items or records. Visual embeddings derived from processed, uploaded images would be compared against a database of known items. Similarly, textual embeddings generated from user descriptions and interactions could be matched to metadata or textual entries in the database. When combined, these approaches improve the accuracy of the matching process \cite{Prawira2024, Radford2021}. For instance, the integration of image and text embeddings through models like Contrastive Language-Image Pre-training (CLIP) enables effective multimodal matching by aligning visual and textual information in a unified vector space \cite{Radford2021}.
+Alternative architectures have explored different approaches to multimodal alignment. Foundation Language And Vision Alignment (FLAVA) presents a unified transformer architecture capable of processing vision-only, language-only, and multimodal tasks within a single model \cite{Singh2022}. Large-scale ImaGe and
+Noisy-text embedding (ALIGN) scales contrastive learning to noisy web data, demonstrating that large-scale training can compensate for data quality issues \cite{Jia2021}. These models have established new benchmarks for cross-modal retrieval tasks, with performance improvements consistently observed across standard evaluation datasets.
 
-On the one hand, embedding-based systems face challenges related to scalability, bias, and computational demands. Scaling these systems to handle large datasets requires optimisation techniques such as lightweight models or distributed computing \cite{Lubna2021}. Moreover, biases inherent in pre-trained models can affect fairness, mainly when embeddings are derived from imbalanced datasets \cite{Prawira2024}. On the other hand, despite these challenges, empirical studies underscore the efficacy of multimodal matching in \acp{lfms}. For instance, \citeauthoryear{Prawira2024} achieved a 97.92\% matching accuracy by integrating \ac{resnet} embeddings with cosine similarity. \citeauthoryear{Ghazal2016} demonstrated an 89.2\% retrieval accuracy using a multi-feature image matching approach that incorporated texture, shape, and colour features.
+Contrastive learning forms the primary approach for multimodal representation learning. The fundamental principle involves maximizing agreement between positive pairs (e.g., image-caption pairs) while minimizing agreement between negative pairs. Modern approaches have refined this methodology through various innovations. InfoNCE loss, originally introduced in the Contrastive Predictive Coding framework \cite{VanDenOord2018} and later adopted in SimCLR for visual representation learning \cite{Chen2020}, has been adapted for multimodal scenarios to improve the quality of learned representations. Recent developments include multi-level contrastive learning that operates at different granularities, from global image-text alignment to fine-grained token-level correspondences. Cross-modal attention mechanisms have been integrated to enable more nuanced alignment, allowing models to focus on relevant regions and concepts across modalities.
+
+In the domain of \ac{lf} management, multimodal matching facilitates the alignment of user-provided queries with database entries through multiple channels. Visual embeddings derived from uploaded images are compared against stored item representations, while textual embeddings generated from user descriptions are matched against metadata and textual records. Modern approaches leverage the semantic understanding capabilities of vision-language models to bridge the gap between visual appearance and textual description. For instance, a user's natural language description of a "red leather wallet with multiple card slots" can be effectively matched against visual representations of similar items through learned cross-modal correspondences.
+
+Advanced similarity metrics have been developed to improve matching accuracy beyond traditional cosine similarity and Euclidean distance measures. Probabilistic approaches that incorporate uncertainty estimation represent an active area of research, with potential applications in providing confidence intervals for decision-making processes. Learnable similarity functions that adapt to domain-specific characteristics remain an emerging research direction with potential benefits for specialized applications like lost item retrieval.
+
+The scalability and efficiency of multimodal matching systems remain active areas of research. Techniques such as approximate nearest neighbor search \cite{Johnson2019}, quantization methods \cite{Jegou2011}, and hierarchical clustering have been employed to handle large-scale databases efficiently. Besides that, knowledge distillation approaches \cite{Hinton2015} enable the deployment of lightweight models while maintaining competitive performance. Furthermore, federated learning paradigms \cite{Li2020Fed} represent a promising research direction for addressing privacy concerns while potentially enabling collaborative matching across distributed systems.
+
+Empirical evaluations demonstrate the effectiveness of state-of-the-art multimodal matching approaches. \citeauthoryear{Prawira2024} achieved high matching accuracy by integrating \ac{resnet} embeddings with cosine similarity for lost item identification. \citeauthoryear{Ghazal2016} demonstrated strong retrieval performance using a multi-feature image matching approach incorporating texture, shape, and colour features. Recent vision-language models demonstrate strong zero-shot performance on cross-modal retrieval benchmarks, with \ac{clip} achieving competitive results without task-specific training.
+
+Despite these advances, several challenges persist in multimodal matching systems. Scalability concerns arise when deploying large vision-language models in resource-constrained environments. Bias mitigation remains crucial, as pre-trained models may inherit biases from their training data, potentially affecting fairness in matching decisions. The computational demands of transformer-based architectures necessitate careful optimization for real-time applications. Additionally, the cross-modal semantic gap continues to pose challenges, particularly when dealing with abstract concepts or domain-specific terminology that may not be well-represented in general-purpose training datasets.
+
+While these state-of-the-art approaches represent the cutting edge of multimodal matching research, practical implementations often employ simplified architectures that balance performance with computational efficiency and deployment constraints. The gap between research prototypes and production systems highlights the ongoing need to translate advanced techniques into practical solutions that can operate reliably in real-world environments with limited computational resources.

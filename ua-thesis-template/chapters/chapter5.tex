@@ -1,7 +1,7 @@
-\chapter{System Validation and Testing}
+\chapter{System Evalidation and Testing}
 \label{chapter:testing_validation}
 
-This chapter presents testing and validation results that demonstrate the system's readiness for production deployment through both technical performance validation and user experience evaluation. All technical tests were conducted on a MacBook Air M2 (Apple M2 chip, 8-core CPU, 8-core GPU) with 16GB RAM running macOS Sequoia 15.6.1, providing consistent baseline measurements for performance benchmarks. The validation approach combines backend technical testing with human-centered usability evaluation across multiple dimensions. Technical validation includes unit testing infrastructure with 60.44\% coverage across 551 functions, performance benchmarking with measured throughput and latency metrics, AI processing validation, and security assessment. User experience validation involved 17 participants from the University of Aveiro, comprising both administrative staff and students, evaluating interface effectiveness and adoption potential.
+This chapter presents testing and validation results that demonstrate the system's readiness for production deployment through both technical performance validation and user experience evaluation. All tests were conducted on a MacBook Air M2 (Apple M2 chip, 8-core CPU, 8-core GPU) with 16GB RAM running macOS Sequoia 15.6.1, providing consistent baseline measurements for performance benchmarks. The validation approach combines backend technical testing with human-centered usability evaluation across multiple dimensions. Technical validation includes unit testing infrastructure with 60.44\% coverage across 551 functions, performance benchmarking with measured throughput and latency metrics, AI processing validation, and security assessment. User experience validation involved 17 participants from the University of Aveiro, comprising both administrative staff and students, evaluating interface effectiveness and adoption potential.
 
 % ____________________ Backend Testing Infrastructure ____________________ %
 
@@ -25,7 +25,7 @@ The testing architecture uses Factory Boy\footnote{\url{https://factoryboy.readt
 
 \subsubsection{Environment Configuration and Isolation}
 
-Configuration management via \texttt{conftest.py} handles environment setup, dependency mocking, and resource cleanup. Test isolation prevents interdependencies by automatically resetting mock state between executions. Coverage reporting generates both \ac{html} and \ac{xml} reports with a 70\% minimum threshold requirement, integrating with static analysis tools for quality assurance.
+Configuration management via \texttt{conftest.py} handles environment setup, dependency mocking, and resource cleanup. Test isolation prevents interdependencies by automatically resetting mock state between executions. Coverage reporting generates both HyperText Markup Language (HTML) and Extensible Markup Language (XML) reports with a 70\% minimum threshold requirement, integrating with static analysis tools for quality assurance.
 
 \subsection{Integration Testing Implementation} \label{subsection:integration_testing_implementation}
 

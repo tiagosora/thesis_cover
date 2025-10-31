@@ -23,13 +23,13 @@ Overall, most of the objectives previously outlined in the Chapters \ref{chapter
 
 % ____________________ Research Contributions ____________________ %
 
-\section{Research Contributions} \label{section:research_contributions}
+% \section{Research Contributions} \label{section:research_contributions}
 
-This work contributes to intelligent lost property management through theoretical advances, practical implementation, and methodological approaches.
+% This work contributes to intelligent lost property management through theoretical advances, practical implementation, and methodological approaches.
 
-The \ac{slr} in Chapter \ref{chapter:state_of_art} analysed 476 studies following \ac{prisma} guidelines, integrating 18 papers to establish a structured analysis of \ac{ai} in lost property management. The review identified \ac{yolo} and \ac{resnet}-50 as dominant architectures, while revealing challenges in computational intensity (26\%), dataset quality (26\%), and scalability (21\%). It revealed gaps in multimodal matching and community solutions, supporting this research approach.
+% The \ac{slr} in Chapter \ref{chapter:state_of_art} analysed 476 studies following \ac{prisma} guidelines, integrating 18 papers to establish a structured analysis of \ac{ai} in lost property management. The review identified \ac{yolo} and \ac{resnet}-50 as dominant architectures, while revealing challenges in computational intensity (26\%), dataset quality (26\%), and scalability (21\%). It revealed gaps in multimodal matching and community solutions, supporting this research approach.
 
-The novel matching algorithm combines multiple factors in a weighted confidence framework with a binary threshold at 0.90. It goes beyond single-modality approaches while maintaining transparency through interpretable scores and fallback mechanisms.
+% The novel matching algorithm combines multiple factors in a weighted confidence framework with a binary threshold at 0.90. It goes beyond single-modality approaches while maintaining transparency through interpretable scores and fallback mechanisms.
 
 % ____________________ Limitations and Future Opportunities ____________________ %
 
@@ -59,7 +59,7 @@ Domain-specific architectures with real-time adaptation based on human feedback 
 
 From an infrastructure perspective, distributed architectures and microservices would address current scalability limitations. Specific implementations could also include horizontal scaling using Kubernetes orchestration. Load balancing across multiple application instances could support 10000+ concurrent users while maintaining sub-100ms response times. Besides that, container orchestration with auto-scaling based on CPU and memory metrics would provide elastic resource allocation during peak usage periods.
 
-A testing approach using AWS cloud infrastructure would provide realistic and more reliable production performance metrics beyond current local development constraints. The proposed testing framework should deploy the system using AWS ECS or EKS for container orchestration, RDS PostgreSQL for scalable database operations, and ElastiCache Redis for caching layers. Load testing could be implemented using distributed tools such as Artillery.io or k6 deployed across multiple AWS regions, or cloud-native solutions like AWS Load Testing solution built on Amazon ECS. These tools could simulate from 1000 to 10000 concurrent users with realistic traffic patterns including ramp-up phases, sustained load periods, and stress testing scenarios. CloudWatch monitoring integrated with custom Grafana dashboards would capture detailed performance metrics including response times, throughput, error rates, CPU utilization, memory consumption, network I/O, and database query performance. This would enable testing scenarios impossible in local environments.
+A testing approach using \ac{aws} cloud infrastructure would provide realistic and more reliable production performance metrics beyond current local development constraints. The proposed testing framework should deploy the system using \ac{aws} ECS or EKS for container orchestration, RDS PostgreSQL for scalable database operations, and ElastiCache Redis for caching layers. Load testing could be implemented using distributed tools such as Artillery.io or k6 deployed across multiple \ac{aws} regions, or cloud-native solutions like \ac{aws} Load Testing solution built on Amazon ECS. These tools could simulate from 1000 to 10000 concurrent users with realistic traffic patterns including ramp-up phases, sustained load periods, and stress testing scenarios. CloudWatch monitoring integrated with custom Grafana dashboards would capture detailed performance metrics including response times, throughput, error rates, CPU utilization, memory consumption, network I/O, and database query performance. This would enable testing scenarios impossible in local environments.
 
 % ____________________ Conclusions and Future Work ____________________ %
 

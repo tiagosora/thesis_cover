@@ -5,22 +5,22 @@ The chapter begins by defining the research phases, then outlines the system's s
 
 % ____________________ Phases of the Research ____________________ %
 
-\section{Phases of the Research} \label{section:phases_of_the_research}
+% \section{Phases of the Research} \label{section:phases_of_the_research}
 
-To realise the previously mentioned objectives, the proposed research can be conducted in four key stages, which align with a logical progression from understanding the problem to focusing on different aspects of design and development.
+% To realise the previously mentioned objectives, the proposed research can be conducted in four key stages, which align with a logical progression from understanding the problem to focusing on different aspects of design and development.
 
-\begin{outline}[enumerate]
-    \1 Study the State-of-the-Art and identify design approaches:
-        \2 Review existing;
-        \2 \aclp{lfms};
-        \2 In-production solutions;
-        \2 Available and recommended technologies;
-        \2 Best practices and optimal approaches;
-    \1 Design the structure of the system by defining its architecture, features and workflows;
-    \1 Create the main system components, including all the planned features;
-    \1 Test the system in a real-world and controlled environment;
-    \1 Finalise and document the results for academic and practical use.
-\end{outline}
+% \begin{outline}[enumerate]
+%     \1 Study the State-of-the-Art and identify design approaches:
+%         \2 Review existing;
+%         \2 \aclp{lfms};
+%         \2 In-production solutions;
+%         \2 Available and recommended technologies;
+%         \2 Best practices and optimal approaches;
+%     \1 Design the structure of the system by defining its architecture, features and workflows;
+%     \1 Create the main system components, including all the planned features;
+%     \1 Test the system in a real-world and controlled environment;
+%     \1 Finalise and document the results for academic and practical use.
+% \end{outline}
 
 % ____________________ Architecture-Centric Development Methodology ____________________ %
 
@@ -59,11 +59,11 @@ The design is then subjected to an architectural review, where it is assessed ag
 
 \subsubsection{Refinement Phase}
 
-If the architecture is deemed insufficient during the review, the process enters a refinement phase. This phase begins with the \textbf{experiment planning}, where targeted experiments are designed to address specific weaknesses or uncertainties, such as performance bottlenecks or scalability challenges. These experiments are executed in the \textbf{experiment execution} and subsequent \textbf{architecture refinement} stage, with findings informing updates to the architecture. Once refined, the updated architecture undergoes another review to ensure it meets the required standards before moving forward.
+If the architecture is deemed insufficient during the review, the process enters a refinement phase. This phase begins with the experiment planning, where targeted experiments are designed to address specific weaknesses or uncertainties, such as performance bottlenecks or scalability challenges. These experiments are executed in the experiment execution and subsequent architecture refinement stage, with findings informing updates to the architecture. Once refined, the updated architecture undergoes another review to ensure it meets the required standards before moving forward.
 
 \subsubsection{Production Phase}
 
-If the architecture passes the review, the process transitions to the production phase, beginning with the \textbf{production planning}, which involves preparing the system for deployment by developing detailed plans, establishing monitoring mechanisms, and guaranteeing operational readiness. Finally, the system is deployed during the \textbf{production} stage, when it becomes operational and accessible to end-users. Post-deployment, the architecture is continuously monitored for performance and feedback, allowing iterative improvements as needed.
+If the architecture passes the review, the process transitions to the production phase, beginning with the production planning, which involves preparing the system for deployment by developing detailed plans, establishing monitoring mechanisms, and guaranteeing operational readiness. Finally, the system is deployed during the production stage, when it becomes operational and accessible to end-users. Post-deployment, the architecture is continuously monitored for performance and feedback, allowing iterative improvements as needed.
 
 % ____________________ Quality Attributes ____________________ %
 
@@ -98,42 +98,42 @@ Observability tools to collect logs, metrics, and traces will allow real-time an
 The system's design and implementation are guided by its requirements, which can also be used to measure the research progress and value. When correctly specified, they help developers understand the expected result and stakeholders evaluate the system's performance. These requirements fall into two categories: functional and non-functional. Table \ref{tab:functional_requirements} lists the functional requirements that define the core features of the system, focusing on enabling users to interact with and manage data effectively.
 
 \begin{table}[!htb]
-\centering
-\begin{tabular}{|p{0.1\textwidth}|p{0.80\textwidth}|}
-\hline
-\textbf{ID} & \textbf{Functional Requirement Description} \\ \hline
-FR1 & Support three user roles: ordinary users, local managers, and administrators. \\ \hline
-FR2 & Enable secure account management for all user types. \\ \hline
-FR3 & Implement authentication and authorization mechanisms, including multi-factor authentication. \\ \hline
-FR4 & Allow users to browse and search lost items based on categories and filters (e.g., location, type). \\ \hline
-FR5 & Provide personalized suggestions for matching items using \ac{ai}. \\ \hline
-FR6 & Provide item status updates and notifications to users about item matches or updates. \\ \hline
-FR7 & Allow users to schedule appointments for item retrieval. \\ \hline
-FR8 & Allow administrators to audit system logs and manage user roles effectively. \\ \hline
-FR9 & Integrate community-driven features for collaborative lost item recovery. \\ \hline
-\end{tabular}
-\caption[Functional Requirements]{Functional requirements defining the core system features.}
-\label{tab:functional_requirements}
+    \centering
+    \begin{tabular}{|p{0.1\textwidth}|p{0.80\textwidth}|}
+        \hline
+        \textbf{ID} & \textbf{Functional Requirement Description} \\ \hline
+        FR1 & Support three user roles: ordinary users, local managers, and administrators. \\ \hline
+        FR2 & Enable secure account management for all user types. \\ \hline
+        FR3 & Implement authentication and authorization mechanisms, including multi-factor authentication. \\ \hline
+        FR4 & Allow users to browse and search lost items based on categories and filters (e.g., location, type). \\ \hline
+        FR5 & Provide personalized suggestions for matching items using \ac{ai}. \\ \hline
+        FR6 & Provide item status updates and notifications to users about item matches or updates. \\ \hline
+        FR7 & Allow users to schedule appointments for item retrieval. \\ \hline
+        FR8 & Allow administrators to audit system logs and manage user roles effectively. \\ \hline
+        FR9 & Integrate community-driven features for collaborative lost item recovery. \\ \hline
+    \end{tabular}
+    \caption[Functional Requirements]{Functional requirements defining the core system features.}
+    \label{tab:functional_requirements}
 \end{table}
 
 On the other hand, Table \ref{tab:nonfunctional_requirements} presents the non-functional requirements, which are directly connected with the system's expected quality levels.
 
 \begin{table}[!htb]
-\centering
-\begin{tabular}{|p{0.1\textwidth}|p{0.80\textwidth}|}
-\hline
-\textbf{ID} & \textbf{Non-Functional Requirement Description} \\ \hline
-NFR1 & Maintain a response time of less than 2 seconds for critical operations under peak load. \\ \hline
-NFR2 & Support scalability to accommodate up to 10,000 concurrent users. \\ \hline
-NFR3 & Comply with data privacy regulations such as \ac{gdpr}. \\ \hline
-NFR4 & Maintain 99\% uptime through fault tolerance and disaster recovery mechanisms. \\ \hline
-NFR5 & Adhere to \ac{ux} and \ac{ui} best practices. \\ \hline
-NFR6 & Implement modular and extensible architecture for easier updates and debugging. \\ \hline
-NFR7 & Incorporate monitoring tools for real-time performance tracking and troubleshooting. \\ \hline
-NFR8 & Provide compatibility across devices. \\ \hline
-\end{tabular}
-\caption[Non-Functional Requirements]{Non-functional requirements defining the system's quality attributes.}
-\label{tab:nonfunctional_requirements}
+    \centering
+    \begin{tabular}{|p{0.1\textwidth}|p{0.80\textwidth}|}
+        \hline
+        \textbf{ID} & \textbf{Non-Functional Requirement Description} \\ \hline
+        NFR1 & Maintain a response time of less than 2 seconds for critical operations under peak load. \\ \hline
+        NFR2 & Support scalability to accommodate up to 1,000 concurrent users. \\ \hline
+        NFR3 & Comply with data privacy regulations such as \ac{gdpr}. \\ \hline
+        NFR4 & Maintain 99\% uptime through fault tolerance and disaster recovery mechanisms. \\ \hline
+        NFR5 & Adhere to \ac{ux} and \ac{ui} best practices. \\ \hline
+        NFR6 & Implement modular and extensible architecture for easier updates and debugging. \\ \hline
+        NFR7 & Incorporate monitoring tools for real-time performance tracking and troubleshooting. \\ \hline
+        NFR8 & Provide compatibility across devices. \\ \hline
+    \end{tabular}
+    \caption[Non-Functional Requirements]{Non-functional requirements defining the system's quality attributes.}
+    \label{tab:nonfunctional_requirements}
 \end{table}
 
 
@@ -141,27 +141,23 @@ NFR8 & Provide compatibility across devices. \\ \hline
 
 \subsection{Constraints} \label{section:constraints}
 
-The development of the system is governed by two primary constraints that shape its scope, deliverables, and quality:
+The system development operates within two fundamental constraints that define its scope and implementation boundaries, ensuring feasibility while meeting academic and stakeholder requirements.
 
-\subsubsection{C1: Timeframe Limitation}
+The first constraint is the fixed 10-month development timeframe, spanning the complete software lifecycle from requirements gathering to deployment. This limitation necessitates careful feature prioritization and influences key architectural decisions, favoring proven technologies over experimental approaches to minimize risk. The timeline must accommodate development activities, testing cycles, stakeholder feedback, documentation, and dissertation requirements.
 
-The development is restricted to a 10-month timeframe in which it is embedded.
-
-\subsubsection{C2: Verifiable Quality}
-
-Both software and design quality must be verifiable, meaning the stakeholders must test the system and review its code.
+The second constraint requires verifiable quality in both software implementation and design. All system components must be testable and reviewable by stakeholders through transparent development practices. Software quality verification includes automated testing, code coverage metrics, and performance benchmarks. Design quality demands clear architectural documentation, maintainable code structure, and adherence to engineering best practices. This constraint ensures stakeholders can independently assess functionality and technical soundness through user acceptance testing and code reviews.
 
 % ____________________ Notional Architecture ____________________ %
 
 \section{Notional Architecture} \label{section:notional_architecture}
 
-As previously mentioned, the architecture is iteratively refined. The initially proposed architecture, visible in Figure \ref{fig:initial_arch}, was designed as a microservices-based system, dividing the application into distinct, independent services, each responsible for a specific functionality \cite{Al-Debagy2021,Söylemez2024}. The planned architecture grouped the system's components into three main layers: the frontend, backend, and support infrastructure, as follows:
+As previously mentioned, the architecture is iteratively refined. The initially conceptualised architecture, visible in Figure \ref{fig:conceptual_arch}, was designed as a microservices-based system, dividing the application into distinct, independent services, each responsible for a specific functionality \cite{Al-Debagy2021,Söylemez2024}. The planned architecture grouped the system's components into three main layers: the frontend, backend, and support infrastructure.
 
 \begin{figure}[!htb]
-    \includegraphics[width=0.8\textwidth]{figs/chapter3/initial_arch.png}
+    \includegraphics[width=0.8\textwidth]{figs/chapter3/conceptual_arch.png}
     \centering
-    \caption[Initial Microservices Architecture]{High Level View of the Initially Planned Microservices Architecture.}
-    \label{fig:initial_arch}
+    \caption{Conceptual Architecture}
+    \label{fig:conceptual_arch}
 \end{figure}
 
 \subsection{Frontend}
@@ -180,7 +176,16 @@ The infrastructure was planned to provide the foundation for deploying and manag
 
 \subsection{Proposed Technologies to be Used}
 
-The selection of technologies is based on their alignment with the architectural drivers and the system's requirements. The proposed technology stack is as follows:
+With the architecture defined, the next step was to select the appropriate technologies to implement the system.
+
+The selection of technologies is based on their alignment with the architectural drivers and the system's requirements. Figure \ref{fig:initial_arch} illustrates the proposed technology stack, which is as follows:
+
+\begin{figure}[!htb]
+    \includegraphics[width=0.8\textwidth]{figs/chapter3/initial_arch.png}
+    \centering
+    \caption[Initial Technical Architecture]{High Level View of the Initially Planned Microservices Architecture with the Proposed Technology Stack.}
+    \label{fig:initial_arch}
+\end{figure}
 
 For the frontend, React\footnote{\url{https://react.dev/}} will be used to build a dynamic and interactive web application, mainly for administrative uses inside the platform. At the same time, Flutter\footnote{\url{https://flutter.dev/}} will enable cross-platform mobile application development, providing an accessible and consistent user experience across locations and devices.
 
@@ -207,10 +212,10 @@ The planned microservices architecture would require managing separate services,
 Based on the constraint analysis, the system was implemented using a modular monolithic architecture that preserves microservices design principles while consolidating deployment and operational complexity. Figure \ref{fig:final_implementation_architecture} illustrates the complete system architecture.
 
 \begin{figure}[htbp]
-\centering
-\includegraphics[width=\textwidth]{figs/chapter3/final_implementation_architecture.png}
-\caption{Final Implementation Architecture - Modular monolithic design}
-\label{fig:final_implementation_architecture}
+    \centering
+    \includegraphics[width=\textwidth]{figs/chapter3/final_implementation_architecture.png}
+    \caption[Final Implementation Architecture]{Final Implementation Architecture - Modular monolithic design}
+    \label{fig:final_implementation_architecture}
 \end{figure}
 
 % TODO: Adicionar as cenas todas que faltam na figura
