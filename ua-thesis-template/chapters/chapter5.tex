@@ -1,26 +1,17 @@
 \chapter{System Validation and Testing}
 \label{chapter:testing_validation}
 
-This chapter presents testing and validation results that demonstrate the system's readiness for production deployment through both technical performance validation and user experience evaluation. All technical tests were conducted on a MacBook Air M2 with 16GB RAM running macOS Sequoia 15.6.1, providing consistent baseline measurements for performance benchmarks. The validation approach combines backend technical testing with human-centered usability evaluation across multiple dimensions. Technical validation includes unit testing infrastructure with 60.44\% coverage across 551 functions, performance benchmarking with measured throughput and latency metrics, AI processing validation, and security assessment. User experience validation involved 17 participants from the University of Aveiro, comprising both administrative staff and students, evaluating interface effectiveness and adoption potential.
+This chapter presents testing and validation results that demonstrate the system's readiness for production deployment through both technical performance validation and user experience evaluation. All technical tests were conducted on a MacBook Air M2 (Apple M2 chip, 8-core CPU, 8-core GPU) with 16GB RAM running macOS Sequoia 15.6.1, providing consistent baseline measurements for performance benchmarks. The validation approach combines backend technical testing with human-centered usability evaluation across multiple dimensions. Technical validation includes unit testing infrastructure with 60.44\% coverage across 551 functions, performance benchmarking with measured throughput and latency metrics, AI processing validation, and security assessment. User experience validation involved 17 participants from the University of Aveiro, comprising both administrative staff and students, evaluating interface effectiveness and adoption potential.
 
 % ____________________ Backend Testing Infrastructure ____________________ %
 
 \section{Backend Testing Infrastructure} \label{section:backend_testing}
 
+Testing forms the foundation for system reliability, particularly in production environments where data integrity and user trust are paramount. The UAchado system requires validation given its role in managing personal property and processing sensitive user data through \ac{ai} algorithms that directly impact retrieval success rates.
+
 \subsection{Unit Testing Framework} \label{subsection:unit_testing_framework}
 
-The testing infrastructure uses pytest\footnote{\url{https://docs.pytest.org/}} with pytest-asyncio\footnote{\url{https://pytest-asyncio.readthedocs.io/}} for asynchronous testing patterns required by the \ac{ai}-powered matching system and multi-tenant architecture. The framework includes 43 test files organised across three architectural layers with 551 test functions.
-
-Figure \ref{fig:testing_architecture} illustrates the three-layer testing architecture with coverage metrics for each layer, showing how the pytest framework supports testing across all system components.
-
-TODO: Fix this figure 
-
-% \begin{figure}[htbp]
-% \centering
-% \includegraphics[width=\textwidth]{figs/chapter5/testing_architecture_diagram.png}
-% \caption{Testing Architecture: Three-Layer Coverage Analysis with pytest Framework}
-% \label{fig:testing_architecture}
-% \end{figure}
+The testing infrastructure uses pytest\footnote{\url{https://docs.pytest.org/}} with pytest-asyncio\footnote{\url{https://pytest-asyncio.readthedocs.io/}} for the multi-tenant architecture. The framework includes 43 test files organised across three architectural layers with 551 test functions.
 
 \subsubsection{Framework Configuration and Test Organisation}
 
@@ -49,6 +40,8 @@ Lastly, external service integration focuses on Ollama and \ac{llava} \ac{ai} se
 % ____________________ Performance Testing and Validation ____________________ %
 
 \section{Performance Testing and Validation} \label{section:performance_testing}
+
+System performance directly impacts user experience and operational efficiency within public environments where response times affect daily workflows. Performance bottlenecks in lost property management can delay reunification processes, while inefficient \ac{ai} processing may reduce matching accuracy during peak usage periods when multiple items are reported simultaneously.
 
 \subsection{Test Execution Performance} \label{subsection:test_execution_performance}
 
@@ -99,9 +92,11 @@ Operational monitoring covers system health through sustained load testing with 
 
 \section{Security and Authentication Testing} \label{section:security_testing}
 
+Security failures in university systems can expose personal data and compromise institutional trust, making thorough security testing essential for production deployment. Besides that, the multi-tenant architecture also introduces additional complexity where access control failures could allow cross-community data exposure, violating privacy expectations and institutional policies.
+
 \subsection{Authentication Framework Validation} \label{subsection:authentication_validation}
 
-Authentication system testing validates \ac{jwt} token processing, \ac{rbac} implementation, and multi-tenant access patterns across ordinary users, local managers, and system administrators. The authentication framework uses token-based validation with auto-refresh capability and maintains sub-300ms P99 performance across all authentication endpoints.
+The authentication framework uses token-based validation with auto-refresh capability and maintains sub-300ms P99 performance across ordinary users, local managers, and system administrators.
 
 The \ac{rbac} testing suite verifies collection-level permissions through PocketBase integration, covering the 17-collection schema implementation detailed in Chapter \ref{chapter:implementation}. Token management testing includes session lifecycle validation, automatic refresh mechanisms, and cross-role permission verification. The test suite achieves 95\% coverage for the token manager component with over 100 test cases covering authentication paths and edge cases, including expired tokens, invalid credentials, and concurrent session management.
 
@@ -109,13 +104,15 @@ The \ac{rbac} testing suite verifies collection-level permissions through Pocket
 
 Security implementation testing verifies input sanitisation, file upload restrictions, and data privacy protection through field-level masking services. Pydantic\footnote{\url{https://docs.pydantic.dev/}} schema validation testing covers email, name, description, and location data protection with zero \ac{pii} exposure incidents recorded during testing.
 
-File upload security testing includes \ac{mime} type validation, size restrictions, and temporary file management through dedicated test utilities. The upload handling tests verify file processing workflows within service operations, maintaining 41\% coverage for file handling components.
+File upload security testing includes media type validation, size restrictions, and temporary file management through dedicated test utilities. The upload handling tests verify file processing workflows within service operations, maintaining 41\% coverage for file handling components.
 
 Rate limiting and access control testing show the system supports 1,604 requests per second peak throughput with 100\% success rate under 200 concurrent connections. \ac{cors} configuration testing maintains a zero error rate against the target threshold of less than 0.1\%. Data isolation testing verifies community-based access control through multi-tenant boundaries, preventing cross-community data access through SQL injection prevention via PocketBase abstraction layers.
 
 % ____________________ Test Coverage and Quality Assessment ____________________ %
 
 \section{Test Coverage and Quality Assessment} \label{section:test_coverage_quality}
+
+Coverage analysis reveals the reliability foundation supporting production deployment, where untested code paths represent potential failure points that could affect user experience or data integrity. Understanding coverage distribution across architectural layers helps prioritize testing efforts and identify components requiring additional validation before live deployment.
 
 \subsection{Coverage Analysis and Metrics} \label{subsection:coverage_analysis}
 

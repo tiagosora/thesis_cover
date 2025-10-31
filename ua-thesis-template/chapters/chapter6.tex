@@ -19,7 +19,7 @@ Community features were partially implemented through an architecture enabling i
 
 Testing reached 46\% code coverage across all functions. Performance tests showed 200 concurrent connections with P95 latency of 15.83ms. Prometheus and Grafana provide monitoring through 24 metrics across 5 dashboards. The queue-based architecture allows A/B testing without service disruption.
 
-Overall, most of the objectives previously outlined in the Chapters \ref{chapter:introduction}, \ref{chapter:literature_review} and \ref{chapter:methodology} were met within the framed timeline. The system reached 92.5\% production confidence with exceptional performance improvements. The modular monolithic architecture worked well for academic contexts while preserving scalability.
+Overall, most of the objectives previously outlined in the Chapters \ref{chapter:introduction}, \ref{chapter:state_of_art} and \ref{chapter:methodology} were met within the framed timeline. The system reached 92.5\% production confidence with exceptional performance improvements. The modular monolithic architecture worked well for academic contexts while preserving scalability.
 
 % ____________________ Research Contributions ____________________ %
 
@@ -45,7 +45,7 @@ Authentication lacks integration with Lightweight Directory Access Protocol (LDA
 
 The implementation embeds University of Aveiro-specific assumptions. Fixed proximity thresholds (1km, 5km or 20km, at maximum) may not suit other geographies. Portuguese is the only secondary language supported, limiting accessibility for non-English and non-Portuguese speakers.
 
-In terms of validation, testing offered limited demographic coverage and the performance testing on a single environment (MacBook Air M2) may not represent production conditions. Though the tested code was specifically designed for this environment, incomplete code coverage leaves some error paths and edge cases untested.
+In terms of validation, testing offered limited demographic coverage and the performance testing on a single environment (MacBook Air M2 with Apple M2 chip, 8-core CPU, 8-core GPU) may not represent production conditions. Though the tested code was specifically designed for this environment, incomplete code coverage leaves some error paths and edge cases untested.
 
 Fixed algorithm weights may not work best across all contexts and the confidence thresholds lack empirical tuning. The visual matching also depends on image quality often inconsistent in real-world scenarios and this factor was not deeply studied in this research.
 
