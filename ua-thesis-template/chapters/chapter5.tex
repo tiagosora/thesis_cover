@@ -1,7 +1,7 @@
 \chapter{System Evalidation and Testing}
 \label{chapter:testing_validation}
 
-This chapter presents testing and validation results that demonstrate the system's readiness for production deployment through both technical performance validation and user experience evaluation. All tests were conducted on a MacBook Air M2 (Apple M2 chip, 8-core CPU, 8-core GPU) with 16GB RAM running macOS Sequoia 15.6.1, providing consistent baseline measurements for performance benchmarks. The validation approach combines backend technical testing with human-centered usability evaluation across multiple dimensions. Technical validation includes unit testing infrastructure with 60.44\% coverage across 551 functions, performance benchmarking with measured throughput and latency metrics, AI processing validation, and security assessment. User experience validation involved 17 participants from the University of Aveiro, comprising both administrative staff and students, evaluating interface effectiveness and adoption potential.
+This chapter presents testing and validation results that demonstrate the system's readiness for production deployment through both technical performance validation and user experience evaluation. All tests were conducted on a MacBook Air M2 (Apple M2 chip, 8-core CPU, 8-core GPU) with 16GB RAM running macOS Sequoia 15.6.1, providing consistent baseline measurements for performance benchmarks. The validation approach combines backend technical testing with human-centered usability evaluation across multiple dimensions. Technical validation includes unit testing infrastructure with 60.44\% coverage across 551 functions, performance benchmarking with measured throughput and latency metrics, \ac{ai} processing validation, and security assessment. User experience validation involved 17 participants from the University of Aveiro, comprising both administrative staff and students, evaluating interface effectiveness and adoption potential.
 
 % ____________________ Backend Testing Infrastructure ____________________ %
 
@@ -53,7 +53,7 @@ Test isolation prevents interdependencies through automatic mock state reset bet
 
 System load testing demonstrates stable performance up to 500 concurrent connections using the test framework. Authentication endpoints maintain response times under 467ms even at maximum load, while standard \ac{crud} operations achieve consistently low latency with P95 times reaching 148ms at peak concurrent usage. Database operations perform well, staying under 278ms response times across all tested load scenarios.
 
-Figure \ref{fig:load_testing_results} illustrates the performance characteristics for standard operations and shows the AI processing performance under concurrent load conditions.
+Figure \ref{fig:load_testing_results} illustrates the performance characteristics for standard operations and shows the \ac{ai} processing performance under concurrent load conditions.
 
 \begin{figure}[htbp]
     \centering
@@ -67,7 +67,7 @@ Figure \ref{fig:load_testing_results} illustrates the performance characteristic
     \begin{subfigure}[t]{0.48\textwidth}
         \centering
         \includegraphics[width=\textwidth]{figs/chapter5/load_testing_ai.png}
-        \caption{AI Processing Performance}
+        \caption{\acs{ai} Processing Performance}
         \label{fig:load_testing_ai}
     \end{subfigure}
     \caption{Load Testing Results}
@@ -76,11 +76,32 @@ Figure \ref{fig:load_testing_results} illustrates the performance characteristic
 
 Throughput measurements show 767 requests per second for standard operations under optimal conditions, with \ac{ai}-enhanced search functionality achieving 4.2 requests per second due to external processing requirements. Stress testing confirms system stability under sustained load with continuous 5-minute operation tests maintaining consistent performance. The testing framework validates production readiness through monitoring of response times, error rates, and resource utilisation patterns.
 
-\subsection{AI Processing Performance Validation} \label{subsection:ai_processing_validation}
+\subsection{\acs{ai} Processing Performance Validation} \label{subsection:ai_processing_validation}
 
 \ac{ai} processing performance testing focuses on Ollama and \ac{llava} integration with measured image processing latency averaging 18-52 seconds per image analysis depending on load conditions. Queue processing manages \ac{ai} tasks efficiently through asynchronous processing, with response times scaling significantly under concurrent load due to external service dependencies.
 
 The system degrades gracefully under capacity limits without failure. \ac{ai} matching accuracy remains consistent at 94.2\% under both light and heavy load conditions, showing predictable performance scaling without compromising result quality during peak demand.
+
+The matching algorithm performance analysis shows distinct characteristics between high-confidence and low-confidence matches. Figure \ref{fig:ai_matching_system} demonstrates the accuracy rates achieved for each confidence level and shows the corresponding processing time requirements.
+
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figs/chapter5/ai_accuracy_rates.png}
+        \caption{Accuracy Rates by Confidence Level}
+        \label{fig:ai_accuracy}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figs/chapter5/ai_processing_times.png}
+        \caption{Processing Times by Confidence Level}
+        \label{fig:ai_processing}
+    \end{subfigure}
+    \caption{\acs{ai} Matching Algorithm Performance Metrics}
+    \label{fig:ai_matching_system}
+\end{figure}
 
 \subsection{System Monitoring and Performance Tracking} \label{subsection:monitoring_performance}
 
